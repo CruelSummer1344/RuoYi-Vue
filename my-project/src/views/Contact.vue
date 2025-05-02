@@ -1,202 +1,393 @@
 <template>
-  <div class="contact">
-    <h2 class="title">联系客服</h2>
-    <el-card class="chat-container" shadow="hover">
-      <div slot="header" class="chat-header">
-        <span>在线客服</span>
-        <el-tag :type="staffOnline ? 'success' : 'danger'" size="small">
-          {{ staffOnline ? '在线' : '离线' }}
-        </el-tag>
-      </div>
-      <div class="chat-messages" ref="messageContainer">
-        <div
-            v-for="(message, index) in messages"
-            :key="index"
-            :class="['message', message.from === 'user' ? 'user-message' : 'staff-message']"
-        >
-          <span class="sender">{{ message.from === 'user' ? '我' : '客服' }}:</span>
-          <span class="content">{{ message.text }}</span>
-          <span class="time">{{ message.time }}</span>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>在线客服</h2>
+      <div v-if="loading" class="loading">加载中...</div>
+      <div v-else-if="error" class="error">{{ error }}</div>
+      <template v-else>
+        <div class="staff-list" v-if="!currentStaff">
+          <div v-if="onlineStaff.length === 0" class="no-staff">
+            暂无在线客服
+          </div>
+          <div v-else v-for="staff in onlineStaff" :key="staff.staffId" class="staff-item" @click="startChat(staff)">
+            <img :src="staff.avatar || '/default-avatar.png'" class="staff-avatar">
+            <div class="staff-info">
+              <div class="staff-name">{{ staff.staffName }}</div>
+              <div class="staff-title">{{ staff.title }}</div>
+            </div>
+            <div class="staff-status online">在线</div>
+          </div>
+        </div>
+        <div v-else class="current-staff">
+          <img :src="currentStaff.avatar || '/default-avatar.png'" class="staff-avatar">
+          <div class="staff-info">
+            <div class="staff-name">{{ currentStaff.staffName }}</div>
+            <div class="staff-title">{{ currentStaff.title }}</div>
+          </div>
+          <button class="end-chat-btn" @click="endChat">结束对话</button>
+        </div>
+      </template>
+    </div>
+
+    <div class="chat-main" v-if="currentStaff">
+      <div class="message-list" ref="messageList">
+        <div v-if="messages.length === 0" class="no-messages">
+          开始新的对话
+        </div>
+        <div v-else v-for="(message, index) in messages" :key="index" 
+             :class="['message-item', message.senderId === userId ? 'sent' : 'received']">
+          <div class="message-content">{{ message.content }}</div>
         </div>
       </div>
-      <el-form class="chat-input" @submit.native.prevent="sendMessage">
-        <el-input
-            v-model="newMessage"
-            placeholder="输入消息..."
-            :disabled="!staffOnline"
-            @keyup.enter.native="sendMessage"
-        >
-          <el-button slot="append" icon="el-icon-s-promotion" :disabled="!staffOnline" @click="sendMessage">
-            发送
-          </el-button>
-        </el-input>
-      </el-form>
-    </el-card>
+      <div class="input-area">
+        <textarea v-model="newMessage" placeholder="请输入消息..." @keyup.enter="sendMessage"></textarea>
+        <button @click="sendMessage">发送</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import io from 'socket.io-client'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { getOnlineStaff } from '@/api/chat'
 
 export default {
   name: 'Contact',
-  data() {
-    return {
-      socket: null,
-      staffOnline: false,
-      messages: [], // 仅在前端内存中存储消息
-      newMessage: ''
-    }
-  },
-  mounted() {
-    this.initSocket()
-    this.scrollToBottom()
-  },
-  beforeDestroy() {
-    if (this.socket) {
-      this.socket.disconnect()
-    }
-  },
-  methods: {
-    initSocket() {
-      // 连接 RuoYi-Vue 的 WebSocket 端点
-      this.socket = io('http://localhost:8080/chat', {
-        transports: ['websocket', 'polling'],
-        path: '/socket.io',
-        query: {
-          token: localStorage.getItem('token') // 使用 RuoYi 的 token（可选）
+  setup() {
+    const socket = ref(null)
+    const onlineStaff = ref([])
+    const currentStaff = ref(null)
+    const messages = ref([])
+    const newMessage = ref('')
+    const userId = ref(localStorage.getItem('userId'))
+    const messageList = ref(null)
+    const loading = ref(true)
+    const error = ref(null)
+
+    // 初始化WebSocket连接
+    const initWebSocket = () => {
+      const wsUrl = `ws://${window.location.host}/ws/chat?userId=${userId.value}`
+      socket.value = new WebSocket(wsUrl)
+
+      socket.value.onopen = () => {
+        console.log('WebSocket连接已建立')
+      }
+
+      socket.value.onmessage = (event) => {
+        try {
+          const message = JSON.parse(event.data)
+          messages.value.push(message)
+          nextTick(() => {
+            scrollToBottom()
+          })
+        } catch (e) {
+          console.error('消息解析错误:', e)
         }
-      })
-
-      this.socket.on('connect', () => {
-        this.$message.success('已连接到客服系统')
-      })
-
-      this.socket.on('message', (message) => {
-        this.messages.push({
-          from: 'staff',
-          text: message,
-          time: this.formatTime(new Date())
-        })
-        this.$nextTick(() => this.scrollToBottom())
-      })
-
-      this.socket.on('staffStatus', (status) => {
-        this.staffOnline = status === 'true' || status === true
-      })
-
-      this.socket.on('connect_error', () => {
-        this.$message.error('连接客服系统失败，请稍后重试')
-      })
-    },
-    sendMessage() {
-      if (!this.newMessage.trim() || !this.staffOnline) return
-      const message = {
-        from: 'user',
-        text: this.newMessage,
-        time: this.formatTime(new Date())
       }
-      this.messages.push(message)
-      this.socket.emit('message', this.newMessage)
-      this.newMessage = ''
-      this.$nextTick(() => this.scrollToBottom())
-    },
-    formatTime(date) {
-      return date.toLocaleTimeString('zh-CN', { hour12: false })
-    },
-    scrollToBottom() {
-      const container = this.$refs.messageContainer
-      if (container) {
-        container.scrollTop = container.scrollHeight
+
+      socket.value.onclose = () => {
+        console.log('WebSocket连接已关闭')
       }
+
+      socket.value.onerror = (error) => {
+        console.error('WebSocket错误:', error)
+      }
+    }
+
+    // 获取在线客服列表
+    const fetchOnlineStaff = async () => {
+      loading.value = true
+      error.value = null
+      try {
+        const response = await getOnlineStaff()
+        if (response && response.data) {
+          onlineStaff.value = response.data
+        } else {
+          onlineStaff.value = []
+        }
+      } catch (err) {
+        console.error('获取在线客服列表失败:', err)
+        error.value = '获取客服列表失败，请稍后重试'
+        onlineStaff.value = []
+      } finally {
+        loading.value = false
+      }
+    }
+
+    // 开始对话
+    const startChat = (staff) => {
+      currentStaff.value = staff
+      messages.value = []
+      if (socket.value) {
+        try {
+          const message = {
+            type: 'start',
+            staffId: staff.staffId,
+            userId: userId.value
+          }
+          socket.value.send(JSON.stringify(message))
+        } catch (e) {
+          console.error('发送开始对话消息失败:', e)
+        }
+      }
+    }
+
+    // 结束对话
+    const endChat = () => {
+      if (socket.value && currentStaff.value) {
+        try {
+          const message = {
+            type: 'end',
+            staffId: currentStaff.value.staffId,
+            userId: userId.value
+          }
+          socket.value.send(JSON.stringify(message))
+        } catch (e) {
+          console.error('发送结束对话消息失败:', e)
+        }
+      }
+      currentStaff.value = null
+      messages.value = []
+    }
+
+    // 发送消息
+    const sendMessage = () => {
+      if (newMessage.value.trim() && socket.value && currentStaff.value) {
+        try {
+          const message = {
+            type: 'text',
+            content: newMessage.value,
+            receiverId: currentStaff.value.staffId,
+            senderId: userId.value
+          }
+          socket.value.send(JSON.stringify(message))
+          messages.value.push({
+            content: newMessage.value,
+            senderId: userId.value
+          })
+          newMessage.value = ''
+          nextTick(() => {
+            scrollToBottom()
+          })
+        } catch (e) {
+          console.error('发送消息失败:', e)
+        }
+      }
+    }
+
+    // 滚动到底部
+    const scrollToBottom = () => {
+      if (messageList.value) {
+        messageList.value.scrollTop = messageList.value.scrollHeight
+      }
+    }
+
+    onMounted(() => {
+      initWebSocket()
+      fetchOnlineStaff()
+    })
+
+    onUnmounted(() => {
+      if (socket.value) {
+        socket.value.close()
+      }
+    })
+
+    return {
+      socket,
+      onlineStaff,
+      currentStaff,
+      messages,
+      newMessage,
+      userId,
+      messageList,
+      loading,
+      error,
+      startChat,
+      endChat,
+      sendMessage
     }
   }
 }
 </script>
 
 <style scoped>
-.contact {
-  padding: 20px;
+.chat-container {
   max-width: 800px;
   margin: 0 auto;
-}
-
-.title {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #303133;
-}
-
-.chat-container {
+  padding: 20px;
+  background: #fff;
   border-radius: 8px;
-  height: 600px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chat-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.staff-list {
+  margin-top: 15px;
+}
+
+.staff-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.staff-item:hover {
+  background-color: #f5f5f5;
+}
+
+.staff-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.staff-info {
+  flex: 1;
+}
+
+.staff-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.staff-title {
+  color: #666;
+  font-size: 14px;
+}
+
+.staff-status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.staff-status.online {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.current-staff {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.end-chat-btn {
+  padding: 6px 12px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.end-chat-btn:hover {
+  background-color: #e6e6e6;
+}
+
+.chat-main {
+  height: 500px;
   display: flex;
   flex-direction: column;
 }
 
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
-  color: #303133;
-}
-
-.chat-messages {
+.message-list {
   flex: 1;
-  padding: 15px;
   overflow-y: auto;
-  background: #f5f7fa;
-  border-bottom: 1px solid #e8e8e8;
-}
-
-.message {
-  margin: 10px 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
-
-.user-message {
-  justify-content: flex-end;
-}
-
-.staff-message {
-  justify-content: flex-start;
-}
-
-.sender {
-  font-weight: bold;
-  color: #606266;
-  margin-right: 5px;
-}
-
-.content {
-  background: #fff;
-  padding: 8px 12px;
-  border-radius: 4px;
-  max-width: 70%;
-  word-break: break-word;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.user-message .content {
-  background: #409eff;
-  color: #fff;
-}
-
-.time {
-  font-size: 12px;
-  color: #909399;
-  margin-left: 10px;
-  align-self: flex-end;
-}
-
-.chat-input {
   padding: 15px;
+  background-color: #f9f9f9;
 }
 
-.chat-input .el-input {
-  width: 100%;
+.message-item {
+  margin-bottom: 15px;
+  max-width: 70%;
+}
+
+.message-item.sent {
+  margin-left: auto;
+}
+
+.message-item.received {
+  margin-right: auto;
+}
+
+.message-content {
+  padding: 10px 15px;
+  border-radius: 18px;
+  display: inline-block;
+}
+
+.message-item.sent .message-content {
+  background-color: #1890ff;
+  color: white;
+}
+
+.message-item.received .message-content {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.input-area {
+  padding: 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  align-items: flex-end;
+}
+
+.input-area textarea {
+  flex: 1;
+  height: 60px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+  margin-right: 10px;
+}
+
+.input-area button {
+  padding: 8px 20px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.input-area button:hover {
+  background-color: #40a9ff;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.error {
+  text-align: center;
+  padding: 20px;
+  color: #f56c6c;
+}
+
+.no-staff {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.no-messages {
+  text-align: center;
+  padding: 20px;
+  color: #666;
 }
 </style>
