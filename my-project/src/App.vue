@@ -97,7 +97,7 @@ export default {
   },
   computed: {
     ...mapState([
-        'name', 'token'
+        'token'
     ]),
     activeIndex() {
       return this.$route.path; // 动态高亮当前路由

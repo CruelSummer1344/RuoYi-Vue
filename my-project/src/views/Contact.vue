@@ -9,13 +9,18 @@
           <div v-if="onlineStaff.length === 0" class="no-staff">
             暂无在线客服
           </div>
-          <div v-else v-for="staff in onlineStaff" :key="staff.staffId" class="staff-item" @click="startChat(staff)">
+          <div v-else v-for="staff in onlineStaff" :key="staff.staffId" 
+               class="staff-item" 
+               :class="{ 'staff-item-disabled': !staff.online }"
+               @click="staff.online ? startChat(staff) : null">
             <img :src="staff.avatar || '/default-avatar.png'" class="staff-avatar">
             <div class="staff-info">
               <div class="staff-name">{{ staff.staffName }}</div>
               <div class="staff-title">{{ staff.title }}</div>
             </div>
-            <div class="staff-status online">在线</div>
+            <div class="staff-status" :class="{ online: staff.online, offline: !staff.online }">
+              {{ staff.online ? '在线' : '离线' }}
+            </div>
           </div>
         </div>
         <div v-else class="current-staff">
@@ -71,12 +76,27 @@ export default {
 
       socket.value.onopen = () => {
         console.log('WebSocket连接已建立')
+        // 连接成功后重新获取在线客服列表
+        fetchOnlineStaff()
       }
 
       socket.value.onmessage = (event) => {
         try {
           const message = JSON.parse(event.data)
-          messages.value.push(message)
+          // 处理不同类型的消息
+          switch (message.type) {
+            case 'text':
+            case 'image':
+              messages.value.push(message)
+              break
+            case 'status':
+              // 更新客服在线状态
+              updateStaffStatus(message.staffId, message.online)
+              break
+            case 'error':
+              console.error('服务器错误:', message.content)
+              break
+          }
           nextTick(() => {
             scrollToBottom()
           })
@@ -87,10 +107,22 @@ export default {
 
       socket.value.onclose = () => {
         console.log('WebSocket连接已关闭')
+        // 连接关闭后更新所有客服为离线状态
+        onlineStaff.value.forEach(staff => {
+          staff.online = false
+        })
       }
 
       socket.value.onerror = (error) => {
         console.error('WebSocket错误:', error)
+      }
+    }
+
+    // 更新客服在线状态
+    const updateStaffStatus = (staffId, online) => {
+      const staff = onlineStaff.value.find(s => s.staffId === staffId)
+      if (staff) {
+        staff.online = online
       }
     }
 
@@ -101,7 +133,10 @@ export default {
       try {
         const response = await getOnlineStaff()
         if (response && response.data) {
-          onlineStaff.value = response.data
+          onlineStaff.value = response.data.map(staff => ({
+            ...staff,
+            online: true // 从后端获取的客服默认都是在线状态
+          }))
         } else {
           onlineStaff.value = []
         }
@@ -116,6 +151,10 @@ export default {
 
     // 开始对话
     const startChat = (staff) => {
+      if (!staff.online) {
+        console.log('客服不在线，无法开始对话')
+        return
+      }
       currentStaff.value = staff
       messages.value = []
       if (socket.value) {
@@ -152,26 +191,35 @@ export default {
 
     // 发送消息
     const sendMessage = () => {
-      if (newMessage.value.trim() && socket.value && currentStaff.value) {
-        try {
-          const message = {
-            type: 'text',
-            content: newMessage.value,
-            receiverId: currentStaff.value.staffId,
-            senderId: userId.value
-          }
-          socket.value.send(JSON.stringify(message))
-          messages.value.push({
-            content: newMessage.value,
-            senderId: userId.value
-          })
-          newMessage.value = ''
-          nextTick(() => {
-            scrollToBottom()
-          })
-        } catch (e) {
-          console.error('发送消息失败:', e)
+      if (!newMessage.value.trim()) {
+        return
+      }
+      if (!socket.value || !currentStaff.value) {
+        console.error('未连接到服务器或未选择客服')
+        return
+      }
+      if (!currentStaff.value.online) {
+        console.error('客服已离线，无法发送消息')
+        return
+      }
+      try {
+        const message = {
+          type: 'text',
+          content: newMessage.value,
+          receiverId: currentStaff.value.staffId,
+          senderId: userId.value
         }
+        socket.value.send(JSON.stringify(message))
+        messages.value.push({
+          content: newMessage.value,
+          senderId: userId.value
+        })
+        newMessage.value = ''
+        nextTick(() => {
+          scrollToBottom()
+        })
+      } catch (e) {
+        console.error('发送消息失败:', e)
       }
     }
 
@@ -184,7 +232,6 @@ export default {
 
     onMounted(() => {
       initWebSocket()
-      fetchOnlineStaff()
     })
 
     onUnmounted(() => {
@@ -273,6 +320,11 @@ export default {
 .staff-status.online {
   background-color: #e6f7ff;
   color: #1890ff;
+}
+
+.staff-status.offline {
+  background-color: #f5f5f5;
+  color: #999;
 }
 
 .current-staff {
@@ -389,5 +441,10 @@ export default {
   text-align: center;
   padding: 20px;
   color: #666;
+}
+
+.staff-item-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 </style>
