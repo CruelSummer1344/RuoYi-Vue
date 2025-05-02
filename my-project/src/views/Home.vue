@@ -801,17 +801,32 @@ export default {
 
         // 搜索处理
         handleSearch: function() {
-            if (this.searchQuery.trim()) {
-                this.$router.push({
-                    path: '/search',
-                    query: {
-                        type: this.searchType,
-                        keyword: this.searchQuery
-                    }
-                });
-            } else {
-                this.$message.warning('请输入搜索内容');
-            }
+            // 使用防抖处理搜索
+            const debouncedSearch = this.debounce(function() {
+                if (this.searchQuery.trim()) {
+                    this.searchLoading = true;
+
+                    // 模拟搜索请求
+                    setTimeout(() => {
+                        this.searchLoading = false;
+                        this.$message.success(`正在搜索${this.searchType === 'attraction' ? '景点' :
+                            this.searchType === 'route' ? '路线' :
+                                this.searchType === 'guide' ? '攻略' : '酒店'}：${this.searchQuery}`);
+                        // 实际项目中应该跳转到搜索结果页面
+                        // this.$router.push({
+                        //   path: '/search',
+                        //   query: {
+                        //     type: this.searchType,
+                        //     keyword: this.searchQuery
+                        //   }
+                        // });
+                    }, 500);
+                } else {
+                    this.$message.warning('请输入搜索内容');
+                }
+            }, 300);
+
+            debouncedSearch.call(this);
         },
 
         // 快速搜索
@@ -843,15 +858,7 @@ export default {
 
         // 点击排行榜项目
         handleRankItemClick(row) {
-            if(row.name === '黄河口生态旅游区') {
-                this.$router.push('/attraction/huanghekou');
-            } else if(row.name === '黄河三角洲国家级自然保护区') {
-                this.$router.push('/attraction/delta');
-            } else if(row.name === '天鹅湖景区') {
-                this.$router.push('/attraction/tianehu');
-            } else {
-                this.$message.success(`查看景点：${row.name}`);
-            }
+            this.$message.success(`查看景点：${row.name}`);
         },
 
         // 路线标签切换
@@ -872,7 +879,7 @@ export default {
 
         // 查看路线详情
         viewRouteDetail(item) {
-            this.$router.push('/route/detail');
+            this.$message.success(`查看路线详情：${item.title}`);
         },
 
         // 查看所有景点
@@ -882,15 +889,7 @@ export default {
 
         // 查看景点详情
         viewAttractionDetail(item) {
-            if(item.name === '黄河口生态旅游区') {
-                this.$router.push('/attraction/huanghekou');
-            } else if(item.name === '黄河三角洲国家级自然保护区') {
-                this.$router.push('/attraction/delta');
-            } else if(item.name === '天鹅湖景区') {
-                this.$router.push('/attraction/tianehu');
-            } else {
-                this.$message.success(`查看景点详情：${item.name}`);
-            }
+            this.$message.success(`查看景点详情：${item.name}`);
         },
 
         // 新闻标签切换
