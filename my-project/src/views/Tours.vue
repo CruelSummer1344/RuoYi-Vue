@@ -87,77 +87,16 @@
 </template>
 
 <script>
+import { listSpot, getSpot } from "@/api/spot/spot";
+
 export default {
     name: 'Tours',
     data() {
         return {
             searchQuery: '',
             currentPage: 1,
-            pageSize: 4, // 增加每页显示数量，以便在两列布局下显示更多项目
-            tours: [
-                {
-                    id: 1,
-                    title: '黄河口湿地观鸟之旅',
-                    description: '探索黄河口三角洲独特的湿地生态，观赏珍稀鸟类。',
-                    price: 200,
-                    image: 'https://ts1.tc.mm.bing.net/th/id/R-C.0dcae2d2ced5b5757cc9d8d76783c438?rik=QQvMRj2YBrIToA&riu=http%3a%2f%2fwenhui.whb.cn%2fu%2fcms%2fwww%2f202104%2f24223449s69j.jpg&ehk=IcFbW%2fUU3tfgVkFdWhQd8Flt6QNi7XWBwM9R0Xnoia8%3d&risl=&pid=ImgRaw&r=0?text=湿地观鸟',
-                    packages: [
-                        { id: 1, name: '单人票' },
-                        { id: 2, name: '含酒店套餐 (+500元)' },
-                        { id: 3, name: '含餐饮套餐 (+300元)' }
-                    ],
-                    selectedPackage: null,
-                    comments: [
-                        { id: 1, user: '张三', text: '鸟类种类丰富，导游讲解很专业！' },
-                        { id: 2, user: '李四', text: '景色很美，值得一游。' }
-                    ]
-                },
-                {
-                    id: 2,
-                    title: '黄河入海口游船体验',
-                    description: '乘坐游船，近距离感受黄河入海的壮观景象。',
-                    price: 150,
-                    image: 'https://ts1.tc.mm.bing.net/th/id/R-C.4dba070a5945e019dd1b15f57e27c3ca?rik=GwdpcDAodG5W%2fA&riu=http%3a%2f%2fimg.redocn.com%2fsheying%2f20141016%2fhuangheruhaikoudeyuchuan_3250825.jpg&ehk=Ai8NXpFua%2bmBO27qmUFcJU%2bLuH6k%2bub2DcWiuYjONng%3d&risl=&pid=ImgRaw&r=0?text=游船体验',
-                    packages: [
-                        { id: 1, name: '单人票' },
-                        { id: 2, name: '含午餐套餐 (+100元)' }
-                    ],
-                    selectedPackage: null,
-                    comments: [
-                        { id: 1, user: '王五', text: '游船很平稳，风景震撼！' }
-                    ]
-                },
-                {
-                    id: 3,
-                    title: '生态摄影之旅',
-                    description: '适合摄影爱好者，捕捉三角洲自然美景。',
-                    price: 300,
-                    image: 'https://ts1.tc.mm.bing.net/th/id/R-C.8d2e190b5a9c72c77dd6832bfc7c8323?rik=ud1eCkygYn2xlg&riu=http%3a%2f%2fnews.southcn.com%2fzl%2fyc%2fcs%2fcontent%2fimages%2fattachement%2fjpg%2fsite4%2f20200120%2f6c4b908e2c6a1f8fb25837.jpg&ehk=dmMrT2BE5NzR34WTtEgpusoqyhfbuEfICc3zzdC4JP8%3d&risl=&pid=ImgRaw&r=0?text=摄影之旅',
-                    packages: [
-                        { id: 1, name: '单人票' },
-                        { id: 2, name: '含专业指导套餐 (+200元)' }
-                    ],
-                    selectedPackage: null,
-                    comments: [
-                        { id: 1, user: '赵六', text: '拍到了很多好照片，推荐！' }
-                    ]
-                },
-                {
-                    id: 4,
-                    title: '黄河文化探索之旅',
-                    description: '深入了解黄河文化，参观历史遗迹和博物馆。',
-                    price: 280,
-                    image: 'https://ts1.tc.mm.bing.net/th/id/R-C.4dba070a5945e019dd1b15f57e27c3ca?rik=GwdpcDAodG5W%2fA&riu=http%3a%2f%2fimg.redocn.com%2fsheying%2f20141016%2fhuangheruhaikoudeyuchuan_3250825.jpg&ehk=Ai8NXpFua%2bmBO27qmUFcJU%2bLuH6k%2bub2DcWiuYjONng%3d&risl=&pid=ImgRaw&r=0',
-                    packages: [
-                        { id: 1, name: '单人票' },
-                        { id: 2, name: '含讲解套餐 (+120元)' }
-                    ],
-                    selectedPackage: null,
-                    comments: [
-                        { id: 1, user: '小明', text: '讲解员很专业，学到了很多知识！' }
-                    ]
-                }
-            ],
+            pageSize: 4,
+            tours: [],
             recentActivities: [
                 { id: 1, title: '湿地保护日', date: '2025-03-15', image: 'https://ts1.tc.mm.bing.net/th/id/R-C.0dcae2d2ced5b5757cc9d8d76783c438?rik=QQvMRj2YBrIToA&riu=http%3a%2f%2fwenhui.whb.cn%2fu%2fcms%2fwww%2f202104%2f24223449s69j.jpg&ehk=IcFbW%2fUU3tfgVkFdWhQd8Flt6QNi7XWBwM9R0Xnoia8%3d&risl=&pid=ImgRaw&r=0?text=活动1' },
                 { id: 2, title: '春季观鸟节', date: '2025-04-01', image: 'https://ts1.tc.mm.bing.net/th/id/R-C.8d2e190b5a9c72c77dd6832bfc7c8323?rik=ud1eCkygYn2xlg&riu=http%3a%2f%2fnews.southcn.com%2fzl%2fyc%2fcs%2fcontent%2fimages%2fattachement%2fjpg%2fsite4%2f20200120%2f6c4b908e2c6a1f8fb25837.jpg&ehk=dmMrT2BE5NzR34WTtEgpusoqyhfbuEfICc3zzdC4JP8%3d&risl=&pid=ImgRaw&r=0?text=活动2' }
@@ -178,23 +117,84 @@ export default {
             return this.filteredTours.slice(start, end)
         }
     },
+    created() {
+        this.getTourList();
+    },
     methods: {
+        // 获取旅游项目列表
+        getTourList() {
+            listSpot().then(response => {
+                this.tours = response.rows.map(spot => ({
+                    id: spot.spotId,
+                    title: spot.name,
+                    description: spot.description,
+                    price: spot.price,
+                    image: spot.image || '/assets/default-spot.jpg',
+                    packages: [
+                        { id: 1, name: '标准门票' },
+                        { id: 2, name: '含讲解套餐 (+120元)' },
+                        { id: 3, name: '含餐饮套餐 (+300元)' }
+                    ],
+                    selectedPackage: null,
+                    comments: [
+                        { id: 1, user: '游客', text: '景点很美，值得一游！' }
+                    ]
+                }));
+            });
+        },
+
         handleSearch() {
-            this.currentPage = 1
-            this.$message.success(`搜索关键词：${this.searchQuery}`)
+            const query = {
+                name: this.searchQuery
+            };
+            listSpot(query).then(response => {
+                this.tours = response.rows.map(spot => ({
+                    id: spot.spotId,
+                    title: spot.name,
+                    description: spot.description,
+                    price: spot.price,
+                    image: spot.image || '/assets/default-spot.jpg',
+                    packages: [
+                        { id: 1, name: '标准门票' },
+                        { id: 2, name: '含讲解套餐 (+120元)' },
+                        { id: 3, name: '含餐饮套餐 (+300元)' }
+                    ],
+                    selectedPackage: null,
+                    comments: [
+                        { id: 1, user: '游客', text: '景点很美，值得一游！' }
+                    ]
+                }));
+                this.currentPage = 1;
+                this.$message.success(`搜索关键词：${this.searchQuery}`);
+            });
         },
+
         handlePageChange(page) {
-            this.currentPage = page
+            this.currentPage = page;
         },
+
         bookTour(tour) {
-            const pkg = tour.packages.find(p => p.id === tour.selectedPackage) || tour.packages[0]
-            this.$message.success(`已预约：${tour.title} - ${pkg.name}`)
+            getSpot(tour.id).then(response => {
+                const spotData = response.data;
+                const pkg = tour.packages.find(p => p.id === tour.selectedPackage) || tour.packages[0];
+                this.$message.success(`已预约：${spotData.name} - ${pkg.name}`);
+                // 跳转到预订页面
+                this.$router.push({
+                    path: '/booking',
+                    query: {
+                        projectId: spotData.spotId,
+                        packageId: pkg.id
+                    }
+                });
+            });
         },
+
         contactCustomerService() {
-            this.$message.info('正在连接客服...')
+            this.$message.info('正在连接客服...');
         },
+
         goToActivity(activityId) {
-            this.$message.info(`跳转到活动详情：${activityId}`)
+            this.$message.info(`跳转到活动详情：${activityId}`);
         }
     }
 }

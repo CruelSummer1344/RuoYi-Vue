@@ -34,14 +34,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertComments" parameterType="Comments" useGeneratedKeys="true" keyProperty="commentId">
         insert into comments
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userId != null">user_id,</if>
+            user_id,
             <if test="projectId != null">project_id,</if>
             <if test="content != null and content != ''">content,</if>
             <if test="rating != null">rating,</if>
             <if test="createdAt != null">created_at,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="userId != null">#{userId},</if>
+            #{userId},
             <if test="projectId != null">#{projectId},</if>
             <if test="content != null and content != ''">#{content},</if>
             <if test="rating != null">#{rating},</if>

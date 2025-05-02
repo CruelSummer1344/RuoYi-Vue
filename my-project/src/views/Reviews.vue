@@ -17,19 +17,6 @@
         <el-form-item label="评论内容" prop="content">
           <el-input type="textarea" v-model="reviewForm.content" placeholder="请分享您的真实体验" :rows="4"></el-input>
         </el-form-item>
-        <el-form-item label="上传图片">
-          <el-upload
-              action="/api/upload"
-              :on-success="handleUploadSuccess"
-              :on-error="handleUploadError"
-              :before-upload="beforeUpload"
-              :file-list="reviewForm.images"
-              list-type="picture-card"
-              multiple
-          >
-            <i class="el-icon-plus"></i>
-          </el-upload>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitReview('reviewForm')">提交评论</el-button>
           <el-button @click="resetForm('reviewForm')">重置</el-button>
@@ -52,12 +39,9 @@
         <div class="review-header">
           <span class="username">{{ review.username }}</span>
           <el-rate v-model="review.rating" disabled show-score text-color="#ff9900" score-template="{value} 分"></el-rate>
-          <span class="date">{{ review.date }}</span>
+          <span class="date">{{ review.createTime }}</span>
         </div>
         <p>{{ review.content }}</p>
-        <div class="review-images" v-if="review.images.length > 0">
-          <el-image v-for="(img, index) in review.images" :key="index" :src="img.url" fit="cover" style="width: 100px; height: 100px; margin-right: 10px;" :preview-src-list="[img.url]"></el-image>
-        </div>
         <p class="project-name"><strong>项目：</strong>{{ review.projectName }}</p>
       </el-card>
       <el-empty v-if="sortedReviews.length === 0" description="暂无评论"></el-empty>
@@ -66,20 +50,19 @@
 </template>
 
 <script>
+import { listComments, addComments } from "@/api/comments/comments";
+import { listSpot } from "@/api/spot/spot";
+
 export default {
   name: 'Reviews',
   data() {
     return {
-      projects: [
-        { id: 1, name: '生态观鸟之旅' },
-        { id: 2, name: '黄河文化深度游' }
-      ],
+      projects: [],
       reviewForm: {
         projectId: '',
         projectName: '',
         rating: null,
-        content: '',
-        images: []
+        content: ''
       },
       rules: {
         projectId: [{ required: true, message: '请选择项目', trigger: 'change' }],
@@ -90,106 +73,79 @@ export default {
         ]
       },
       reviews: [],
-      sortOrder: 'desc' // 默认按最新排序
+      sortOrder: 'desc'
     };
   },
   computed: {
     sortedReviews() {
       return [...this.reviews].sort((a, b) => {
         return this.sortOrder === 'desc'
-            ? new Date(b.date) - new Date(a.date)
-            : new Date(a.date) - new Date(b.date);
+            ? new Date(b.createTime) - new Date(a.createTime)
+            : new Date(a.createTime) - new Date(b.createTime);
       });
     }
   },
   created() {
-    this.loadReviews(); // 初始化加载评论
-    // 如果从订单跳转过来，预填项目
-    if (this.$route.query.projectId) {
-      this.reviewForm.projectId = parseInt(this.$route.query.projectId);
-      this.onProjectChange(this.reviewForm.projectId);
-    }
+    this.loadProjects();
+    this.loadReviews();
   },
   methods: {
-    // 加载评论
-    loadReviews() {
-      this.$axios.get('/api/reviews').then(response => {
-        if (response.data.code === 200) {
-          this.reviews = response.data.data;
+    loadProjects() {
+      listSpot().then(response => {
+        if (response.code === 200) {
+          this.projects = response.rows.map(spot => ({
+            id: spot.spotId,
+            name: spot.name
+          }));
         }
-      }).catch(() => {
-        this.$message.error('加载评论失败');
       });
     },
-    // 项目选择
+    loadReviews() {
+      listComments().then(response => {
+        if (response.code === 200) {
+          this.reviews = response.rows.map(comment => ({
+            id: comment.commentId,
+            username: comment.username || '匿名用户',
+            rating: comment.rating,
+            content: comment.content,
+            projectName: comment.projectName,
+            createTime: comment.createTime
+          }));
+        }
+      });
+    },
     onProjectChange(projectId) {
       const project = this.projects.find(p => p.id === projectId);
       this.reviewForm.projectName = project ? project.name : '';
     },
-    // 上传图片成功
-    handleUploadSuccess(response) {
-      if (response.code === 200) {
-        this.reviewForm.images.push({ url: response.data.url });
-        this.$message.success('图片上传成功');
-      }
-    },
-    // 上传图片失败
-    handleUploadError() {
-      this.$message.error('图片上传失败');
-    },
-    // 上传前校验
-    beforeUpload(file) {
-      const isImage = file.type.startsWith('image/');
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isImage) {
-        this.$message.error('只能上传图片文件！');
-      }
-      if (!isLt2M) {
-        this.$message.error('图片大小不能超过2MB！');
-      }
-      return isImage && isLt2M;
-    },
-    // 提交评论
     submitReview(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$axios.post('/api/reviews/submit', {
+          const commentData = {
             projectId: this.reviewForm.projectId,
             projectName: this.reviewForm.projectName,
             rating: this.reviewForm.rating,
             content: this.reviewForm.content,
-            images: this.reviewForm.images
-          }).then(response => {
-            if (response.data.code === 200) {
+            status: '待审核',
+            userId: this.$store.state.user.userId,
+            username: this.$store.state.user.name
+          };
+          
+          addComments(commentData).then(response => {
+            if (response.code === 200) {
               this.$message.success('评论提交成功，待审核');
-              this.reviews.push({
-                id: response.data.reviewId,
-                username: localStorage.getItem('username') || '匿名用户',
-                rating: this.reviewForm.rating,
-                content: this.reviewForm.content,
-                images: this.reviewForm.images,
-                projectName: this.reviewForm.projectName,
-                date: new Date().toISOString().split('T')[0],
-                status: '待审核'
-              });
+              this.loadReviews();
               this.resetForm(formName);
-            } else {
-              this.$message.error('评论提交失败：' + response.data.msg);
             }
-          }).catch(() => {
-            this.$message.error('提交请求失败');
           });
         }
       });
     },
-    // 重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields();
-      this.reviewForm.images = [];
     },
-    // 排序评论
     sortReviews() {
-      this.loadReviews(); // 可选：重新加载后排序
+      this.loadReviews();
     }
   }
 };
@@ -239,10 +195,6 @@ h2, h3 {
 .date {
   color: #909399;
   font-size: 12px;
-}
-
-.review-images {
-  margin-top: 10px;
 }
 
 .project-name {

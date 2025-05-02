@@ -20,6 +20,7 @@ import com.ruoyi.comments.domain.Comments;
 import com.ruoyi.comments.service.ICommentsService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.SecurityUtils;
 
 /**
  * 评论Controller
@@ -77,6 +78,7 @@ public class CommentsController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Comments comments)
     {
+        comments.setUserId(SecurityUtils.getUserId());
         return toAjax(commentsService.insertComments(comments));
     }
 

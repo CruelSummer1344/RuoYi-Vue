@@ -40,7 +40,32 @@ const routes = [
   { path: '/profile', component: () => import('@/views/Profile.vue') },
   { path: '/culture', component: () => import('@/views/Culture.vue') },
   { path: '/auth', component: Auth },
-  { path: '/reviews', component: Reviews }
+  { path: '/reviews', component: Reviews },
+  {
+    path: '/attraction/huanghekou',
+    name: 'AttractionHuanghekou',
+    component: () => import('../views/AttractionHuanghekou.vue')
+  },
+  {
+    path: '/attraction/delta',
+    name: 'AttractionDelta',
+    component: () => import('../views/AttractionDelta.vue')
+  },
+  {
+    path: '/attraction/tianehu',
+    name: 'AttractionTianEHu',
+    component: () => import('../views/AttractionTianEHu.vue')
+  },
+  {
+    path: '/route/detail',
+    name: 'AttractionRouteDetail',
+    component: () => import('../views/AttractionRouteDetail.vue')
+  },
+  {
+    path: '/search',
+    name: 'SearchResult',
+    component: () => import('../views/SearchResult.vue')
+  }
 ]
 
 const router = new VueRouter({

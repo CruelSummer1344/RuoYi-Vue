@@ -1,76 +1,161 @@
 <template>
     <div class="booking">
-        <!-- 项目搜索区域 -->
-        <h2>旅游项目预订</h2>
-        <div class="search-form">
-            <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-                <el-form-item label="项目名称">
-                    <el-input v-model="searchForm.name" placeholder="输入项目名称"></el-input>
-                </el-form-item>
-                <el-form-item label="项目类型">
-                    <el-select v-model="searchForm.type" placeholder="选择项目类型" clearable>
-                        <el-option label="景点门票" value="attraction"></el-option>
-                        <el-option label="精品路线" value="route"></el-option>
-                        <el-option label="文化体验" value="culture"></el-option>
-                        <el-option label="生态游" value="eco"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="searchProjects">搜索</el-button>
-                    <el-button @click="resetSearch">重置</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
+        <!-- 分类选择 -->
+        <div class="category-tabs">
+            <el-tabs v-model="activeCategory" @tab-click="handleCategoryChange">
+                <el-tab-pane label="旅游项目预订" name="tourism">
+                    <!-- 项目搜索区域 -->
+                    <h2>旅游项目预订</h2>
+                    <div class="search-form">
+                        <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+                            <el-form-item label="项目名称">
+                                <el-input v-model="searchForm.name" placeholder="输入项目名称"></el-input>
+                            </el-form-item>
+                            <el-form-item label="项目类型">
+                                <el-select v-model="searchForm.type" placeholder="选择项目类型" clearable>
+                                    <el-option label="景点门票" value="attraction"></el-option>
+                                    <el-option label="精品路线" value="route"></el-option>
+                                    <el-option label="文化体验" value="culture"></el-option>
+                                    <el-option label="生态游" value="eco"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="searchProjects">搜索</el-button>
+                                <el-button @click="resetSearch">重置</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
 
-        <!-- 项目列表 -->
-        <el-row :gutter="20" class="project-row">
-            <el-col :xs="24" :sm="12" :md="8" v-for="project in filteredProjects" :key="project.id">
-                <el-card class="project-card" shadow="hover">
-                    <div class="project-image">
-                        <img :src="project.image" alt="项目图片" class="image">
-                        <div class="project-tag" v-if="project.tag">{{ project.tag }}</div>
-                    </div>
-                    <h3>{{ project.name }}</h3>
-                    <p class="project-desc">{{ project.description }}</p>
-                    <div class="project-info">
-                        <span><i class="el-icon-location"></i> {{ project.location }}</span>
-                        <span><i class="el-icon-view"></i> {{ project.views }}</span>
-                    </div>
-                    <div class="package-list">
-                        <h4>可选套餐</h4>
-                        <el-table :data="project.packages" style="width: 100%">
-                            <el-table-column prop="name" label="套餐名称"></el-table-column>
-                            <el-table-column prop="price" label="价格">
-                                <template slot-scope="scope">
-                                    <span class="price">¥{{ scope.row.price }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="100">
-                                <template slot-scope="scope">
-                                    <el-button
-                                        type="text"
-                                        size="small"
-                                        @click="openBookingDialog(project, scope.row)"
-                                    >
-                                        预订
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row>
+                    <!-- 项目列表 -->
+                    <el-row :gutter="20" class="project-row">
+                        <el-col :xs="24" :sm="12" :md="8" v-for="project in filteredProjects" :key="project.id">
+                            <el-card class="project-card" shadow="hover">
+                                <div class="project-image">
+                                    <img :src="project.image" alt="项目图片" class="image">
+                                    <div class="project-tag" v-if="project.tag">{{ project.tag }}</div>
+                                </div>
+                                <h3>{{ project.name }}</h3>
+                                <p class="project-desc">{{ project.description }}</p>
+                                <div class="project-info">
+                                    <span><i class="el-icon-location"></i> {{ project.location }}</span>
+                                    <span><i class="el-icon-view"></i> {{ project.views }}</span>
+                                </div>
+                                <div class="package-list">
+                                    <h4>可选套餐</h4>
+                                    <el-table :data="project.packages" style="width: 100%">
+                                        <el-table-column prop="name" label="套餐名称"></el-table-column>
+                                        <el-table-column prop="price" label="价格">
+                                            <template slot-scope="scope">
+                                                <span class="price">¥{{ scope.row.price }}</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column label="操作" width="100">
+                                            <template slot-scope="scope">
+                                                <el-button
+                                                    type="text"
+                                                    size="small"
+                                                    @click="openBookingDialog(project, scope.row)"
+                                                >
+                                                    预订
+                                                </el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </div>
+                            </el-card>
+                        </el-col>
+                    </el-row>
 
-        <!-- 分页 -->
-        <div class="pagination-container" v-if="filteredProjects.length > 0">
-            <el-pagination
-                background
-                layout="prev, pager, next"
-                :total="filteredProjects.length"
-                :page-size="6"
-                @current-change="handlePageChange"
-            ></el-pagination>
+                    <!-- 分页 -->
+                    <div class="pagination-container" v-if="filteredProjects.length > 0">
+                        <el-pagination
+                            background
+                            layout="prev, pager, next"
+                            :total="filteredProjects.length"
+                            :page-size="6"
+                            @current-change="handlePageChange"
+                        ></el-pagination>
+                    </div>
+                </el-tab-pane>
+
+                <el-tab-pane label="酒店预订" name="hotel">
+                    <!-- 酒店搜索区域 -->
+                    <h2>酒店预订</h2>
+                    <div class="search-form">
+                        <el-form :inline="true" :model="hotelSearchForm" class="demo-form-inline">
+                            <el-form-item label="酒店名称">
+                                <el-input v-model="hotelSearchForm.name" placeholder="输入酒店名称"></el-input>
+                            </el-form-item>
+                            <el-form-item label="价格区间">
+                                <el-select v-model="hotelSearchForm.priceRange" placeholder="选择价格区间" clearable>
+                                    <el-option label="¥200以下" value="0-200"></el-option>
+                                    <el-option label="¥200-500" value="200-500"></el-option>
+                                    <el-option label="¥500-1000" value="500-1000"></el-option>
+                                    <el-option label="¥1000以上" value="1000-9999"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="searchHotels">搜索</el-button>
+                                <el-button @click="resetHotelSearch">重置</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+
+                    <!-- 酒店列表 -->
+                    <div class="hotel-list">
+                        <el-card class="hotel-card" shadow="hover" v-for="hotel in filteredHotels" :key="hotel.id">
+                            <div class="hotel-content">
+                                <div class="hotel-image">
+                                    <img :src="hotel.image" alt="酒店图片" class="image">
+                                    <div class="hotel-tag" v-if="hotel.tag">{{ hotel.tag }}</div>
+                                </div>
+                                <div class="hotel-info">
+                                    <h3>{{ hotel.name }}</h3>
+                                    <p class="hotel-desc">{{ hotel.description }}</p>
+                                    <div class="hotel-details">
+                                        <span><i class="el-icon-location"></i> {{ hotel.location }}</span>
+                                        <span><i class="el-icon-star-on"></i> {{ hotel.rating }}分</span>
+                                        <span><i class="el-icon-view"></i> {{ hotel.views }}浏览</span>
+                                    </div>
+                                    <div class="room-list">
+                                        <h4>可选房型</h4>
+                                        <el-table :data="hotel.rooms" style="width: 100%">
+                                            <el-table-column prop="name" label="房型"></el-table-column>
+                                            <el-table-column prop="price" label="价格">
+                                                <template slot-scope="scope">
+                                                    <span class="price">¥{{ scope.row.price }}</span>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column label="操作" width="100">
+                                                <template slot-scope="scope">
+                                                    <el-button
+                                                        type="text"
+                                                        size="small"
+                                                        @click="openHotelBookingDialog(hotel, scope.row)"
+                                                    >
+                                                        预订
+                                                    </el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </div>
+
+                    <!-- 分页 -->
+                    <div class="pagination-container" v-if="filteredHotels.length > 0">
+                        <el-pagination
+                            background
+                            layout="prev, pager, next"
+                            :total="filteredHotels.length"
+                            :page-size="5"
+                            @current-change="handleHotelPageChange"
+                        ></el-pagination>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
         </div>
 
         <!-- 订单管理 -->
@@ -186,6 +271,77 @@
             </div>
         </el-dialog>
 
+        <!-- 酒店预订对话框 -->
+        <el-dialog title="酒店预订" :visible.sync="hotelDialogVisible" width="40%">
+            <el-form :model="hotelBookingForm" ref="hotelBookingForm" :rules="hotelRules" label-width="100px">
+                <el-form-item label="酒店名称" prop="hotelName">
+                    <el-input v-model="hotelBookingForm.hotelName" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="房型" prop="roomType">
+                    <el-input v-model="hotelBookingForm.roomType" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="入住日期" prop="checkInDate">
+                    <el-date-picker 
+                        v-model="hotelBookingForm.checkInDate" 
+                        type="date" 
+                        placeholder="选择入住日期"
+                        :picker-options="{
+                            disabledDate(time) {
+                                return time.getTime() < Date.now() - 8.64e7;
+                            }
+                        }"
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item label="离店日期" prop="checkOutDate">
+                    <el-date-picker 
+                        v-model="hotelBookingForm.checkOutDate" 
+                        type="date" 
+                        placeholder="选择离店日期"
+                        :picker-options="{
+                            disabledDate(time) {
+                                return time.getTime() <= hotelBookingForm.checkInDate;
+                            }
+                        }"
+                    ></el-date-picker>
+                </el-form-item>
+                <el-form-item label="房间数量" prop="roomCount">
+                    <el-input-number v-model="hotelBookingForm.roomCount" :min="1" :max="5"></el-input-number>
+                </el-form-item>
+                <el-form-item label="入住时间">
+                    <el-time-picker
+                        v-model="hotelBookingForm.checkInTime"
+                        placeholder="选择入住时间"
+                        :picker-options="{
+                            selectableRange: '14:00:00 - 23:59:59'
+                        }"
+                    ></el-time-picker>
+                </el-form-item>
+                <el-form-item label="离店时间">
+                    <el-time-picker
+                        v-model="hotelBookingForm.checkOutTime"
+                        placeholder="选择离店时间"
+                        :picker-options="{
+                            selectableRange: '00:00:00 - 12:00:00'
+                        }"
+                    ></el-time-picker>
+                </el-form-item>
+                <el-form-item label="总价">
+                    <span class="total-price">￥{{ hotelTotalPrice }}</span>
+                </el-form-item>
+                <el-form-item label="支付方式" prop="paymentMethod">
+                    <el-radio-group v-model="hotelBookingForm.paymentMethod">
+                        <el-radio label="wechat">微信支付</el-radio>
+                        <el-radio label="alipay">支付宝</el-radio>
+                        <el-radio label="bank">银行卡</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form>
+            <div slot="footer">
+                <el-button @click="hotelDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="confirmHotelBooking('hotelBookingForm')">确认支付</el-button>
+            </div>
+        </el-dialog>
+
         <!-- 订单详情对话框 -->
         <el-dialog title="订单详情" :visible.sync="orderDetailVisible" width="40%">
             <div v-if="selectedOrder">
@@ -224,13 +380,21 @@
 </template>
 
 <script>
+import { listHotel, getHotel } from "@/api/hotel/hotel";
+import { listSpot, getSpot } from "@/api/spot/spot";
+import { addOrder } from "@/api/order/order";
+
 export default {
     name: 'Booking',
     data() {
         return {
+            // 当前选中的分类
+            activeCategory: 'tourism',
+
             // 对话框显示控制
             dialogVisible: false,
             orderDetailVisible: false,
+            hotelDialogVisible: false,
 
             // 预订表单
             bookingForm: {
@@ -246,6 +410,20 @@ export default {
                 paymentMethod: 'wechat'
             },
 
+            // 酒店预订表单
+            hotelBookingForm: {
+                hotelId: '',
+                hotelName: '',
+                roomId: '',
+                roomType: '',
+                checkInDate: '',
+                checkOutDate: '',
+                checkInTime: '14:00',
+                checkOutTime: '12:00',
+                roomCount: 1,
+                paymentMethod: 'wechat'
+            },
+
             // 表单验证规则
             rules: {
                 date: [{ required: true, message: '请选择日期', trigger: 'change' }],
@@ -253,10 +431,24 @@ export default {
                 paymentMethod: [{ required: true, message: '请选择支付方式', trigger: 'change' }]
             },
 
+            // 酒店表单验证规则
+            hotelRules: {
+                checkInDate: [{ required: true, message: '请选择入住日期', trigger: 'change' }],
+                checkOutDate: [{ required: true, message: '请选择离店日期', trigger: 'change' }],
+                roomCount: [{ required: true, message: '请选择房间数量', trigger: 'change' }],
+                paymentMethod: [{ required: true, message: '请选择支付方式', trigger: 'change' }]
+            },
+
             // 项目搜索表单
             searchForm: {
                 name: '',
                 type: ''
+            },
+
+            // 酒店搜索表单
+            hotelSearchForm: {
+                name: '',
+                priceRange: ''
             },
 
             // 订单搜索表单
@@ -477,6 +669,105 @@ export default {
                             activity: '黄河文化+湿地生态+红海滩+渔家体验'
                         }
                     ]
+                },
+                {
+                    id: 7,
+                    name: '黄河口生态度假酒店',
+                    description: '位于黄河口生态旅游区内的五星级度假酒店，提供豪华舒适的住宿体验',
+                    location: '东营市河口区',
+                    type: 'hotel',
+                    tag: '五星级',
+                    rating: 4.8,
+                    views: 12580,
+                    image: '/assets/hotel-1.jpg',
+                    checkInTime: '14:00',
+                    checkOutTime: '12:00',
+                    rooms: [
+                        {
+                            id: 701,
+                            name: '豪华大床房',
+                            price: 680,
+                            description: '45平米，1.8米大床，河景房'
+                        },
+                        {
+                            id: 702,
+                            name: '豪华双床房',
+                            price: 680,
+                            description: '45平米，2张1.2米床，河景房'
+                        },
+                        {
+                            id: 703,
+                            name: '行政套房',
+                            price: 1280,
+                            description: '80平米，1.8米大床，客厅，河景房'
+                        }
+                    ]
+                },
+                {
+                    id: 8,
+                    name: '天鹅湖度假酒店',
+                    description: '毗邻天鹅湖景区的四星级度假酒店，提供优雅舒适的住宿环境',
+                    location: '东营市东营区',
+                    type: 'hotel',
+                    tag: '四星级',
+                    rating: 4.5,
+                    views: 8654,
+                    image: '/assets/hotel-2.jpg',
+                    checkInTime: '14:00',
+                    checkOutTime: '12:00',
+                    rooms: [
+                        {
+                            id: 801,
+                            name: '标准大床房',
+                            price: 480,
+                            description: '35平米，1.8米大床，湖景房'
+                        },
+                        {
+                            id: 802,
+                            name: '标准双床房',
+                            price: 480,
+                            description: '35平米，2张1.2米床，湖景房'
+                        },
+                        {
+                            id: 803,
+                            name: '豪华套房',
+                            price: 880,
+                            description: '60平米，1.8米大床，客厅，湖景房'
+                        }
+                    ]
+                },
+                {
+                    id: 9,
+                    name: '孙子文化主题酒店',
+                    description: '融合孙子兵法文化元素的特色酒店，提供独特的文化体验',
+                    location: '东营市广饶县',
+                    type: 'hotel',
+                    tag: '四星级',
+                    rating: 4.6,
+                    views: 5890,
+                    image: '/assets/hotel-3.jpg',
+                    checkInTime: '14:00',
+                    checkOutTime: '12:00',
+                    rooms: [
+                        {
+                            id: 901,
+                            name: '文化主题大床房',
+                            price: 520,
+                            description: '40平米，1.8米大床，文化主题装饰'
+                        },
+                        {
+                            id: 902,
+                            name: '文化主题双床房',
+                            price: 520,
+                            description: '40平米，2张1.2米床，文化主题装饰'
+                        },
+                        {
+                            id: 903,
+                            name: '兵法主题套房',
+                            price: 980,
+                            description: '70平米，1.8米大床，客厅，兵法主题装饰'
+                        }
+                    ]
                 }
             ],
 
@@ -528,9 +819,11 @@ export default {
             // 筛选后的项目和订单
             filteredProjects: [],
             filteredOrders: [],
+            filteredHotels: [],
 
             // 当前页码
-            currentPage: 1
+            currentPage: 1,
+            hotelCurrentPage: 1
         };
     },
     computed: {
@@ -541,12 +834,20 @@ export default {
 
             const pkg = project.packages.find(p => p.id === this.bookingForm.packageId);
             return pkg ? (pkg.price * this.bookingForm.peopleCount).toFixed(2) : '0.00';
+        },
+        hotelTotalPrice() {
+            const hotel = this.filteredHotels.find(h => h.id === this.hotelBookingForm.hotelId);
+            if (!hotel) return '0.00';
+
+            const room = hotel.rooms.find(r => r.id === this.hotelBookingForm.roomId);
+            return room ? (room.price * this.hotelBookingForm.roomCount).toFixed(2) : '0.00';
         }
     },
     created() {
         // 初始化筛选后的项目和订单
-        this.filteredProjects = [...this.projects];
+        this.getSpotList();
         this.filteredOrders = [...this.orders];
+        this.getHotelList();
 
         // 从路由获取项目和套餐
         if (this.$route.query.projectId && this.$route.query.packageId) {
@@ -563,21 +864,87 @@ export default {
         }
     },
     methods: {
+        // 获取景点列表
+        getSpotList() {
+            listSpot().then(response => {
+                this.filteredProjects = response.rows.map(spot => ({
+                    id: spot.spotId,
+                    name: spot.name,
+                    description: spot.description,
+                    location: spot.location,
+                    type: spot.type || 'attraction',
+                    tag: spot.tag || '景点',
+                    views: spot.views || 0,
+                    image: spot.image || '/assets/default-spot.jpg',
+                    packages: [
+                        {
+                            id: spot.spotId * 100 + 1,
+                            name: '标准门票',
+                            price: spot.price,
+                            description: spot.description
+                        }
+                    ]
+                }));
+            });
+        },
+
+        // 搜索景点
+        searchProjects() {
+            const query = {
+                name: this.searchForm.name,
+                type: this.searchForm.type
+            };
+            listSpot(query).then(response => {
+                this.filteredProjects = response.rows.map(spot => ({
+                    id: spot.spotId,
+                    name: spot.name,
+                    description: spot.description,
+                    location: spot.location,
+                    type: spot.type || 'attraction',
+                    tag: spot.tag || '景点',
+                    views: spot.views || 0,
+                    image: spot.image || '/assets/default-spot.jpg',
+                    packages: [
+                        {
+                            id: spot.spotId * 100 + 1,
+                            name: '标准门票',
+                            price: spot.price,
+                            description: spot.description
+                        }
+                    ]
+                }));
+                this.currentPage = 1;
+            });
+        },
+
+        // 重置景点搜索
+        resetSearch() {
+            this.searchForm = {
+                name: '',
+                type: ''
+            };
+            this.getSpotList();
+            this.currentPage = 1;
+        },
+
         // 打开预订对话框
         openBookingDialog(project, pkg) {
-            this.bookingForm = {
-                projectId: project.id,
-                projectName: project.name,
-                packageId: pkg.id,
-                packageName: pkg.name,
-                hotel: pkg.hotel || '',
-                restaurant: pkg.restaurant || '',
-                activity: pkg.activity || '',
-                date: '',
-                peopleCount: 1,
-                paymentMethod: 'wechat'
-            };
-            this.dialogVisible = true;
+            getSpot(project.id).then(response => {
+                const spotData = response.data;
+                this.bookingForm = {
+                    projectId: spotData.spotId,
+                    projectName: spotData.name,
+                    packageId: pkg.id,
+                    packageName: pkg.name,
+                    hotel: pkg.hotel || '',
+                    restaurant: pkg.restaurant || '',
+                    activity: pkg.activity || '',
+                    date: '',
+                    peopleCount: 1,
+                    paymentMethod: 'wechat'
+                };
+                this.dialogVisible = true;
+            });
         },
 
         // 确认预订
@@ -585,64 +952,74 @@ export default {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     // 创建订单对象
-                    const order = {
-                        orderId: `ORD${Date.now()}`,
-                        projectId: this.bookingForm.projectId,
-                        projectName: this.bookingForm.projectName,
-                        date: this.formatDate(this.bookingForm.date),
+                    const orderData = {
+                        userId: this.$store.state.user.userId,
+                        spotId: this.bookingForm.projectId,
+                        hotelId: this.bookingForm.hotel ? this.bookingForm.hotel.id : null,
+                        productId: this.bookingForm.packageId,
+                        status: '已支付',
                         peopleCount: this.bookingForm.peopleCount,
                         totalPrice: this.totalPrice,
-                        status: '已支付',
-                        details: {
+                        remarks: JSON.stringify({
+                            projectName: this.bookingForm.projectName,
                             packageName: this.bookingForm.packageName,
                             hotel: this.bookingForm.hotel,
                             restaurant: this.bookingForm.restaurant,
                             activity: this.bookingForm.activity
-                        }
+                        })
                     };
-
-                    // 添加到订单列表
-                    this.orders.unshift(order);
-                    this.filteredOrders = [...this.orders];
-
-                    // 提示成功并关闭对话框
-                    this.$message.success('订单创建并支付成功');
-                    this.dialogVisible = false;
-
-                    // 重置表单
-                    this.$refs[formName].resetFields();
-
-                    // 询问是否评价
-                    this.$confirm('支付成功！是否现在评价？', '提示', {
-                        confirmButtonText: '去评价',
-                        cancelButtonText: '稍后',
-                        type: 'success'
-                    }).then(() => {
-                        this.goToReview(order);
-                    }).catch(() => {});
+                    
+                    // 调用后端 API 保存订单
+                    addOrder(orderData).then(response => {
+                        if (response.code === 200) {
+                            this.$message.success('订单创建并支付成功');
+                            this.dialogVisible = false;
+                            this.$refs[formName].resetFields();
+                            
+                            // 询问是否评价
+                            this.$confirm('支付成功！是否现在评价？', '提示', {
+                                confirmButtonText: '去评价',
+                                cancelButtonText: '稍后',
+                                type: 'success'
+                            }).then(() => {
+                                this.goToReview({
+                                    orderId: response.data.orderId,
+                                    projectId: this.bookingForm.projectId
+                                });
+                            }).catch(() => {});
+                        }
+                    }).catch(error => {
+                        this.$message.error('订单创建失败：' + error.message);
+                    });
                 }
             });
         },
 
-        // 搜索项目
-        searchProjects() {
-            this.filteredProjects = this.projects.filter(project => {
-                const nameMatch = !this.searchForm.name ||
-                    project.name.toLowerCase().includes(this.searchForm.name.toLowerCase());
-                const typeMatch = !this.searchForm.type || project.type === this.searchForm.type;
-                return nameMatch && typeMatch;
+        // 获取酒店列表
+        getHotelList() {
+            listHotel().then(response => {
+                this.filteredHotels = response.rows.map(hotel => ({
+                    id: hotel.hotelId,
+                    name: hotel.name,
+                    description: hotel.description,
+                    location: hotel.location,
+                    type: 'hotel',
+                    tag: hotel.tag || '酒店',
+                    rating: hotel.rating || 4.5,
+                    views: hotel.views || 0,
+                    image: hotel.image || '/assets/default-hotel.jpg',
+                    checkInTime: hotel.checkInTime || '14:00',
+                    checkOutTime: hotel.checkOutTime || '12:00',
+                    rooms: [
+                        {
+                            id: hotel.hotelId * 100 + 1,
+                            name: '标准房',
+                            price: hotel.price,
+                            description: hotel.description
+                        }
+                    ]
+                }));
             });
-            this.currentPage = 1;
-        },
-
-        // 重置项目搜索
-        resetSearch() {
-            this.searchForm = {
-                name: '',
-                type: ''
-            };
-            this.filteredProjects = [...this.projects];
-            this.currentPage = 1;
         },
 
         // 搜索订单
@@ -740,6 +1117,124 @@ export default {
             const day = String(date.getDate()).padStart(2, '0');
 
             return `${year}-${month}-${day}`;
+        },
+
+        // 搜索酒店
+        searchHotels() {
+            const query = {
+                name: this.hotelSearchForm.name,
+                priceRange: this.hotelSearchForm.priceRange
+            };
+            listHotel(query).then(response => {
+                this.filteredHotels = response.rows.map(hotel => ({
+                    id: hotel.hotelId,
+                    name: hotel.name,
+                    description: hotel.description,
+                    location: hotel.location,
+                    type: 'hotel',
+                    tag: hotel.tag || '酒店',
+                    rating: hotel.rating || 4.5,
+                    views: hotel.views || 0,
+                    image: hotel.image || '/assets/default-hotel.jpg',
+                    checkInTime: hotel.checkInTime || '14:00',
+                    checkOutTime: hotel.checkOutTime || '12:00',
+                    rooms: [
+                        {
+                            id: hotel.hotelId * 100 + 1,
+                            name: '标准房',
+                            price: hotel.price,
+                            description: hotel.description
+                        }
+                    ]
+                }));
+                this.hotelCurrentPage = 1;
+            });
+        },
+
+        // 重置酒店搜索
+        resetHotelSearch() {
+            this.hotelSearchForm = {
+                name: '',
+                priceRange: ''
+            };
+            this.getHotelList();
+            this.hotelCurrentPage = 1;
+        },
+
+        // 打开酒店预订对话框
+        openHotelBookingDialog(hotel, room) {
+            getHotel(hotel.id).then(response => {
+                const hotelData = response.data;
+                this.hotelBookingForm = {
+                    hotelId: hotelData.hotelId,
+                    hotelName: hotelData.name,
+                    roomId: room.id,
+                    roomType: room.name,
+                    checkInDate: '',
+                    checkOutDate: '',
+                    checkInTime: hotelData.checkInTime || '14:00',
+                    checkOutTime: hotelData.checkOutTime || '12:00',
+                    roomCount: 1,
+                    paymentMethod: 'wechat'
+                };
+                this.hotelDialogVisible = true;
+            });
+        },
+
+        // 确认酒店预订
+        confirmHotelBooking(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    // 创建订单对象
+                    const order = {
+                        orderId: `ORD${Date.now()}`,
+                        projectId: this.hotelBookingForm.hotelId,
+                        projectName: this.hotelBookingForm.hotelName,
+                        date: this.formatDate(this.hotelBookingForm.checkInDate),
+                        peopleCount: this.hotelBookingForm.roomCount,
+                        totalPrice: this.hotelTotalPrice,
+                        status: '已支付',
+                        details: {
+                            packageName: this.hotelBookingForm.roomType,
+                            hotel: this.hotelBookingForm.hotelName,
+                            checkInTime: this.hotelBookingForm.checkInTime,
+                            checkOutTime: this.hotelBookingForm.checkOutTime,
+                            restaurant: '',
+                            activity: ''
+                        }
+                    };
+
+                    // 添加到订单列表
+                    this.orders.unshift(order);
+                    this.filteredOrders = [...this.orders];
+
+                    // 提示成功并关闭对话框
+                    this.$message.success('订单创建并支付成功');
+                    this.hotelDialogVisible = false;
+
+                    // 重置表单
+                    this.$refs[formName].resetFields();
+
+                    // 询问是否评价
+                    this.$confirm('支付成功！是否现在评价？', '提示', {
+                        confirmButtonText: '去评价',
+                        cancelButtonText: '稍后',
+                        type: 'success'
+                    }).then(() => {
+                        this.goToReview(order);
+                    }).catch(() => {});
+                }
+            });
+        },
+
+        // 处理酒店分页变化
+        handleHotelPageChange(page) {
+            this.hotelCurrentPage = page;
+        },
+
+        // 处理分类变化
+        handleCategoryChange(tab) {
+            this.activeCategory = tab.name;
         }
     }
 };
@@ -870,10 +1365,91 @@ h4 {
     margin-bottom: 20px;
 }
 
+.hotel-list {
+    margin: 0 -10px;
+}
+
+.hotel-card {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.hotel-content {
+    display: flex;
+    gap: 20px;
+}
+
+.hotel-image {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.hotel-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.hotel-card:hover .hotel-image img {
+    transform: scale(1.05);
+}
+
+.hotel-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 2px 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.hotel-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.hotel-desc {
+    color: #606266;
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.hotel-details {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+    color: #909399;
+    margin-bottom: 15px;
+}
+
+.room-list {
+    margin-top: auto;
+}
+
 /* 响应式调整 */
 @media (max-width: 1200px) {
     .booking {
         padding: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    .hotel-content {
+        flex-direction: column;
+    }
+
+    .hotel-image {
+        width: 100%;
+        height: 200px;
     }
 }
 
@@ -904,6 +1480,15 @@ h4 {
     .el-select {
         width: 100%;
     }
+
+    .hotel-image {
+        height: 180px;
+    }
+
+    .hotel-details {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -922,6 +1507,10 @@ h4 {
     .el-dialog {
         width: 90% !important;
         margin-top: 10vh !important;
+    }
+
+    .hotel-image {
+        height: 150px;
     }
 }
 </style>
