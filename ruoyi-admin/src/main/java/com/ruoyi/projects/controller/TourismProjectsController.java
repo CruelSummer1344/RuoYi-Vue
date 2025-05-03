@@ -37,7 +37,7 @@ public class TourismProjectsController extends BaseController
     /**
      * 查询旅游项目列表
      */
-    @PreAuthorize("@ss.hasPermi('projects:projects:list')")
+//    @PreAuthorize("@ss.hasPermi('projects:projects:list')")
     @GetMapping("/list")
     public TableDataInfo list(TourismProjects tourismProjects)
     {
@@ -49,7 +49,7 @@ public class TourismProjectsController extends BaseController
     /**
      * 导出旅游项目列表
      */
-    @PreAuthorize("@ss.hasPermi('projects:projects:export')")
+//    @PreAuthorize("@ss.hasPermi('projects:projects:export')")
     @Log(title = "旅游项目", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TourismProjects tourismProjects)
@@ -62,7 +62,7 @@ public class TourismProjectsController extends BaseController
     /**
      * 获取旅游项目详细信息
      */
-    @PreAuthorize("@ss.hasPermi('projects:projects:query')")
+//    @PreAuthorize("@ss.hasPermi('projects:projects:query')")
     @GetMapping(value = "/{projectId}")
     public AjaxResult getInfo(@PathVariable("projectId") Long projectId)
     {
@@ -72,7 +72,7 @@ public class TourismProjectsController extends BaseController
     /**
      * 新增旅游项目
      */
-    @PreAuthorize("@ss.hasPermi('projects:projects:add')")
+//    @PreAuthorize("@ss.hasPermi('projects:projects:add')")
     @Log(title = "旅游项目", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TourismProjects tourismProjects)
@@ -83,7 +83,7 @@ public class TourismProjectsController extends BaseController
     /**
      * 修改旅游项目
      */
-    @PreAuthorize("@ss.hasPermi('projects:projects:edit')")
+//    @PreAuthorize("@ss.hasPermi('projects:projects:edit')")
     @Log(title = "旅游项目", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TourismProjects tourismProjects)
@@ -94,7 +94,7 @@ public class TourismProjectsController extends BaseController
     /**
      * 删除旅游项目
      */
-    @PreAuthorize("@ss.hasPermi('projects:projects:remove')")
+//    @PreAuthorize("@ss.hasPermi('projects:projects:remove')")
     @Log(title = "旅游项目", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{projectIds}")
     public AjaxResult remove(@PathVariable Long[] projectIds)

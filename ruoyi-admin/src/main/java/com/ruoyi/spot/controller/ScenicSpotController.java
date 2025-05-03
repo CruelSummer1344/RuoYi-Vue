@@ -37,7 +37,7 @@ public class ScenicSpotController extends BaseController
     /**
      * 查询景点列表
      */
-    @PreAuthorize("@ss.hasPermi('spot:spot:list')")
+//    @PreAuthorize("@ss.hasPermi('spot:spot:list')")
     @GetMapping("/list")
     public TableDataInfo list(ScenicSpot scenicSpot)
     {
@@ -49,7 +49,7 @@ public class ScenicSpotController extends BaseController
     /**
      * 导出景点列表
      */
-    @PreAuthorize("@ss.hasPermi('spot:spot:export')")
+//    @PreAuthorize("@ss.hasPermi('spot:spot:export')")
     @Log(title = "景点", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ScenicSpot scenicSpot)
@@ -62,7 +62,7 @@ public class ScenicSpotController extends BaseController
     /**
      * 获取景点详细信息
      */
-    @PreAuthorize("@ss.hasPermi('spot:spot:query')")
+//    @PreAuthorize("@ss.hasPermi('spot:spot:query')")
     @GetMapping(value = "/{spotId}")
     public AjaxResult getInfo(@PathVariable("spotId") Long spotId)
     {
@@ -72,7 +72,7 @@ public class ScenicSpotController extends BaseController
     /**
      * 新增景点
      */
-    @PreAuthorize("@ss.hasPermi('spot:spot:add')")
+//    @PreAuthorize("@ss.hasPermi('spot:spot:add')")
     @Log(title = "景点", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody ScenicSpot scenicSpot)
@@ -83,7 +83,7 @@ public class ScenicSpotController extends BaseController
     /**
      * 修改景点
      */
-    @PreAuthorize("@ss.hasPermi('spot:spot:edit')")
+//    @PreAuthorize("@ss.hasPermi('spot:spot:edit')")
     @Log(title = "景点", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody ScenicSpot scenicSpot)
@@ -94,7 +94,7 @@ public class ScenicSpotController extends BaseController
     /**
      * 删除景点
      */
-    @PreAuthorize("@ss.hasPermi('spot:spot:remove')")
+//    @PreAuthorize("@ss.hasPermi('spot:spot:remove')")
     @Log(title = "景点", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{spotIds}")
     public AjaxResult remove(@PathVariable Long[] spotIds)

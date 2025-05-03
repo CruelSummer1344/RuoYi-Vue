@@ -37,7 +37,7 @@ public class AttendanceRecordsController extends BaseController
     /**
      * 查询考勤记录列表
      */
-    @PreAuthorize("@ss.hasPermi('records:records:list')")
+//    @PreAuthorize("@ss.hasPermi('records:records:list')")
     @GetMapping("/list")
     public TableDataInfo list(AttendanceRecords attendanceRecords)
     {
@@ -49,7 +49,7 @@ public class AttendanceRecordsController extends BaseController
     /**
      * 导出考勤记录列表
      */
-    @PreAuthorize("@ss.hasPermi('records:records:export')")
+//    @PreAuthorize("@ss.hasPermi('records:records:export')")
     @Log(title = "考勤记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, AttendanceRecords attendanceRecords)
@@ -62,7 +62,7 @@ public class AttendanceRecordsController extends BaseController
     /**
      * 获取考勤记录详细信息
      */
-    @PreAuthorize("@ss.hasPermi('records:records:query')")
+//    @PreAuthorize("@ss.hasPermi('records:records:query')")
     @GetMapping(value = "/{recordId}")
     public AjaxResult getInfo(@PathVariable("recordId") Long recordId)
     {
@@ -72,7 +72,7 @@ public class AttendanceRecordsController extends BaseController
     /**
      * 新增考勤记录
      */
-    @PreAuthorize("@ss.hasPermi('records:records:add')")
+//    @PreAuthorize("@ss.hasPermi('records:records:add')")
     @Log(title = "考勤记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody AttendanceRecords attendanceRecords)
@@ -83,7 +83,7 @@ public class AttendanceRecordsController extends BaseController
     /**
      * 修改考勤记录
      */
-    @PreAuthorize("@ss.hasPermi('records:records:edit')")
+//    @PreAuthorize("@ss.hasPermi('records:records:edit')")
     @Log(title = "考勤记录", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody AttendanceRecords attendanceRecords)
@@ -94,7 +94,7 @@ public class AttendanceRecordsController extends BaseController
     /**
      * 删除考勤记录
      */
-    @PreAuthorize("@ss.hasPermi('records:records:remove')")
+//    @PreAuthorize("@ss.hasPermi('records:records:remove')")
     @Log(title = "考勤记录", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{recordIds}")
     public AjaxResult remove(@PathVariable Long[] recordIds)

@@ -37,7 +37,7 @@ public class OrderController extends BaseController
     /**
      * 查询订单列表
      */
-    @PreAuthorize("@ss.hasPermi('order:order:list')")
+//    @PreAuthorize("@ss.hasPermi('order:order:list')")
     @GetMapping("/list")
     public TableDataInfo list(Order order)
     {
@@ -49,7 +49,7 @@ public class OrderController extends BaseController
     /**
      * 导出订单列表
      */
-    @PreAuthorize("@ss.hasPermi('order:order:export')")
+//    @PreAuthorize("@ss.hasPermi('order:order:export')")
     @Log(title = "订单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Order order)
@@ -62,7 +62,7 @@ public class OrderController extends BaseController
     /**
      * 获取订单详细信息
      */
-    @PreAuthorize("@ss.hasPermi('order:order:query')")
+//    @PreAuthorize("@ss.hasPermi('order:order:query')")
     @GetMapping(value = "/{orderId}")
     public AjaxResult getInfo(@PathVariable("orderId") Long orderId)
     {
@@ -72,7 +72,7 @@ public class OrderController extends BaseController
     /**
      * 新增订单
      */
-    @PreAuthorize("@ss.hasPermi('order:order:add')")
+//    @PreAuthorize("@ss.hasPermi('order:order:add')")
     @Log(title = "订单", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Order order)
@@ -83,7 +83,7 @@ public class OrderController extends BaseController
     /**
      * 修改订单
      */
-    @PreAuthorize("@ss.hasPermi('order:order:edit')")
+//    @PreAuthorize("@ss.hasPermi('order:order:edit')")
     @Log(title = "订单", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Order order)
@@ -94,7 +94,7 @@ public class OrderController extends BaseController
     /**
      * 删除订单
      */
-    @PreAuthorize("@ss.hasPermi('order:order:remove')")
+//    @PreAuthorize("@ss.hasPermi('order:order:remove')")
     @Log(title = "订单", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{orderIds}")
     public AjaxResult remove(@PathVariable Long[] orderIds)

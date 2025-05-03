@@ -37,7 +37,7 @@ public class HotelController extends BaseController
     /**
      * 查询酒店表列表
      */
-    @PreAuthorize("@ss.hasPermi('hotel:hotel:list')")
+//    @PreAuthorize("@ss.hasPermi('hotel:hotel:list')")
     @GetMapping("/list")
     public TableDataInfo list(Hotel hotel)
     {
@@ -49,7 +49,7 @@ public class HotelController extends BaseController
     /**
      * 导出酒店表列表
      */
-    @PreAuthorize("@ss.hasPermi('hotel:hotel:export')")
+//    @PreAuthorize("@ss.hasPermi('hotel:hotel:export')")
     @Log(title = "酒店表", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Hotel hotel)
@@ -62,7 +62,7 @@ public class HotelController extends BaseController
     /**
      * 获取酒店表详细信息
      */
-    @PreAuthorize("@ss.hasPermi('hotel:hotel:query')")
+//    @PreAuthorize("@ss.hasPermi('hotel:hotel:query')")
     @GetMapping(value = "/{hotelId}")
     public AjaxResult getInfo(@PathVariable("hotelId") Long hotelId)
     {
@@ -72,7 +72,7 @@ public class HotelController extends BaseController
     /**
      * 新增酒店表
      */
-    @PreAuthorize("@ss.hasPermi('hotel:hotel:add')")
+//    @PreAuthorize("@ss.hasPermi('hotel:hotel:add')")
     @Log(title = "酒店表", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Hotel hotel)
@@ -83,7 +83,7 @@ public class HotelController extends BaseController
     /**
      * 修改酒店表
      */
-    @PreAuthorize("@ss.hasPermi('hotel:hotel:edit')")
+//    @PreAuthorize("@ss.hasPermi('hotel:hotel:edit')")
     @Log(title = "酒店表", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Hotel hotel)
@@ -94,7 +94,7 @@ public class HotelController extends BaseController
     /**
      * 删除酒店表
      */
-    @PreAuthorize("@ss.hasPermi('hotel:hotel:remove')")
+//    @PreAuthorize("@ss.hasPermi('hotel:hotel:remove')")
     @Log(title = "酒店表", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{hotelIds}")
     public AjaxResult remove(@PathVariable Long[] hotelIds)

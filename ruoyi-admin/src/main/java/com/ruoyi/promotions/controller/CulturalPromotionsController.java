@@ -37,7 +37,7 @@ public class CulturalPromotionsController extends BaseController
     /**
      * 查询文化列表
      */
-    @PreAuthorize("@ss.hasPermi('promotions:promotions:list')")
+//    @PreAuthorize("@ss.hasPermi('promotions:promotions:list')")
     @GetMapping("/list")
     public TableDataInfo list(CulturalPromotions culturalPromotions)
     {
@@ -49,7 +49,7 @@ public class CulturalPromotionsController extends BaseController
     /**
      * 导出文化列表
      */
-    @PreAuthorize("@ss.hasPermi('promotions:promotions:export')")
+//    @PreAuthorize("@ss.hasPermi('promotions:promotions:export')")
     @Log(title = "文化", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CulturalPromotions culturalPromotions)
@@ -62,7 +62,7 @@ public class CulturalPromotionsController extends BaseController
     /**
      * 获取文化详细信息
      */
-    @PreAuthorize("@ss.hasPermi('promotions:promotions:query')")
+//    @PreAuthorize("@ss.hasPermi('promotions:promotions:query')")
     @GetMapping(value = "/{promotionId}")
     public AjaxResult getInfo(@PathVariable("promotionId") Long promotionId)
     {
@@ -72,7 +72,7 @@ public class CulturalPromotionsController extends BaseController
     /**
      * 新增文化
      */
-    @PreAuthorize("@ss.hasPermi('promotions:promotions:add')")
+//    @PreAuthorize("@ss.hasPermi('promotions:promotions:add')")
     @Log(title = "文化", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CulturalPromotions culturalPromotions)
@@ -83,7 +83,7 @@ public class CulturalPromotionsController extends BaseController
     /**
      * 修改文化
      */
-    @PreAuthorize("@ss.hasPermi('promotions:promotions:edit')")
+//    @PreAuthorize("@ss.hasPermi('promotions:promotions:edit')")
     @Log(title = "文化", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CulturalPromotions culturalPromotions)
@@ -94,7 +94,7 @@ public class CulturalPromotionsController extends BaseController
     /**
      * 删除文化
      */
-    @PreAuthorize("@ss.hasPermi('promotions:promotions:remove')")
+//    @PreAuthorize("@ss.hasPermi('promotions:promotions:remove')")
     @Log(title = "文化", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{promotionIds}")
     public AjaxResult remove(@PathVariable Long[] promotionIds)

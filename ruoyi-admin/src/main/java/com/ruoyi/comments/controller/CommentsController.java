@@ -38,7 +38,7 @@ public class CommentsController extends BaseController
     /**
      * 查询评论列表
      */
-    @PreAuthorize("@ss.hasPermi('comments:comments:list')")
+//    @PreAuthorize("@ss.hasPermi('comments:comments:list')")
     @GetMapping("/list")
     public TableDataInfo list(Comments comments)
     {
@@ -50,7 +50,7 @@ public class CommentsController extends BaseController
     /**
      * 导出评论列表
      */
-    @PreAuthorize("@ss.hasPermi('comments:comments:export')")
+//    @PreAuthorize("@ss.hasPermi('comments:comments:export')")
     @Log(title = "评论", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Comments comments)
@@ -63,7 +63,7 @@ public class CommentsController extends BaseController
     /**
      * 获取评论详细信息
      */
-    @PreAuthorize("@ss.hasPermi('comments:comments:query')")
+//    @PreAuthorize("@ss.hasPermi('comments:comments:query')")
     @GetMapping(value = "/{commentId}")
     public AjaxResult getInfo(@PathVariable("commentId") Long commentId)
     {
@@ -73,7 +73,7 @@ public class CommentsController extends BaseController
     /**
      * 新增评论
      */
-    @PreAuthorize("@ss.hasPermi('comments:comments:add')")
+//    @PreAuthorize("@ss.hasPermi('comments:comments:add')")
     @Log(title = "评论", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Comments comments)
@@ -85,7 +85,7 @@ public class CommentsController extends BaseController
     /**
      * 修改评论
      */
-    @PreAuthorize("@ss.hasPermi('comments:comments:edit')")
+//    @PreAuthorize("@ss.hasPermi('comments:comments:edit')")
     @Log(title = "评论", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Comments comments)
@@ -96,7 +96,7 @@ public class CommentsController extends BaseController
     /**
      * 删除评论
      */
-    @PreAuthorize("@ss.hasPermi('comments:comments:remove')")
+//    @PreAuthorize("@ss.hasPermi('comments:comments:remove')")
     @Log(title = "评论", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{commentIds}")
     public AjaxResult remove(@PathVariable Long[] commentIds)
