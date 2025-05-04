@@ -90,6 +90,11 @@
       <el-table-column label="描述" align="center" prop="description" />
       <el-table-column label="价格" align="center" prop="price" />
       <el-table-column label="位置" align="center" prop="location" />
+      <el-table-column label="图片" align="center" prop="imageUrl" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.imageUrl" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
       <el-table-column label="入住时间" align="center" prop="checkInTime" width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.checkInTime }}</span>
@@ -152,6 +157,9 @@
         </el-form-item>
         <el-form-item label="位置" prop="location">
           <el-input v-model="form.location" placeholder="请输入位置" />
+        </el-form-item>
+        <el-form-item label="图片" prop="imageUrl">
+          <image-upload v-model="form.imageUrl"/>
         </el-form-item>
         <el-form-item label="入住时间" prop="checkInTime">
           <el-time-picker clearable

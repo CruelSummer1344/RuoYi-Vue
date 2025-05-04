@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="description"    column="description"    />
         <result property="price"    column="price"    />
         <result property="location"    column="location"    />
+        <result property="imageUrl"    column="image_url"    />
         <result property="checkInTime"    column="check_in_time"    />
         <result property="checkOutTime"    column="check_out_time"    />
         <result property="createdAt"    column="created_at"    />
@@ -17,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectHotelVo">
-        select hotel_id, name, description, price, location, check_in_time, check_out_time, created_at, updated_at from hotel
+        select hotel_id, name, description, price, location, image_url, check_in_time, check_out_time, created_at, updated_at from hotel
     </sql>
 
     <select id="selectHotelList" parameterType="Hotel" resultMap="HotelResult">
@@ -43,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="description != null and description != ''">description,</if>
             <if test="price != null">price,</if>
             <if test="location != null and location != ''">location,</if>
+            <if test="imageUrl != null and imageUrl != ''">image_url,</if>
             <if test="checkInTime != null">check_in_time,</if>
             <if test="checkOutTime != null">check_out_time,</if>
             <if test="createdAt != null">created_at,</if>
@@ -53,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="description != null and description != ''">#{description},</if>
             <if test="price != null">#{price},</if>
             <if test="location != null and location != ''">#{location},</if>
+            <if test="imageUrl != null and imageUrl != ''">#{imageUrl},</if>
             <if test="checkInTime != null">#{checkInTime},</if>
             <if test="checkOutTime != null">#{checkOutTime},</if>
             <if test="createdAt != null">#{createdAt},</if>
@@ -67,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="description != null and description != ''">description = #{description},</if>
             <if test="price != null">price = #{price},</if>
             <if test="location != null and location != ''">location = #{location},</if>
+            <if test="imageUrl != null and imageUrl != ''">image_url = #{imageUrl},</if>
             <if test="checkInTime != null">check_in_time = #{checkInTime},</if>
             <if test="checkOutTime != null">check_out_time = #{checkOutTime},</if>
             <if test="createdAt != null">created_at = #{createdAt},</if>

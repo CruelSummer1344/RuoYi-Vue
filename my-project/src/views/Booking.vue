@@ -31,7 +31,7 @@
                         <el-col :xs="24" :sm="12" :md="8" v-for="project in filteredProjects" :key="project.id">
                             <el-card class="project-card" shadow="hover">
                                 <div class="project-image">
-                                    <img :src="project.image" alt="项目图片" class="image">
+                                    <el-image :src="realUrl(project.image)" alt="项目图片" class="image"/>
                                     <div class="project-tag" v-if="project.tag">{{ project.tag }}</div>
                                 </div>
                                 <h3>{{ project.name }}</h3>
@@ -106,7 +106,7 @@
                         <el-card class="hotel-card" shadow="hover" v-for="hotel in filteredHotels" :key="hotel.id">
                             <div class="hotel-content">
                                 <div class="hotel-image">
-                                    <img :src="hotel.image" alt="酒店图片" class="image">
+                                    <el-image :src="realUrl(hotel.image)" alt="酒店图片" class="image"/>
                                     <div class="hotel-tag" v-if="hotel.tag">{{ hotel.tag }}</div>
                                 </div>
                                 <div class="hotel-info">
@@ -864,6 +864,9 @@ export default {
         }
     },
     methods: {
+      realUrl(path) {
+        return process.env.VUE_APP_BASE_API + path;
+      },
         // 获取景点列表
         getSpotList() {
             listSpot().then(response => {
@@ -875,7 +878,7 @@ export default {
                     type: spot.type || 'attraction',
                     tag: spot.tag || '景点',
                     views: spot.views || 0,
-                    image: spot.image || '/assets/default-spot.jpg',
+                    image: spot.imageUrl || '/assets/default-spot.jpg',
                     packages: [
                         {
                             id: spot.spotId * 100 + 1,
@@ -903,7 +906,7 @@ export default {
                     type: spot.type || 'attraction',
                     tag: spot.tag || '景点',
                     views: spot.views || 0,
-                    image: spot.image || '/assets/default-spot.jpg',
+                    image: spot.imgUrl || '/assets/default-spot.jpg',
                     packages: [
                         {
                             id: spot.spotId * 100 + 1,
@@ -1007,7 +1010,7 @@ export default {
                     tag: hotel.tag || '酒店',
                     rating: hotel.rating || 4.5,
                     views: hotel.views || 0,
-                    image: hotel.image || '/assets/default-hotel.jpg',
+                    image: hotel.imageUrl || '/assets/default-hotel.jpg',
                     checkInTime: hotel.checkInTime || '14:00',
                     checkOutTime: hotel.checkOutTime || '12:00',
                     rooms: [
