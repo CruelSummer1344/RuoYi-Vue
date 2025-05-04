@@ -92,7 +92,7 @@
       <el-table-column label="支付状态" align="center" prop="status"/>
       <el-table-column label="人数" align="center" prop="peopleCount"/>
       <el-table-column label="总价格" align="center" prop="totalPrice"/>
-      <el-table-column label="备注" align="center" prop="remarks"/>
+<!--      <el-table-column label="备注" align="center" prop="remarks"/>-->
       <el-table-column label="创建时间" align="center" prop="createdAt" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createdAt, '{y}-{m}-{d}') }}</span>
@@ -161,9 +161,9 @@
         <el-form-item label="总价格" prop="totalPrice">
           <el-input v-model="form.totalPrice" placeholder="请输入总价格"/>
         </el-form-item>
-        <el-form-item label="备注" prop="remarks">
-          <el-input v-model="form.remarks" type="textarea" placeholder="请输入内容"/>
-        </el-form-item>
+<!--        <el-form-item label="备注" prop="remarks">-->
+<!--          <el-input v-model="form.remarks" type="textarea" placeholder="请输入内容"/>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -226,9 +226,9 @@ export default {
         totalPrice: [
           {required: true, message: "总价格不能为空", trigger: "blur"}
         ],
-        remarks: [
-          {required: true, message: "备注不能为空", trigger: "blur"}
-        ],
+        // remarks: [
+        //   {required: true, message: "备注不能为空", trigger: "blur"}
+        // ],
       },
       userList: [],
     };
