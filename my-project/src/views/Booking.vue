@@ -244,7 +244,7 @@
           <template slot-scope="scope">
             <span v-if="scope.row.spotId">景点</span>
             <span v-else-if="scope.row.hotelId">酒店</span>
-            <span v-else-if="scope.row.projectId">旅游项目</span>
+            <span v-else>旅游项目</span>
           </template>
         </el-table-column>
         <el-table-column label="创建日期" prop="createTime" width="120"></el-table-column>
@@ -401,22 +401,38 @@
       <div v-if="selectedOrder">
         <el-descriptions :column="1" border>
           <el-descriptions-item label="订单号">{{ selectedOrder.orderId }}</el-descriptions-item>
-          <el-descriptions-item label="景点名称">{{ selectedOrder.projectName }}</el-descriptions-item>
+          <el-descriptions-item label="项目名称">{{ selectedOrder.projectName }}</el-descriptions-item>
+          <el-descriptions-item label="订单类型">
+            <span v-if="selectedOrder.spotId">景点</span>
+            <span v-else-if="selectedOrder.hotelId">酒店</span>
+            <span v-else>旅游项目</span>
+          </el-descriptions-item>
           <el-descriptions-item label="创建日期">{{ selectedOrder.createTime }}</el-descriptions-item>
           <el-descriptions-item label="人数">{{ selectedOrder.peopleCount }}</el-descriptions-item>
           <el-descriptions-item label="总价">¥{{ selectedOrder.totalPrice }}</el-descriptions-item>
           <el-descriptions-item label="状态">
             <el-tag :type="getStatusType(selectedOrder.status)">{{ selectedOrder.status }}</el-tag>
           </el-descriptions-item>
-          <el-descriptions-item v-if="selectedOrder.details && selectedOrder.details.hotel" label="酒店">
-            {{ selectedOrder.details.hotel }}
-          </el-descriptions-item>
-          <el-descriptions-item v-if="selectedOrder.details && selectedOrder.details.restaurant" label="餐饮">
-            {{ selectedOrder.details.restaurant }}
-          </el-descriptions-item>
-          <el-descriptions-item v-if="selectedOrder.details && selectedOrder.details.activity" label="活动">
-            {{ selectedOrder.details.activity }}
-          </el-descriptions-item>
+          
+          <!-- 景点订单详情 -->
+          <template v-if="selectedOrder.spotId">
+            <el-descriptions-item label="套餐">{{ selectedOrder.details.packageName }}</el-descriptions-item>
+            <el-descriptions-item v-if="selectedOrder.details.hotel" label="酒店">{{ selectedOrder.details.hotel }}</el-descriptions-item>
+            <el-descriptions-item v-if="selectedOrder.details.restaurant" label="餐饮">{{ selectedOrder.details.restaurant }}</el-descriptions-item>
+            <el-descriptions-item v-if="selectedOrder.details.activity" label="活动">{{ selectedOrder.details.activity }}</el-descriptions-item>
+          </template>
+
+          <!-- 酒店订单详情 -->
+          <template v-if="selectedOrder.hotelId">
+            <el-descriptions-item label="房型">{{ selectedOrder.details.packageName }}</el-descriptions-item>
+            <el-descriptions-item label="入住日期">{{ formatDateTime(selectedOrder.details.checkInDate, selectedOrder.details.checkInTime) }}</el-descriptions-item>
+            <el-descriptions-item label="离店日期">{{ formatDateTime(selectedOrder.details.checkOutDate, selectedOrder.details.checkOutTime) }}</el-descriptions-item>
+          </template>
+
+          <!-- 旅游项目订单详情 -->
+          <template v-if="selectedOrder.productId">
+            <el-descriptions-item label="套餐">{{ selectedOrder.details.packageName }}</el-descriptions-item>
+          </template>
         </el-descriptions>
       </div>
       <div slot="footer">
@@ -500,7 +516,7 @@ export default {
 
       // 旅游项目预订表单
       tourProjectBookingForm: {
-        projectId: '',
+        productId: '',
         projectName: '',
         packageId: '',
         packageName: '',
@@ -1026,8 +1042,6 @@ export default {
           const orderData = {
             userId: this.$store.state.user.userId,
             spotId: this.bookingForm.projectId,
-            hotelId: this.bookingForm.hotel ? this.bookingForm.hotel.id : null,
-            productId: this.bookingForm.packageId,
             status: '已支付',
             peopleCount: this.bookingForm.peopleCount,
             totalPrice: this.bookingForm.totalPrice,
@@ -1055,10 +1069,9 @@ export default {
               }).then(() => {
                 this.goToReview({
                   orderId: response.data.orderId,
-                  projectId: this.bookingForm.projectId
+                  spotId: this.bookingForm.projectId
                 });
-              }).catch(() => {
-              });
+              }).catch(() => {});
             }
           }).catch(error => {
             this.$message.error('订单创建失败：' + error.message);
@@ -1071,7 +1084,9 @@ export default {
       listOrder().then(response => {
         this.orders = response.rows.map(order => ({
           orderId: order.orderId,
-          projectId: order.spotId,
+          spotId: order.spotId,
+          hotelId: order.hotelId,
+          projectId: order.projectId,
           projectName: order.remarks ? JSON.parse(order.remarks).projectName : '',
           createTime: this.formatDate(order.createdAt),
           peopleCount: order.peopleCount,
@@ -1093,7 +1108,9 @@ export default {
       listOrder(query).then(response => {
         this.orders = response.rows.map(order => ({
           orderId: order.orderId,
-          projectId: order.spotId,
+          spotId: order.spotId,
+          hotelId: order.hotelId,
+          projectId: order.projectId,
           projectName: order.remarks ? JSON.parse(order.remarks).projectName : '',
           createTime: this.formatDate(order.createdAt),
           peopleCount: order.peopleCount,
@@ -1145,10 +1162,11 @@ export default {
 
     // 前往评价页面
     goToReview(order) {
+      let projectId = order.spotId || order.hotelId || order.projectId;
       this.$router.push({
         path: '/reviews',
         query: {
-          projectId: order.projectId,
+          projectId: projectId,
           orderId: order.orderId
         }
       });
@@ -1282,43 +1300,43 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // 创建订单对象
-          const order = {
-            orderId: `ORD${Date.now()}`,
-            projectId: this.hotelBookingForm.hotelId,
-            projectName: this.hotelBookingForm.hotelName,
-            date: this.formatDate(this.hotelBookingForm.checkInDate),
+          const orderData = {
+            userId: this.$store.state.user.userId,
+            hotelId: this.hotelBookingForm.hotelId,
+            status: '已支付',
             peopleCount: this.hotelBookingForm.roomCount,
             totalPrice: this.hotelTotalPrice,
-            status: '已支付',
-            details: {
+            remarks: JSON.stringify({
+              projectName: this.hotelBookingForm.hotelName,
               packageName: this.hotelBookingForm.roomType,
-              hotel: this.hotelBookingForm.hotelName,
+              checkInDate: this.formatDate(this.hotelBookingForm.checkInDate),
+              checkOutDate: this.formatDate(this.hotelBookingForm.checkOutDate),
               checkInTime: this.hotelBookingForm.checkInTime,
-              checkOutTime: this.hotelBookingForm.checkOutTime,
-              restaurant: '',
-              activity: ''
-            }
+              checkOutTime: this.hotelBookingForm.checkOutTime
+            })
           };
 
-          // 添加到订单列表
-          this.orders.unshift(order);
-          this.filteredOrders = [...this.orders];
+          // 调用后端 API 保存订单
+          addOrder(orderData).then(response => {
+            if (response.code === 200) {
+              this.$message.success('订单创建并支付成功');
+              this.hotelDialogVisible = false;
+              this.$refs[formName].resetFields();
 
-          // 提示成功并关闭对话框
-          this.$message.success('订单创建并支付成功');
-          this.hotelDialogVisible = false;
-
-          // 重置表单
-          this.$refs[formName].resetFields();
-
-          // 询问是否评价
-          this.$confirm('支付成功！是否现在评价？', '提示', {
-            confirmButtonText: '去评价',
-            cancelButtonText: '稍后',
-            type: 'success'
-          }).then(() => {
-            this.goToReview(order);
-          }).catch(() => {
+              // 询问是否评价
+              this.$confirm('支付成功！是否现在评价？', '提示', {
+                confirmButtonText: '去评价',
+                cancelButtonText: '稍后',
+                type: 'success'
+              }).then(() => {
+                this.goToReview({
+                  orderId: response.data.orderId,
+                  hotelId: this.hotelBookingForm.hotelId
+                });
+              }).catch(() => {});
+            }
+          }).catch(error => {
+            this.$message.error('订单创建失败：' + error.message);
           });
         }
       });
@@ -1371,7 +1389,7 @@ export default {
           location: project.location,
           tag: project.tag || '旅游项目',
           views: project.views || 0,
-          image: project.imageUrl || '/assets/default-project.jpg',
+          image: project.imgUrl || '/assets/default-project.jpg',
           packages: [
             {
               id: project.projectId * 100 + 1,
@@ -1452,6 +1470,28 @@ export default {
           });
         }
       });
+    },
+
+    // 格式化日期时间
+    formatDateTime(date, time) {
+      if (!date) return '';
+      // 如果是ISO字符串，直接格式化
+      let d = new Date(date);
+      if (!isNaN(d.getTime())) {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const hour = String(d.getHours()).padStart(2, '0');
+        const min = String(d.getMinutes()).padStart(2, '0');
+        const sec = String(d.getSeconds()).padStart(2, '0');
+        // 如果时间为00:00:00且有time参数，拼接time
+        if (hour === '00' && min === '00' && sec === '00' && time) {
+          return `${year}-${month}-${day} ${time.length === 5 ? time+':00' : time}`;
+        }
+        return `${year}-${month}-${day} ${hour}:${min}:${sec}`;
+      }
+      // 否则直接返回字符串
+      return date;
     },
   }
 };
