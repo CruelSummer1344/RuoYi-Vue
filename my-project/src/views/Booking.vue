@@ -11,13 +11,13 @@
               <el-form-item label="景点名称">
                 <el-input v-model="searchForm.name" placeholder="输入景点名称"></el-input>
               </el-form-item>
-              <el-form-item label="景点类型">
-                <el-select v-model="searchForm.type" clearable placeholder="选择景点类型">
-                  <el-option label="自然景观" value="attraction"></el-option>
-                  <el-option label="文化古迹" value="culture"></el-option>
-                  <el-option label="生态保护区" value="eco"></el-option>
-                </el-select>
-              </el-form-item>
+<!--              <el-form-item label="景点类型">-->
+<!--                <el-select v-model="searchForm.type" clearable placeholder="选择景点类型">-->
+<!--                  <el-option label="自然景观" value="attraction"></el-option>-->
+<!--                  <el-option label="文化古迹" value="culture"></el-option>-->
+<!--                  <el-option label="生态保护区" value="eco"></el-option>-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
               <el-form-item>
                 <el-button type="primary" @click="searchProjects">搜索</el-button>
                 <el-button @click="resetSearch">重置</el-button>
@@ -75,6 +75,61 @@
                 @current-change="handlePageChange"
             ></el-pagination>
           </div>
+        </el-tab-pane>
+
+        <el-tab-pane label="旅游项目" name="project">
+          <!-- 旅游项目搜索区域 -->
+          <h2>旅游项目预订</h2>
+          <div class="search-form">
+            <el-form :inline="true" :model="projectSearchForm" class="demo-form-inline">
+              <el-form-item label="项目名称">
+                <el-input v-model="projectSearchForm.name" placeholder="输入项目名称"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="searchTourProjects">搜索</el-button>
+                <el-button @click="resetTourProjectSearch">重置</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+          <!-- 旅游项目列表 -->
+          <el-row :gutter="20" class="project-row">
+            <el-col v-for="project in filteredTourProjects" :key="project.id" :md="8" :sm="12" :xs="24">
+              <el-card class="project-card" shadow="hover">
+                <div class="project-image">
+                  <el-image :src="realUrl(project.image)" alt="项目图片" class="image"/>
+                  <div v-if="project.tag" class="project-tag">{{ project.tag }}</div>
+                </div>
+                <h3>{{ project.name }}</h3>
+                <p class="project-desc">{{ project.description }}</p>
+                <div class="project-info">
+                  <span><i class="el-icon-location"></i> {{ project.location }}</span>
+                  <span><i class="el-icon-view"></i> {{ project.views }}</span>
+                </div>
+                <div class="package-list">
+                  <h4>可选套餐</h4>
+                  <el-table :data="project.packages" style="width: 100%">
+                    <el-table-column label="套餐名称" prop="name"></el-table-column>
+                    <el-table-column label="价格" prop="price">
+                      <template slot-scope="scope">
+                        <span class="price">¥{{ scope.row.price }}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="100">
+                      <template slot-scope="scope">
+                        <el-button
+                            size="small"
+                            type="text"
+                            @click="openTourProjectBookingDialog(project, scope.row)"
+                        >
+                          预订
+                        </el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
+              </el-card>
+            </el-col>
+          </el-row>
         </el-tab-pane>
 
         <el-tab-pane label="酒店预订" name="hotel">
@@ -375,6 +430,38 @@
         </el-button>
       </div>
     </el-dialog>
+
+    <!-- 旅游项目预订对话框 -->
+    <el-dialog :visible.sync="tourProjectDialogVisible" title="旅游项目预订" width="40%">
+      <el-form ref="tourProjectBookingForm" :model="tourProjectBookingForm" :rules="rules" label-width="100px">
+        <el-form-item label="项目名称" prop="projectName">
+          <el-input v-model="tourProjectBookingForm.projectName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="套餐" prop="packageName">
+          <el-input v-model="tourProjectBookingForm.packageName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="预订日期" prop="date">
+          <el-date-picker v-model="tourProjectBookingForm.date" placeholder="选择日期" type="date"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="人数" prop="peopleCount">
+          <el-input-number v-model="tourProjectBookingForm.peopleCount" :max="10" :min="1"></el-input-number>
+        </el-form-item>
+        <el-form-item label="总价">
+          <span class="total-price">￥{{ tourProjectBookingForm.totalPrice }}</span>
+        </el-form-item>
+        <el-form-item label="支付方式" prop="paymentMethod">
+          <el-radio-group v-model="tourProjectBookingForm.paymentMethod">
+            <el-radio label="wechat">微信支付</el-radio>
+            <el-radio label="alipay">支付宝</el-radio>
+            <el-radio label="bank">银行卡</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button @click="tourProjectDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmTourProjectBooking('tourProjectBookingForm')">确认支付</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -382,6 +469,7 @@
 import {listHotel, getHotel} from "@/api/hotel/hotel";
 import {listSpot, getSpot} from "@/api/spot/spot";
 import {addOrder, listOrder, updateOrder} from "@/api/order/order";
+import {listProject, getProject} from "@/api/projects/projects";
 
 export default {
   name: 'Booking',
@@ -394,6 +482,7 @@ export default {
       dialogVisible: false,
       orderDetailVisible: false,
       hotelDialogVisible: false,
+      tourProjectDialogVisible: false,
 
       // 预订表单
       bookingForm: {
@@ -404,6 +493,17 @@ export default {
         hotel: '',
         restaurant: '',
         activity: '',
+        date: '',
+        peopleCount: 1,
+        paymentMethod: 'wechat',
+      },
+
+      // 旅游项目预订表单
+      tourProjectBookingForm: {
+        projectId: '',
+        projectName: '',
+        packageId: '',
+        packageName: '',
         date: '',
         peopleCount: 1,
         paymentMethod: 'wechat',
@@ -778,6 +878,15 @@ export default {
       filteredOrders: [],
       filteredHotels: [],
 
+      // 旅游项目搜索表单
+      projectSearchForm: {
+        name: '',
+      },
+
+      // 旅游项目数据
+      tourProjects: [],
+      filteredTourProjects: [],
+
       // 当前页码
       currentPage: 1,
       hotelCurrentPage: 1
@@ -805,6 +914,7 @@ export default {
     this.getSpotList();
     this.getOrderList();
     this.getHotelList();
+    this.getTourProjectList();
 
     // 从路由获取项目和套餐
     if (this.$route.query.projectId && this.$route.query.packageId) {
@@ -1222,7 +1332,127 @@ export default {
     // 处理分类变化
     handleCategoryChange(tab) {
       this.activeCategory = tab.name;
-    }
+    },
+
+    // 获取旅游项目列表
+    getTourProjectList() {
+      listProject().then(response => {
+        this.tourProjects = response.rows.map(project => ({
+          id: project.projectId,
+          name: project.name,
+          description: project.description,
+          location: project.location,
+          tag: project.tag || '旅游项目',
+          views: project.views || 0,
+          image: project.imageUrl || '/assets/default-project.jpg',
+          packages: [
+            {
+              id: project.projectId * 100 + 1,
+              name: '标准套餐',
+              price: project.price,
+              description: project.description
+            }
+          ]
+        }));
+        this.filteredTourProjects = [...this.tourProjects];
+      });
+    },
+
+    // 搜索旅游项目
+    searchTourProjects() {
+      const query = {
+        name: this.projectSearchForm.name
+      };
+      listProject(query).then(response => {
+        this.tourProjects = response.rows.map(project => ({
+          id: project.projectId,
+          name: project.name,
+          description: project.description,
+          location: project.location,
+          tag: project.tag || '旅游项目',
+          views: project.views || 0,
+          image: project.imageUrl || '/assets/default-project.jpg',
+          packages: [
+            {
+              id: project.projectId * 100 + 1,
+              name: '标准套餐',
+              price: project.price,
+              description: project.description
+            }
+          ]
+        }));
+        this.filteredTourProjects = [...this.tourProjects];
+      });
+    },
+
+    // 重置旅游项目搜索
+    resetTourProjectSearch() {
+      this.projectSearchForm = {
+        name: ''
+      };
+      this.getTourProjectList();
+    },
+
+    // 打开旅游项目预订对话框
+    openTourProjectBookingDialog(project, pkg) {
+      getProject(project.id).then(response => {
+        const projectData = response.data;
+        this.tourProjectBookingForm = {
+          projectId: projectData.projectId,
+          projectName: projectData.name,
+          packageId: pkg.id,
+          packageName: pkg.name,
+          date: '',
+          peopleCount: 1,
+          paymentMethod: 'wechat',
+          totalPrice: pkg.price
+        };
+        this.tourProjectDialogVisible = true;
+      });
+    },
+
+    // 确认旅游项目预订
+    confirmTourProjectBooking(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          // 创建订单对象
+          const orderData = {
+            userId: this.$store.state.user.userId,
+            projectId: this.tourProjectBookingForm.projectId,
+            status: '已支付',
+            peopleCount: this.tourProjectBookingForm.peopleCount,
+            totalPrice: this.tourProjectBookingForm.totalPrice,
+            remarks: JSON.stringify({
+              projectName: this.tourProjectBookingForm.projectName,
+              packageName: this.tourProjectBookingForm.packageName
+            })
+          };
+
+          // 调用后端 API 保存订单
+          addOrder(orderData).then(response => {
+            if (response.code === 200) {
+              this.$message.success('订单创建并支付成功');
+              this.tourProjectDialogVisible = false;
+              this.$refs[formName].resetFields();
+
+              // 询问是否评价
+              this.$confirm('支付成功！是否现在评价？', '提示', {
+                confirmButtonText: '去评价',
+                cancelButtonText: '稍后',
+                type: 'success'
+              }).then(() => {
+                this.goToReview({
+                  orderId: response.data.orderId,
+                  projectId: this.tourProjectBookingForm.projectId
+                });
+              }).catch(() => {});
+            }
+          }).catch(error => {
+            this.$message.error('订单创建失败：' + error.message);
+          });
+        }
+      });
+    },
   }
 };
 </script>
