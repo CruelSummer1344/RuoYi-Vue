@@ -12,7 +12,7 @@
                 <el-input v-model="searchForm.name" placeholder="输入景点名称"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="searchProjects">搜索</el-button>
+                <el-button type="primary" @click="searchSpot">搜索</el-button>
                 <el-button @click="resetSearch">重置</el-button>
               </el-form-item>
             </el-form>
@@ -132,14 +132,6 @@
             <el-form :inline="true" :model="hotelSearchForm" class="demo-form-inline">
               <el-form-item label="酒店名称">
                 <el-input v-model="hotelSearchForm.name" placeholder="输入酒店名称"></el-input>
-              </el-form-item>
-              <el-form-item label="价格区间">
-                <el-select v-model="hotelSearchForm.priceRange" clearable placeholder="选择价格区间">
-                  <el-option label="¥200以下" value="0-200"></el-option>
-                  <el-option label="¥200-500" value="200-500"></el-option>
-                  <el-option label="¥500-1000" value="500-1000"></el-option>
-                  <el-option label="¥1000以上" value="1000-9999"></el-option>
-                </el-select>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="searchHotels">搜索</el-button>
@@ -975,10 +967,9 @@ export default {
     },
 
     // 搜索景点
-    searchProjects() {
+    searchSpot() {
       const query = {
-        name: this.searchForm.name,
-        type: this.searchForm.type
+        name: this.searchForm.name
       };
       listSpot(query).then(response => {
         this.filteredProjects = response.rows.map(spot => ({
@@ -989,7 +980,7 @@ export default {
           type: spot.type || 'attraction',
           tag: spot.tag || '景点',
           views: spot.views || 0,
-          image: spot.imgUrl || '/assets/default-spot.jpg',
+          image: spot.imageUrl || '/assets/default-spot.jpg',
           packages: [
             {
               id: spot.spotId * 100 + 1,
@@ -1249,7 +1240,7 @@ export default {
           tag: hotel.tag || '酒店',
           rating: hotel.rating || 4.5,
           views: hotel.views || 0,
-          image: hotel.image || '/assets/default-hotel.jpg',
+          image: hotel.imageUrl || '/assets/default-hotel.jpg',
           checkInTime: hotel.checkInTime || '14:00',
           checkOutTime: hotel.checkOutTime || '12:00',
           rooms: [
