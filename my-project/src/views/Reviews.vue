@@ -50,8 +50,9 @@
 </template>
 
 <script>
-import { listComments, addComments } from "@/api/comments/comments";
-import { listSpot } from "@/api/spot/spot";
+import {addComments, listComments} from "@/api/comments/comments";
+import {listSpot} from "@/api/spot/spot";
+import {listHotel} from "@/api/hotel/hotel";
 
 export default {
   name: 'Reviews',
@@ -93,10 +94,18 @@ export default {
     loadProjects() {
       listSpot().then(response => {
         if (response.code === 200) {
-          this.projects = response.rows.map(spot => ({
+          this.projects = this.projects.concat(response.rows.map(spot => ({
             id: spot.spotId,
             name: spot.name
-          }));
+          })));
+        }
+      });
+      listHotel().then(resp => {
+        if (resp.code === 200) {
+          this.projects = this.projects.concat(resp.rows.map(hotel => ({
+            id: hotel.hotelId,
+            name: hotel.name
+          })))
         }
       });
     },
