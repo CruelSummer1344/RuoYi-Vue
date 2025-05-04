@@ -56,18 +56,6 @@
       </el-carousel>
     </div>
 
-    <!--        &lt;!&ndash; 快捷入口 &ndash;&gt;-->
-    <!--        <div class="quick-access">-->
-    <!--            <el-row :gutter="20">-->
-    <!--                <el-col :span="4" v-for="(item, index) in quickAccessItems" :key="index">-->
-    <!--                    <div class="quick-access-item" @click="navigateTo(item.route)">-->
-    <!--                        <i :class="item.icon"></i>-->
-    <!--                        <span>{{ item.title }}</span>-->
-    <!--                    </div>-->
-    <!--                </el-col>-->
-    <!--            </el-row>-->
-    <!--        </div>-->
-
     <!-- 三列布局 -->
     <el-row :gutter="20" class="content-row">
       <!-- 热度排行榜 -->
@@ -361,19 +349,19 @@ export default {
       carouselItems: [
         {
           id: 1,
-          image: 'http://www.xinhuanet.com/2021-06/09/1127547819_16232418196431n.jpeg',
+          image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
           title: '黄河入海 壮美东营',
           description: '探索中国唯一能够同时观赏黄河入海奇观和湿地风光的生态旅游胜地'
         },
         {
           id: 2,
-          image: 'http://www.xinhuanet.com/2021-06/09/1127547819_16232418196441n.jpeg',
+          image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80',
           title: '湿地天堂 生态东营',
           description: '中国最大的新生湿地，国际重要湿地，候鸟迁徙的重要驿站'
         },
         {
           id: 3,
-          image: 'http://www.xinhuanet.com/2021-06/09/1127547819_16232418196451n.jpeg',
+          image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80',
           title: '红色海滩 梦幻东营',
           description: '每年秋季，碱蓬草变红，形成壮观的"红地毯"景观，摄影爱好者的天堂'
         }
@@ -424,7 +412,7 @@ export default {
         {
           id: 1,
           title: '生态观鸟之旅',
-          image: '/assets/route-1.jpg',
+          image: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&w=400&q=80',
           tag: '热门',
           duration: '2天1晚',
           startPoint: '东营市区',
@@ -435,7 +423,7 @@ export default {
         {
           id: 2,
           title: '黄河文化深度游',
-          image: '/assets/route-2.jpg',
+          image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80',
           tag: '文化',
           duration: '3天2晚',
           startPoint: '东营市区',
@@ -446,7 +434,7 @@ export default {
         {
           id: 3,
           title: '家庭亲子休闲游',
-          image: '/assets/route-3.jpg',
+          image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
           tag: '亲子',
           duration: '2天1晚',
           startPoint: '东营市区',
@@ -457,7 +445,7 @@ export default {
         {
           id: 4,
           title: '秋季红地毯摄影游',
-          image: '/assets/route-4.jpg',
+          image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
           tag: '摄影',
           duration: '3天2晚',
           startPoint: '东营市区',
@@ -468,7 +456,7 @@ export default {
         {
           id: 5,
           title: '黄河口生态探秘游',
-          image: '/assets/route-5.jpg',
+          image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80',
           tag: '探险',
           duration: '2天1晚',
           startPoint: '东营市区',
@@ -486,7 +474,7 @@ export default {
         {
           id: 1,
           name: '黄河口生态旅游区',
-          image: '/assets/attraction-1.jpg',
+          image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=400&q=80',
           level: '5A景区',
           rating: 4.9,
           price: 120
@@ -494,7 +482,7 @@ export default {
         {
           id: 2,
           name: '天鹅湖景区',
-          image: '/assets/attraction-2.jpg',
+          image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
           level: '4A景区',
           rating: 4.7,
           price: 80
@@ -502,7 +490,7 @@ export default {
         {
           id: 3,
           name: '孙子文化园',
-          image: '/assets/attraction-3.jpg',
+          image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80',
           level: '4A景区',
           rating: 4.6,
           price: 60
@@ -572,8 +560,8 @@ export default {
           id: 1,
           title: '东营三日游完美攻略，带你领略黄河入海的壮美',
           author: '旅行家小王',
-          authorAvatar: '/assets/avatar-1.jpg',
-          image: '/assets/guide-1.jpg',
+          authorAvatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+          image: 'https://images.pexels.com/photos/210243/pexels-photo-210243.jpeg?auto=compress&w=400&q=80',
           views: 12567,
           likes: 3456
         },
@@ -581,8 +569,8 @@ export default {
           id: 2,
           title: '东营美食地图：不可错过的十大特色美食',
           author: '美食达人',
-          authorAvatar: '/assets/avatar-2.jpg',
-          image: '/assets/guide-2.jpg',
+          authorAvatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+          image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80',
           views: 9876,
           likes: 2345
         },
@@ -590,8 +578,8 @@ export default {
           id: 3,
           title: '带着孩子游东营，亲子游玩全攻略',
           author: '亲子游专家',
-          authorAvatar: '/assets/avatar-3.jpg',
-          image: '/assets/guide-3.jpg',
+          authorAvatar: 'https://randomuser.me/api/portraits/men/65.jpg',
+          image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
           views: 8765,
           likes: 1987
         }
