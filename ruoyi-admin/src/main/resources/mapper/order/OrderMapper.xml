@@ -14,12 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="peopleCount" column="people_count" />
         <result property="totalPrice" column="total_price" />
         <result property="remarks"    column="remarks"     />
-        <result property="createTime" column="create_time" />
-        <result property="updateTime" column="update_time" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
     </resultMap>
 
     <sql id="selectOrderVo">
-        select order_id, user_id, spot_id, hotel_id, product_id, status, people_count, total_price, remarks, create_time, update_time
+        select order_id, user_id, spot_id, hotel_id, product_id, status, people_count, total_price, remarks, created_at, updated_at
         from `order`
     </sql>
 
@@ -52,8 +52,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="peopleCount != null">people_count,</if>
             <if test="totalPrice != null">total_price,</if>
             <if test="remarks != null">remarks,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="updateTime != null">update_time,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -64,8 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="peopleCount != null">#{peopleCount},</if>
             <if test="totalPrice != null">#{totalPrice},</if>
             <if test="remarks != null">#{remarks},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
          </trim>
     </insert>
 
@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="peopleCount != null">people_count = #{peopleCount},</if>
             <if test="totalPrice != null">total_price = #{totalPrice},</if>
             <if test="remarks != null">remarks = #{remarks},</if>
-            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
         </trim>
         where order_id = #{orderId}
     </update>

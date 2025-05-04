@@ -1,6 +1,8 @@
 package com.ruoyi.order.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.order.mapper.OrderMapper;
@@ -52,6 +54,7 @@ public class OrderServiceImpl implements IOrderService
     @Override
     public int insertOrder(Order order)
     {
+        order.setUserId(SecurityUtils.getUserId());
         return orderMapper.insertOrder(order);
     }
 

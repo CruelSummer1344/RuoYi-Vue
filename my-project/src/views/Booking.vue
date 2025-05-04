@@ -255,7 +255,7 @@
                     <el-input-number v-model="bookingForm.peopleCount" :min="1" :max="10"></el-input-number>
                 </el-form-item>
                 <el-form-item label="总价">
-                    <span class="total-price">￥{{ totalPrice }}</span>
+                    <span class="total-price">￥{{ bookingForm.totalPrice }}</span>
                 </el-form-item>
                 <el-form-item label="支付方式" prop="paymentMethod">
                     <el-radio-group v-model="bookingForm.paymentMethod">
@@ -382,7 +382,7 @@
 <script>
 import { listHotel, getHotel } from "@/api/hotel/hotel";
 import { listSpot, getSpot } from "@/api/spot/spot";
-import { addOrder } from "@/api/order/order";
+import { addOrder, listOrder, updateOrder } from "@/api/order/order";
 
 export default {
     name: 'Booking',
@@ -772,49 +772,7 @@ export default {
             ],
 
             // 订单数据
-            orders: [
-                {
-                    orderId: 'ORD20250301001',
-                    projectId: 1,
-                    projectName: '黄河口生态旅游区',
-                    date: '2025-03-15',
-                    peopleCount: 2,
-                    totalPrice: '440.00',
-                    status: '已支付',
-                    details: {
-                        packageName: '黄河入海观光套餐',
-                        activity: '黄河入海观光船游览'
-                    }
-                },
-                {
-                    orderId: 'ORD20250228002',
-                    projectId: 3,
-                    projectName: '孙子文化园',
-                    date: '2025-03-10',
-                    peopleCount: 1,
-                    totalPrice: '120.00',
-                    status: '已完成',
-                    details: {
-                        packageName: '兵法文化体验套餐',
-                        activity: '兵法体验互动活动'
-                    }
-                },
-                {
-                    orderId: 'ORD20250227003',
-                    projectId: 2,
-                    projectName: '天鹅湖景区',
-                    date: '2025-04-05',
-                    peopleCount: 3,
-                    totalPrice: '1440.00',
-                    status: '待支付',
-                    details: {
-                        packageName: '湿地生态两日游',
-                        hotel: '天鹅湖度假酒店',
-                        restaurant: '生态农家餐厅',
-                        activity: '湿地徒步+观鸟+摄影指导'
-                    }
-                }
-            ],
+            orders: [],
 
             // 筛选后的项目和订单
             filteredProjects: [],
@@ -846,7 +804,7 @@ export default {
     created() {
         // 初始化筛选后的项目和订单
         this.getSpotList();
-        this.filteredOrders = [...this.orders];
+        this.getOrderList();
         this.getHotelList();
 
         // 从路由获取项目和套餐
@@ -944,104 +902,96 @@ export default {
                     activity: pkg.activity || '',
                     date: '',
                     peopleCount: 1,
-                    paymentMethod: 'wechat'
+                    paymentMethod: 'wechat',
+                    totalPrice: pkg.price
                 };
                 this.dialogVisible = true;
             });
         },
 
-        // 确认预订
-        confirmBooking(formName) {
-            this.$refs[formName].validate(valid => {
-                if (valid) {
-                    // 创建订单对象
-                    const orderData = {
-                        userId: this.$store.state.user.userId,
-                        spotId: this.bookingForm.projectId,
-                        hotelId: this.bookingForm.hotel ? this.bookingForm.hotel.id : null,
-                        productId: this.bookingForm.packageId,
-                        status: '已支付',
-                        peopleCount: this.bookingForm.peopleCount,
-                        totalPrice: this.totalPrice,
-                        remarks: JSON.stringify({
-                            projectName: this.bookingForm.projectName,
-                            packageName: this.bookingForm.packageName,
-                            hotel: this.bookingForm.hotel,
-                            restaurant: this.bookingForm.restaurant,
-                            activity: this.bookingForm.activity
-                        })
-                    };
-                    
-                    // 调用后端 API 保存订单
-                    addOrder(orderData).then(response => {
-                        if (response.code === 200) {
-                            this.$message.success('订单创建并支付成功');
-                            this.dialogVisible = false;
-                            this.$refs[formName].resetFields();
-                            
-                            // 询问是否评价
-                            this.$confirm('支付成功！是否现在评价？', '提示', {
-                                confirmButtonText: '去评价',
-                                cancelButtonText: '稍后',
-                                type: 'success'
-                            }).then(() => {
-                                this.goToReview({
-                                    orderId: response.data.orderId,
-                                    projectId: this.bookingForm.projectId
-                                });
-                            }).catch(() => {});
-                        }
-                    }).catch(error => {
-                        this.$message.error('订单创建失败：' + error.message);
-                    });
-                }
-            });
-        },
+      // 确认预订
+      confirmBooking(formName) {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            // 创建订单对象
+            const orderData = {
+              userId: this.$store.state.user.userId,
+              spotId: this.bookingForm.projectId,
+              hotelId: this.bookingForm.hotel ? this.bookingForm.hotel.id : null,
+              productId: this.bookingForm.packageId,
+              status: '已支付',
+              peopleCount: this.bookingForm.peopleCount,
+              totalPrice: this.totalPrice,
+              remarks: JSON.stringify({
+                projectName: this.bookingForm.projectName,
+                packageName: this.bookingForm.packageName,
+                hotel: this.bookingForm.hotel,
+                restaurant: this.bookingForm.restaurant,
+                activity: this.bookingForm.activity
+              })
+            };
 
-        // 获取酒店列表
-        getHotelList() {
-            listHotel().then(response => {
-                this.filteredHotels = response.rows.map(hotel => ({
-                    id: hotel.hotelId,
-                    name: hotel.name,
-                    description: hotel.description,
-                    location: hotel.location,
-                    type: 'hotel',
-                    tag: hotel.tag || '酒店',
-                    rating: hotel.rating || 4.5,
-                    views: hotel.views || 0,
-                    image: hotel.imageUrl || '/assets/default-hotel.jpg',
-                    checkInTime: hotel.checkInTime || '14:00',
-                    checkOutTime: hotel.checkOutTime || '12:00',
-                    rooms: [
-                        {
-                            id: hotel.hotelId * 100 + 1,
-                            name: '标准房',
-                            price: hotel.price,
-                            description: hotel.description
-                        }
-                    ]
+            // 调用后端 API 保存订单
+            addOrder(orderData).then(response => {
+              if (response.code === 200) {
+                this.$message.success('订单创建并支付成功');
+                this.dialogVisible = false;
+                this.$refs[formName].resetFields();
+
+                // 询问是否评价
+                this.$confirm('支付成功！是否现在评价？', '提示', {
+                  confirmButtonText: '去评价',
+                  cancelButtonText: '稍后',
+                  type: 'success'
+                }).then(() => {
+                  this.goToReview({
+                    orderId: response.data.orderId,
+                    projectId: this.bookingForm.projectId
+                  });
+                }).catch(() => {});
+              }
+            }).catch(error => {
+              this.$message.error('订单创建失败：' + error.message);
+            });
+          }
+        });
+      },
+      // 获取订单列表
+        getOrderList() {
+            listOrder().then(response => {
+                this.orders = response.rows.map(order => ({
+                    orderId: order.orderId,
+                    projectId: order.spotId,
+                    projectName: order.remarks ? JSON.parse(order.remarks).projectName : '',
+                    date: this.formatDate(order.createTime),
+                    peopleCount: order.peopleCount,
+                    totalPrice: order.totalPrice,
+                    status: order.status,
+                    details: order.remarks ? JSON.parse(order.remarks) : {}
                 }));
+                this.filteredOrders = [...this.orders];
             });
         },
 
         // 搜索订单
         searchOrders() {
-            this.filteredOrders = this.orders.filter(order => {
-                // 状态筛选
-                const statusMatch = !this.orderSearchForm.status ||
-                    order.status === this.orderSearchForm.status;
-
-                // 日期范围筛选
-                let dateMatch = true;
-                if (this.orderSearchForm.dateRange && this.orderSearchForm.dateRange.length === 2) {
-                    const orderDate = new Date(order.date);
-                    const startDate = new Date(this.orderSearchForm.dateRange[0]);
-                    const endDate = new Date(this.orderSearchForm.dateRange[1]);
-                    dateMatch = orderDate >= startDate && orderDate <= endDate;
-                }
-
-                return statusMatch && dateMatch;
+            const query = {
+                status: this.orderSearchForm.status,
+                createTime: this.orderSearchForm.dateRange ? this.orderSearchForm.dateRange[0] : null,
+                endTime: this.orderSearchForm.dateRange ? this.orderSearchForm.dateRange[1] : null
+            };
+            listOrder(query).then(response => {
+                this.orders = response.rows.map(order => ({
+                    orderId: order.orderId,
+                    projectId: order.spotId,
+                    projectName: order.remarks ? JSON.parse(order.remarks).projectName : '',
+                    date: this.formatDate(order.createTime),
+                    peopleCount: order.peopleCount,
+                    totalPrice: order.totalPrice,
+                    status: order.status,
+                    details: order.remarks ? JSON.parse(order.remarks) : {}
+                }));
+                this.filteredOrders = [...this.orders];
             });
         },
 
@@ -1067,13 +1017,18 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                // 更新订单状态
-                const index = this.orders.findIndex(o => o.orderId === order.orderId);
-                if (index !== -1) {
-                    this.orders[index].status = '已取消';
-                    this.filteredOrders = [...this.orders];
-                    this.$message.success('订单已取消');
-                }
+                const orderData = {
+                    orderId: order.orderId,
+                    status: '已取消'
+                };
+                updateOrder(orderData).then(response => {
+                    if (response.code === 200) {
+                        this.$message.success('订单已取消');
+                        this.getOrderList();
+                    }
+                }).catch(error => {
+                    this.$message.error('取消订单失败：' + error.message);
+                });
             }).catch(() => {});
         },
 
@@ -1120,6 +1075,33 @@ export default {
             const day = String(date.getDate()).padStart(2, '0');
 
             return `${year}-${month}-${day}`;
+        },
+
+        // 获取酒店列表
+        getHotelList() {
+            listHotel().then(response => {
+                this.filteredHotels = response.rows.map(hotel => ({
+                    id: hotel.hotelId,
+                    name: hotel.name,
+                    description: hotel.description,
+                    location: hotel.location,
+                    type: 'hotel',
+                    tag: hotel.tag || '酒店',
+                    rating: hotel.rating || 4.5,
+                    views: hotel.views || 0,
+                    image: hotel.imageUrl || '/assets/default-hotel.jpg',
+                    checkInTime: hotel.checkInTime || '14:00',
+                    checkOutTime: hotel.checkOutTime || '12:00',
+                    rooms: [
+                        {
+                            id: hotel.hotelId * 100 + 1,
+                            name: '标准房',
+                            price: hotel.price,
+                            description: hotel.description
+                        }
+                    ]
+                }));
+            });
         },
 
         // 搜索酒店

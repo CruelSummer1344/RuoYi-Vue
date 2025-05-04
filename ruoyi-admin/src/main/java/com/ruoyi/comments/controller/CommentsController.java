@@ -1,7 +1,15 @@
 package com.ruoyi.comments.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.annotation.Resource;
+import javax.annotation.Resources;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.hotel.service.IHotelService;
+import com.ruoyi.spot.domain.ScenicSpot;
+import com.ruoyi.spot.service.IScenicSpotService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +42,10 @@ public class CommentsController extends BaseController
 {
     @Autowired
     private ICommentsService commentsService;
+    @Resource
+    private IScenicSpotService scenicSpotService;
+    @Resource
+    private IHotelService hotelService;
 
     /**
      * 查询评论列表
@@ -44,6 +56,8 @@ public class CommentsController extends BaseController
     {
         startPage();
         List<Comments> list = commentsService.selectCommentsList(comments);
+        Map<Long, String> collect = scenicSpotService.selectScenicSpotList(null).stream().collect(Collectors.toMap(ScenicSpot::getSpotId, ScenicSpot::getName));
+        list.forEach(comment -> comment.setProjectName(collect.get(comment.getProjectId())));
         return getDataTable(list);
     }
 
