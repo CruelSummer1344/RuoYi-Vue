@@ -63,56 +63,56 @@ export default {
                     title: '黄河口蟹黄汤包',
                     description: '选用黄河口新鲜螃蟹，汤汁鲜美，皮薄馅足。',
                     type: '美食',
-                    image: 'https://via.placeholder.com/300x200?text=蟹黄汤包'
+                    image: require('@/assets/images/1.jpg')
                 },
                 {
                     id: 2,
                     title: '三角洲渔家民宿',
                     description: '依水而建，体验渔家生活，环境清幽舒适。',
                     type: '民宿',
-                    image: 'https://via.placeholder.com/300x200?text=渔家民宿'
+                    image: require('@/assets/images/2.webp')
                 },
                 {
                     id: 3,
                     title: '东营盐焗鸡',
                     description: '传统工艺制作，肉质鲜嫩，咸香入味。',
                     type: '美食',
-                    image: 'https://via.placeholder.com/300x200?text=盐焗鸡'
+                    image: require('@/assets/images/3.webp')
                 },
                 {
                     id: 4,
                     title: '湿地芦苇小屋',
                     description: '芦苇搭建的生态民宿，融入自然，适合度假。',
                     type: '民宿',
-                    image: 'https://via.placeholder.com/300x200?text=芦苇小屋'
+                    image: require('@/assets/images/4.webp')
                 },
                 {
                     id: 5,
                     title: '黄河鲤鱼宴',
                     description: '新鲜黄河鲤鱼烹制，口感鲜美，营养丰富。',
                     type: '美食',
-                    image: 'https://via.placeholder.com/300x200?text=鲤鱼宴'
+                    image: require('@/assets/images/5.webp')
                 },
                 {
                     id: 6,
                     title: '黄河人家客栈',
                     description: '传统建筑风格，提供地道乡村体验。',
                     type: '民宿',
-                    image: 'https://via.placeholder.com/300x200?text=黄河人家'
+                    image: require('@/assets/images/6.webp')
                 },
                 {
                     id: 7,
                     title: '东营河蟹',
                     description: '黄河口特产，肉质鲜美，蟹黄丰富，营养价值高。',
                     type: '美食',
-                    image: 'https://via.placeholder.com/300x200?text=东营河蟹'
+                    image: require('@/assets/images/7.webp')
                 },
                 {
                     id: 8,
                     title: '湿地观景木屋',
                     description: '位于湿地保护区边缘，可以近距离观赏湿地风光和鸟类。',
                     type: '民宿',
-                    image: 'https://via.placeholder.com/300x200?text=观景木屋'
+                    image: require('@/assets/images/8.webp')
                 }
             ]
         }
