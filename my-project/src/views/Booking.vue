@@ -11,13 +11,6 @@
               <el-form-item label="景点名称">
                 <el-input v-model="searchForm.name" placeholder="输入景点名称"></el-input>
               </el-form-item>
-<!--              <el-form-item label="景点类型">-->
-<!--                <el-select v-model="searchForm.type" clearable placeholder="选择景点类型">-->
-<!--                  <el-option label="自然景观" value="attraction"></el-option>-->
-<!--                  <el-option label="文化古迹" value="culture"></el-option>-->
-<!--                  <el-option label="生态保护区" value="eco"></el-option>-->
-<!--                </el-select>-->
-<!--              </el-form-item>-->
               <el-form-item>
                 <el-button type="primary" @click="searchProjects">搜索</el-button>
                 <el-button @click="resetSearch">重置</el-button>
@@ -246,7 +239,14 @@
       <!-- 订单列表 -->
       <el-table v-if="filteredOrders.length > 0" :data="filteredOrders" style="width: 100%">
         <el-table-column label="订单号" prop="orderId" width="180"></el-table-column>
-        <el-table-column label="景点名称" prop="projectName"></el-table-column>
+        <el-table-column label="项目名称" prop="projectName"></el-table-column>
+        <el-table-column label="订单类型" prop="type">
+          <template slot-scope="scope">
+            <span v-if="scope.row.spotId">景点</span>
+            <span v-else-if="scope.row.hotelId">酒店</span>
+            <span v-else-if="scope.row.projectId">旅游项目</span>
+          </template>
+        </el-table-column>
         <el-table-column label="创建日期" prop="createTime" width="120"></el-table-column>
         <el-table-column label="人数" prop="peopleCount" width="80"></el-table-column>
         <el-table-column label="总价" prop="totalPrice" width="120">
@@ -1344,7 +1344,7 @@ export default {
           location: project.location,
           tag: project.tag || '旅游项目',
           views: project.views || 0,
-          image: project.imageUrl || '/assets/default-project.jpg',
+          image: project.imgUrl || '/assets/default-project.jpg',
           packages: [
             {
               id: project.projectId * 100 + 1,
