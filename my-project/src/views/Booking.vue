@@ -1427,7 +1427,7 @@ export default {
           // 创建订单对象
           const orderData = {
             userId: this.$store.state.user.userId,
-            projectId: this.tourProjectBookingForm.projectId,
+            productId: this.tourProjectBookingForm.projectId,
             status: '已支付',
             peopleCount: this.tourProjectBookingForm.peopleCount,
             totalPrice: this.tourProjectBookingForm.totalPrice,

@@ -85,14 +85,13 @@
     <el-table v-loading="loading" :data="orderList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="订单id" align="center" prop="orderId"/>
-      <el-table-column label="用户id" align="center" prop="userId"/>
-      <el-table-column label="景点id" align="center" prop="spotId"/>
-      <el-table-column label="酒店ID" align="center" prop="hotelId"/>
-      <el-table-column label="产品ID" align="center" prop="productId"/>
+      <el-table-column label="用户姓名" align="center" prop="userName"/>
+      <el-table-column label="景点名称" align="center" prop="spotName"/>
+      <el-table-column label="酒店名称" align="center" prop="hotelName"/>
+      <el-table-column label="项目名称" align="center" prop="productName"/>
       <el-table-column label="支付状态" align="center" prop="status"/>
       <el-table-column label="人数" align="center" prop="peopleCount"/>
       <el-table-column label="总价格" align="center" prop="totalPrice"/>
-<!--      <el-table-column label="备注" align="center" prop="remarks"/>-->
       <el-table-column label="创建时间" align="center" prop="createdAt" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createdAt, '{y}-{m}-{d}') }}</span>
@@ -161,9 +160,6 @@
         <el-form-item label="总价格" prop="totalPrice">
           <el-input v-model="form.totalPrice" placeholder="请输入总价格"/>
         </el-form-item>
-<!--        <el-form-item label="备注" prop="remarks">-->
-<!--          <el-input v-model="form.remarks" type="textarea" placeholder="请输入内容"/>-->
-<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -226,9 +222,6 @@ export default {
         totalPrice: [
           {required: true, message: "总价格不能为空", trigger: "blur"}
         ],
-        // remarks: [
-        //   {required: true, message: "备注不能为空", trigger: "blur"}
-        // ],
       },
       userList: [],
     };

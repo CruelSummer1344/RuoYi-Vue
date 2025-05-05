@@ -63,6 +63,22 @@ public class Order extends BaseEntity
     @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date updatedAt;
 
+    /** 用户名称 */
+    @Excel(name = "用户名称")
+    private String userName;
+
+    /** 景点名称 */
+    @Excel(name = "景点名称")
+    private String spotName;
+
+    /** 酒店名称 */
+    @Excel(name = "酒店名称")
+    private String hotelName;
+
+    /** 项目名称 */
+    @Excel(name = "项目名称")
+    private String productName;
+
     public void setOrderId(Long orderId) 
     {
         this.orderId = orderId;
@@ -171,6 +187,38 @@ public class Order extends BaseEntity
     public Date getUpdatedAt() 
     {
         return updatedAt;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getSpotName() {
+        return spotName;
+    }
+
+    public void setSpotName(String spotName) {
+        this.spotName = spotName;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     @Override
