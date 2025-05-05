@@ -65,6 +65,19 @@ export const constantRoutes = [
         meta: { title: '个人中心', icon: 'user' }
       }
     ]
+  },
+  {
+    path: '/statistics',
+    component: Layout,
+    permissions: ['statistics:view'],
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/statistics/index'),
+        name: 'Statistics',
+        meta: { title: '数据统计', icon: 'chart' }
+      }
+    ]
   }
 ]
 
