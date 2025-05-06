@@ -45,7 +45,7 @@ public class ResourcesConfig implements WebMvcConfigurer
     @Override
     public void addInterceptors(InterceptorRegistry registry)
     {
-        registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
+//        registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
     }
 
     /**
@@ -63,6 +63,7 @@ public class ResourcesConfig implements WebMvcConfigurer
         config.addAllowedMethod("*");
         // 有效期 1800秒
         config.setMaxAge(1800L);
+        config.setAllowCredentials(true);
         // 添加映射路径，拦截一切请求
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

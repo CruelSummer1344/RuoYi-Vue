@@ -1,5 +1,7 @@
 package com.ruoyi.framework.websocket;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -15,39 +17,59 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private static final Logger log = LoggerFactory.getLogger(ChatWebSocketHandler.class);
     private static final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<String, WebSocketSession> staffSessions = new ConcurrentHashMap<>();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String userId = (String) session.getAttributes().get("userId");
-        String role = (String) session.getAttributes().get("role");
-
-        if ("staff".equals(role)) {
-            staffSessions.put(userId, session);
-            log.info("客服上线: {}", userId);
-        } else {
-            sessions.put(userId, session);
-            log.info("用户连接: {}", userId);
-        }
-        broadcastStaffStatus();
+        // 等待前端发送连接消息来设置 userId 和 role
+        log.info("新连接建立: {}", session.getId());
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
-        String userId = (String) session.getAttributes().get("userId");
-        String role = (String) session.getAttributes().get("role");
+        try {
+            JsonNode jsonNode = objectMapper.readTree(payload);
+            String type = jsonNode.get("type").asText();
 
-        if ("user".equals(role)) {
-            // 用户发送消息给所有客服
-            sendMessageToStaff(userId, payload);
-        } else if ("staff".equals(role) && payload.startsWith("to:")) {
-            // 客服回复特定用户，格式 "to:userId:内容"
-            String[] parts = payload.split(":", 3);
-            if (parts.length == 3) {
-                String targetUserId = parts[1];
-                String content = parts[2];
-                sendMessageToUser(targetUserId, "客服回复: " + content);
+            if ("connect".equals(type)) {
+                // 处理连接消息
+                String userId = jsonNode.get("userId").asText();
+                String role = jsonNode.get("userType").asText(); // 使用 userType 作为 role
+                session.getAttributes().put("userId", userId);
+                session.getAttributes().put("role", role.equals("admin") ? "staff" : "user");
+
+                if ("staff".equals(session.getAttributes().get("role"))) {
+                    staffSessions.put(userId, session);
+                    log.info("客服上线: {}", userId);
+                } else {
+                    sessions.put(userId, session);
+                    log.info("用户连接: {}", userId);
+                }
+                broadcastStaffStatus();
+            } else if ("message".equals(type)) {
+                // 处理普通消息
+                String userId = (String) session.getAttributes().get("userId");
+                String role = (String) session.getAttributes().get("role");
+
+                if ("user".equals(role)) {
+                    // 用户发送消息给所有客服
+                    sendMessageToStaff(userId, jsonNode.get("content").asText());
+                } else if ("staff".equals(role)) {
+                    // 客服回复特定用户
+                    String content = jsonNode.get("content").asText();
+                    if (content.startsWith("to:")) {
+                        String[] parts = content.split(":", 3);
+                        if (parts.length == 3) {
+                            String targetUserId = parts[1];
+                            String msgContent = parts[2];
+                            sendMessageToUser(targetUserId, "客服回复: " + msgContent);
+                        }
+                    }
+                }
             }
+        } catch (Exception e) {
+            log.error("处理消息失败: {}", e.getMessage());
         }
     }
 
@@ -56,14 +78,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         String userId = (String) session.getAttributes().get("userId");
         String role = (String) session.getAttributes().get("role");
 
-        if ("staff".equals(role)) {
-            staffSessions.remove(userId);
-            log.info("客服下线: {}", userId);
-        } else {
-            sessions.remove(userId);
-            log.info("用户断开: {}", userId);
+        if (userId != null) {
+            if ("staff".equals(role)) {
+                staffSessions.remove(userId);
+                log.info("客服下线: {}", userId);
+            } else {
+                sessions.remove(userId);
+                log.info("用户断开: {}", userId);
+            }
+            broadcastStaffStatus();
         }
-        broadcastStaffStatus();
     }
 
     private void sendMessageToUser(String userId, String message) throws IOException {
