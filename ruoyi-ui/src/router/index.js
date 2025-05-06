@@ -78,6 +78,19 @@ export const constantRoutes = [
         meta: { title: '数据统计', icon: 'chart' }
       }
     ]
+  },
+  {
+    path: '/customer-service',
+    component: Layout,
+    permissions: ['customer-service:chat:view'],
+    children: [
+      {
+        path: 'chat',
+        component: () => import('@/views/customer-service/chat'),
+        name: 'Chat',
+        meta: { title: '客服聊天室', icon: 'message' }
+      }
+    ]
   }
 ]
 

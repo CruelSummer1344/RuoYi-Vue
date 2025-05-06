@@ -40,6 +40,11 @@ module.exports = {
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
+      },
+      '/websocket': {
+        target: 'ws://localhost:8080',
+        ws: true,
+        changeOrigin: true
       }
     },
     disableHostCheck: true
