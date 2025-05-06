@@ -1,135 +1,143 @@
 <template>
-  <div class="chat-container">
-    <div class="chat-header">
-      <h2>客服聊天室</h2>
-    </div>
-    <div class="chat-messages" ref="messageContainer">
-      <div v-for="(message, index) in messages" :key="message.time + '-' + index" class="message">
-        <div class="message-content">
-          <div class="message-sender">{{ getSenderDisplayName(message) }}</div>
-          <div class="message-text">{{ message.content }}</div>
-          <div class="message-time">{{ formatTime(message.time) }}</div>
+  <div class="app-container">
+    <div class="chat-container">
+      <div class="chat-header">
+        <h3>在线客服</h3>
+      </div>
+      <div class="chat-messages" ref="messageContainer">
+        <div v-for="(message, index) in messages" :key="index"
+             :class="['message', message.userType === 'admin' ? 'message-right' : 'message-left']">
+          <div class="message-content">
+            <div class="message-sender">{{ message.userType === 'admin' ? '我' : '用户' }}</div>
+            <div class="message-text">{{ message.content }}</div>
+            <div class="message-time">{{ message.time }}</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="chat-input">
-      <el-input
-        v-model="inputMessage"
-        type="textarea"
-        :rows="3"
-        placeholder="请输入消息"
-        @keyup.enter.native="sendMessage"
-      />
-      <el-button type="primary" @click="sendMessage">发送</el-button>
+      <div class="chat-input">
+        <el-input
+          v-model="inputMessage"
+          type="textarea"
+          :rows="3"
+          placeholder="请输入消息"
+          @keyup.enter.native="sendMessage"
+        />
+        <el-button type="primary" @click="sendMessage">发送</el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ChatRoom',
+  name: 'OnlineService',
   data() {
     return {
       ws: null,
       messages: [],
       inputMessage: '',
-      userId: 'user_' + Math.random().toString(36).substr(2, 8),
-      senderName: '客服-' + Math.floor(Math.random() * 1000),
-      role: 'admin', // 固定角色：admin
-      targetRole: 'user' // 指定发送给 user
-    }
-  },
-  methods: {
-    formatTime(timestamp) {
-      return new Date(parseInt(timestamp)).toLocaleTimeString('zh-CN', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-    },
-    getSenderDisplayName(message) {
-      if (message.sender === this.senderName) {
-        return '我';
-      }
-      return message.sender || '用户';
-    },
-    sendMessage() {
-      if (!this.inputMessage.trim()) return;
-
-      const message = {
-        type: 'message',
-        content: this.inputMessage,
-        sender: this.senderName,
-        time: Date.now(),
-        role: this.role, // 当前用户角色
-        targetRole: this.targetRole // 指定发送给 user
-      };
-
-      if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-        this.ws.send(JSON.stringify(message));
-        this.inputMessage = '';
-      } else {
-        console.error('WebSocket连接未就绪');
-      }
-    },
-    initWebSocket() {
-      this.ws = new WebSocket(`ws://${window.location.host}/websocket/chat`);
-
-      this.ws.onopen = () => {
-        console.log('管理端 WebSocket 连接成功！');
-      };
-
-      this.ws.onmessage = (event) => {
-        try {
-          const message = JSON.parse(event.data);
-          console.log('管理端收到消息:', message);
-          // 只接收来自 user 的消息
-          if (message.role === 'user' && message.targetRole === 'admin') {
-            this.messages.push(message);
-            this.$nextTick(() => {
-              this.scrollToBottom();
-            });
-          }
-        } catch (err) {
-          console.error('消息解析失败:', err);
-        }
-      };
-
-      this.ws.onclose = () => {
-        console.log('管理端 WebSocket 断开，尝试重连...');
-        setTimeout(() => this.initWebSocket(), 3000);
-      };
-    },
-    scrollToBottom() {
-      const container = this.$refs.messageContainer;
-      if (container) {
-        container.scrollTop = container.scrollHeight;
-      }
-    }
+      userId: '',
+      userType: 'admin'
+    };
   },
   created() {
+    this.userId = this.$store.state.user.userId;
     this.initWebSocket();
   },
   beforeDestroy() {
-    if (this.ws) {
-      this.ws.close();
+    this.closeWebSocket();
+  },
+  methods: {
+    initWebSocket() {
+      const wsUrl = `ws://localhost:8080/websocket/chat`;
+      this.connectWebSocket(wsUrl, 1);
+    },
+    connectWebSocket(wsUrl, attempt) {
+      console.log(`尝试连接 WebSocket: ${wsUrl} (第 ${attempt} 次)`);
+      this.ws = new WebSocket(wsUrl);
+
+      this.ws.onopen = () => {
+        console.log('WebSocket连接已建立');
+        this.ws.send(JSON.stringify({
+          userId: this.userId,
+          userType: this.userType,
+          type: 'connect'
+        }));
+      };
+
+      this.ws.onmessage = (event) => {
+        console.log(event)
+        const message = JSON.parse(event.data);
+        this.messages.push(message);
+        this.$nextTick(() => {
+          this.scrollToBottom();
+        });
+      };
+
+      this.ws.onclose = (event) => {
+        console.log('WebSocket连接已关闭', event.code, event.reason);
+        if (attempt <= 5) {
+          setTimeout(() => {
+            this.connectWebSocket(wsUrl, attempt + 1);
+          }, 3000);
+        } else {
+          console.error('WebSocket连接失败，已达到最大重试次数');
+        }
+      };
+
+      this.ws.onerror = (error) => {
+        console.error('WebSocket错误:', error);
+      };
+    },
+    sendMessage() {
+      if (!this.inputMessage.trim()) return;
+      const message = {
+        userId: this.userId,
+        userType: this.userType,
+        content: this.inputMessage,
+        time: new Date().toLocaleTimeString(),
+        type: 'message'
+      };
+      this.messages.push(message);
+      this.ws.send(JSON.stringify(message));
+      this.inputMessage = '';
+    },
+    closeWebSocket() {
+      if (this.ws) {
+        this.ws.close();
+      }
+    },
+    scrollToBottom() {
+      const container = this.$refs.messageContainer;
+      container.scrollTop = container.scrollHeight;
     }
   }
-}
+};
 </script>
+
 <style scoped>
+.app-container {
+  height: calc(100vh - 84px);
+  padding: 20px;
+}
+
 .chat-container {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  box-sizing: border-box;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
 }
 
 .chat-header {
-  text-align: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 20px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.chat-header h3 {
+  margin: 0;
+  color: #303133;
 }
 
 .chat-messages {
@@ -137,13 +145,19 @@ export default {
   overflow-y: auto;
   padding: 20px;
   background: #f5f5f5;
-  border-radius: 4px;
-  margin: 10px 0;
 }
 
 .message {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   display: flex;
+}
+
+.message-left {
+  justify-content: flex-start;
+}
+
+.message-right {
+  justify-content: flex-end;
 }
 
 .message-content {
@@ -151,13 +165,17 @@ export default {
   padding: 10px;
   border-radius: 8px;
   background: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.message-right .message-content {
+  background: #e3f2fd;
 }
 
 .message-sender {
   font-weight: bold;
   margin-bottom: 5px;
-  color: #333;
+  color: #666;
 }
 
 .message-text {
@@ -168,12 +186,14 @@ export default {
   font-size: 12px;
   color: #999;
   margin-top: 5px;
+  text-align: right;
 }
 
 .chat-input {
+  padding: 20px;
   display: flex;
   gap: 10px;
-  padding: 10px 0;
+  border-top: 1px solid #e6e6e6;
 }
 
 .chat-input .el-button {

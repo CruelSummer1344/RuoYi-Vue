@@ -1,5 +1,6 @@
 package com.ruoyi.framework.websocket;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -21,8 +22,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // 等待前端发送连接消息来设置 userId 和 role
-        log.info("新连接建立: {}", session.getId());
+        String userId = session.getId();
+        String userType = (String) session.getAttributes().get("userType");
+
+        if ("admin".equals(userType)) {
+            staffSessions.put(userId, session);
+            log.info("客服上线: {}", userId);
+        } else if ("user".equals(userType)) {
+            sessions.put(userId, session);
+            log.info("用户连接: {}", userId);
+        }
     }
 
     @Override
@@ -34,7 +43,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
             if ("connect".equals(type)) {
                 // 处理连接消息
-                String userId = jsonNode.get("userId").asText();
+                String userId = session.getId();
                 String role = jsonNode.get("userType").asText(); // 使用 userType 作为 role
                 session.getAttributes().put("userId", userId);
                 session.getAttributes().put("role", role.equals("admin") ? "staff" : "user");
@@ -46,26 +55,20 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                     sessions.put(userId, session);
                     log.info("用户连接: {}", userId);
                 }
-                broadcastStaffStatus();
             } else if ("message".equals(type)) {
                 // 处理普通消息
-                String userId = (String) session.getAttributes().get("userId");
-                String role = (String) session.getAttributes().get("role");
+                String userId = session.getId();
+                String role = jsonNode.get("userType").asText();
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("time", jsonNode.get("time").asText());
+                jsonObject.put("content", jsonNode.get("content").asText());
 
                 if ("user".equals(role)) {
                     // 用户发送消息给所有客服
-                    sendMessageToStaff(userId, jsonNode.get("content").asText());
-                } else if ("staff".equals(role)) {
-                    // 客服回复特定用户
-                    String content = jsonNode.get("content").asText();
-                    if (content.startsWith("to:")) {
-                        String[] parts = content.split(":", 3);
-                        if (parts.length == 3) {
-                            String targetUserId = parts[1];
-                            String msgContent = parts[2];
-                            sendMessageToUser(targetUserId, "客服回复: " + msgContent);
-                        }
-                    }
+                    sendMessageToStaff(jsonObject.toString());
+                } else if ("admin".equals(role)) {
+                    sendMessageToUser(jsonObject.toString());
                 }
             }
         } catch (Exception e) {
@@ -86,32 +89,23 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                 sessions.remove(userId);
                 log.info("用户断开: {}", userId);
             }
-            broadcastStaffStatus();
         }
     }
 
-    private void sendMessageToUser(String userId, String message) throws IOException {
-        WebSocketSession session = sessions.get(userId);
-        if (session != null && session.isOpen()) {
-            session.sendMessage(new TextMessage(message));
+    private void sendMessageToUser(String message) throws IOException {
+        for (WebSocketSession session : sessions.values()) {
+            if (session != null && session.isOpen()) {
+                session.sendMessage(new TextMessage(message));
+            }
         }
     }
 
-    private void sendMessageToStaff(String userId, String message) throws IOException {
+    private void sendMessageToStaff(String message) throws IOException {
         for (WebSocketSession staffSession : staffSessions.values()) {
             if (staffSession.isOpen()) {
-                staffSession.sendMessage(new TextMessage("用户 " + userId + ": " + message));
+                staffSession.sendMessage(new TextMessage(message));
             }
         }
     }
 
-    private void broadcastStaffStatus() throws IOException {
-        boolean online = !staffSessions.isEmpty();
-        TextMessage statusMessage = new TextMessage("staffStatus:" + online);
-        for (WebSocketSession session : sessions.values()) {
-            if (session.isOpen()) {
-                session.sendMessage(statusMessage);
-            }
-        }
-    }
 }
