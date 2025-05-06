@@ -22,9 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="sampleId != null "> and sample_id = #{sampleId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="collectionTime != null "> and collection_time = #{collectionTime}</if>
+            <if test="collectionTime != null "> and DATE_FORMAT(collection_time, '%Y-%m-%d %H:%i:%s') like concat(left(#{collectionTime}, 10), '%')</if>
             <if test="location != null  and location != ''"> and location = #{location}</if>
-            <if test="uploadTime != null "> and upload_time = #{uploadTime}</if>
+            <if test="uploadTime != null "> and DATE_FORMAT(upload_time, '%Y-%m-%d %H:%i:%s') like concat(left(#{uploadTime}, 10), '%')</if>
         </where>
     </select>
     

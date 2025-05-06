@@ -26,8 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="spotId != null "> and spot_id = #{spotId}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="startTime != null "> and start_time = #{startTime}</if>
-            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="startTime != null "> and start_time &gt;= #{startTime}</if>
+            <if test="endTime != null "> and end_time &lt;= #{endTime}</if>
         </where>
     </select>
     

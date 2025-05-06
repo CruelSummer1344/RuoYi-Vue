@@ -41,7 +41,7 @@ public class WaterSampleController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(WaterSample waterSample)
     {
-        startPage();
+//        startPage();
         List<WaterSample> list = waterSampleService.selectWaterSampleList(waterSample);
         return getDataTable(list);
     }

@@ -21,8 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="recordId != null "> and record_id = #{recordId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="clockInTime != null "> and clock_in_time = #{clockInTime}</if>
-            <if test="clockOutTime != null "> and clock_out_time = #{clockOutTime}</if>
+            <if test="clockInTime != null "> and clock_in_time &gt;= #{clockInTime}</if>
+            <if test="clockOutTime != null "> and clock_out_time &lt;= #{clockOutTime}</if>
         </where>
         order by record_id desc
     </select>
