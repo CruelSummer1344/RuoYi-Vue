@@ -1,0 +1,502 @@
+16:39:08.651 [background-preinit] INFO  o.h.v.i.util.Version - [<clinit>,21] - HV000001: Hibernate Validator 6.2.5.Final
+16:39:08.810 [main] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 21.0.2 on CrueldeMacBook-Pro.local with PID 38734 (/Users/cruelsummer/Projects/tourism/RuoYi-Vue/ruoyi-admin/target/classes started by cruelsummer in /Users/cruelsummer/Projects/tourism/RuoYi-Vue)
+16:39:08.810 [main] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+16:39:10.562 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8080"]
+16:39:10.563 [main] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+16:39:10.563 [main] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.98]
+16:39:10.615 [main] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+16:39:11.397 [main] INFO  c.a.d.p.DruidDataSource - [init,1002] - {dataSource-1} inited
+16:39:13.037 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1220] - Using default implementation for ThreadExecutor
+16:39:13.059 [main] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+16:39:13.059 [main] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.2 created.
+16:39:13.059 [main] INFO  o.q.s.RAMJobStore - [initialize,155] - RAMJobStore initialized.
+16:39:13.059 [main] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+16:39:13.060 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1374] - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+16:39:13.060 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1378] - Quartz scheduler version: 2.3.2
+16:39:13.060 [main] INFO  o.q.c.QuartzScheduler - [setJobFactory,2293] - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@4aca6d5a
+16:39:14.198 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8080"]
+16:39:14.537 [main] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+16:39:14.548 [main] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 6.192 seconds (JVM running for 7.501)
+16:39:17.181 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:48:38.946 [http-nio-8080-exec-59] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: a33530b7-27f9-fcaf-1b0f-f5fe2783516b
+16:48:39.518 [http-nio-8080-exec-61] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: e730d1b7-fb97-b0a2-827e-b9a744e9a5fc
+16:49:11.928 [http-nio-8080-exec-40] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 1b051449-a0c2-b0fa-a462-fbfeca0e6af3
+16:49:14.181 [http-nio-8080-exec-49] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 23d1c69a-f37e-fb24-5dc7-838e7772144a
+16:49:47.210 [http-nio-8080-exec-31] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 51a8bbb6-1ac0-d5de-195d-5f0a69d7af92
+16:49:49.725 [http-nio-8080-exec-66] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 2f81c889-fd27-f80f-2d0f-ab5aac25454e
+16:49:53.392 [http-nio-8080-exec-29] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 7bcc109c-f4eb-410f-841c-29831440aa6a
+16:50:47.242 [http-nio-8080-exec-38] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 72f8a26d-c0d0-6890-7e96-7cd04de307ab
+16:54:00.181 [http-nio-8080-exec-55] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 5164543c-bf71-1875-146a-63b830e2f5e9
+16:54:45.154 [http-nio-8080-exec-46] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 18886afd-5b47-62b4-3f57-259557532e62
+16:55:19.148 [http-nio-8080-exec-48] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 905448a9-c320-8353-9a7a-f046f383cda1
+16:55:56.984 [http-nio-8080-exec-50] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 8f0f43f5-dd04-1aca-454d-4226dcc31db5
+16:55:58.243 [http-nio-8080-exec-52] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 7a303220-7bae-371d-0d3f-060be95e4bfe
+16:56:13.471 [http-nio-8080-exec-57] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 0c01822d-cc17-6def-c94e-015b81574e38
+16:56:17.310 [http-nio-8080-exec-72] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 5506c978-14c9-72db-0645-b49972b61c42
+16:56:35.137 [http-nio-8080-exec-27] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 04765cdd-9fde-69c2-e674-543a0184118d
+16:56:56.451 [http-nio-8080-exec-10] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: e83b6032-f3f9-5291-4427-150441bea1c3
+16:56:57.472 [http-nio-8080-exec-100] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: b35393c8-4492-6622-1c14-fa1fa8e03965
+16:57:26.970 [http-nio-8080-exec-83] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 017be123-2c58-bdb9-2a8e-0d78ded0b36e
+16:57:51.166 [http-nio-8080-exec-88] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 987fcfd3-9ba0-6e98-d044-5be0d8447e8d
+16:57:58.132 [http-nio-8080-exec-85] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: f1ad6713-0b0b-36d9-3cc0-ba2c25f68bfb
+16:58:02.047 [http-nio-8080-exec-77] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: f723a07f-f8d6-104d-cafb-82d98736b2bc
+16:58:05.622 [http-nio-8080-exec-81] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 0d0c8d82-8f9c-5620-a6c2-f2eac5b98320
+16:58:28.150 [http-nio-8080-exec-93] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 56044d16-a55c-d868-b5b2-afa5bfa82dcf
+16:58:38.141 [http-nio-8080-exec-96] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 2f36becc-ea1b-cc46-b509-786cc351aa41
+16:58:46.214 [http-nio-8080-exec-95] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 00e2eeec-5e7d-fa5b-a2a0-41721e0afee6
+16:58:48.139 [http-nio-8080-exec-75] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 3463244d-0210-071a-5bb9-c2bef41468c6
+16:58:48.154 [http-nio-8080-exec-99] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 85f07ff4-d343-03d1-8582-07d454a3baa2
+16:59:03.270 [http-nio-8080-exec-12] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 7c9cf8a1-f339-07b6-af75-81d08641aa4a
+16:59:05.134 [http-nio-8080-exec-4] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 385ad6fb-29e4-8afd-b7f3-2b50a745163e
+16:59:08.144 [http-nio-8080-exec-7] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 6d0a524b-8b27-ed01-6bc3-335377135156
+16:59:18.138 [http-nio-8080-exec-3] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: afd4ba6f-79f6-3d9b-7256-45b7714988f8
+16:59:28.148 [http-nio-8080-exec-28] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: f050c1d3-cd95-3bd5-6df8-7f241c2bda22
+16:59:28.163 [http-nio-8080-exec-16] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 47458d1a-5081-c212-584c-4adea1dca68f
+16:59:38.145 [http-nio-8080-exec-14] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: f2fb4a69-6fa3-f21d-36bc-26859c43813c
+16:59:48.146 [http-nio-8080-exec-21] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 9e752961-2ed4-4349-edbe-6c3736a10cf4
+16:59:48.163 [http-nio-8080-exec-18] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: e5fb924d-5bd3-ee7a-6e18-b67d73395179
+17:00:08.151 [http-nio-8080-exec-15] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 17d8fdbe-0732-af10-1878-1d4bc89be3a0
+17:00:08.162 [http-nio-8080-exec-24] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 3c324bcc-32df-3501-5e19-5ef3f060dfd5
+17:00:18.144 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 595c86cf-c54b-eb71-a64a-ba17ff716f27
+17:00:28.145 [http-nio-8080-exec-62] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: f20d3777-c459-1b4e-74fe-8819b72cab44
+17:00:48.147 [http-nio-8080-exec-61] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: d0539d07-c38a-94e7-c7ca-a8ec19f93091
+17:00:48.160 [http-nio-8080-exec-63] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 0438563f-9921-679b-c3fa-181f3f245c62
+17:00:58.147 [http-nio-8080-exec-43] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 2b66545d-532b-0827-8f96-df6b68147d34
+17:01:08.147 [http-nio-8080-exec-40] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: f24f08a3-6ba3-e745-8085-6d30542a584e
+17:01:29.152 [http-nio-8080-exec-35] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: dc954781-3a27-c844-762e-20fbd2e3a078
+17:01:39.146 [http-nio-8080-exec-36] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 42b83b91-aaec-191a-863a-922996136c9c
+17:01:49.142 [http-nio-8080-exec-66] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 9b549cf8-2ff0-81d8-d95d-63145042edcf
+17:02:19.147 [http-nio-8080-exec-29] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: fd72f9d1-f78d-d1c5-d34a-399ef98c8071
+17:22:14.643 [http-nio-8080-exec-34] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: e4a71e5b-5ffa-4144-7733-3a936f9443df
+17:22:57.840 [http-nio-8080-exec-38] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 310ee0bc-a94d-0a01-097d-632f44529562
+17:24:07.735 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+17:24:08.790 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+17:24:08.791 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+17:24:08.791 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+17:24:08.792 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+17:24:08.800 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2204] - {dataSource-1} closing ...
+17:24:08.801 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2277] - {dataSource-1} closed
+17:24:11.302 [background-preinit] INFO  o.h.v.i.util.Version - [<clinit>,21] - HV000001: Hibernate Validator 6.2.5.Final
+17:24:11.452 [main] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 21.0.2 on CrueldeMacBook-Pro.local with PID 39869 (/Users/cruelsummer/Projects/tourism/RuoYi-Vue/ruoyi-admin/target/classes started by cruelsummer in /Users/cruelsummer/Projects/tourism/RuoYi-Vue)
+17:24:11.452 [main] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+17:24:13.122 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8080"]
+17:24:13.123 [main] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+17:24:13.123 [main] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.98]
+17:24:13.194 [main] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+17:24:13.938 [main] INFO  c.a.d.p.DruidDataSource - [init,1002] - {dataSource-1} inited
+17:24:15.583 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1220] - Using default implementation for ThreadExecutor
+17:24:15.604 [main] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+17:24:15.604 [main] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.2 created.
+17:24:15.605 [main] INFO  o.q.s.RAMJobStore - [initialize,155] - RAMJobStore initialized.
+17:24:15.605 [main] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+17:24:15.605 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1374] - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+17:24:15.606 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1378] - Quartz scheduler version: 2.3.2
+17:24:15.606 [main] INFO  o.q.c.QuartzScheduler - [setJobFactory,2293] - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@1ad83fd7
+17:24:16.706 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8080"]
+17:24:17.041 [main] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+17:24:17.047 [main] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 6.031 seconds (JVM running for 7.373)
+17:24:17.994 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:24:18.038 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: a71a1b19-7028-f606-73a3-1c9d6381e4bd
+17:24:40.782 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: a71a1b19-7028-f606-73a3-1c9d6381e4bd
+17:25:17.931 [http-nio-8080-exec-4] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: a71a1b19-7028-f606-73a3-1c9d6381e4bd
+17:25:27.082 [http-nio-8080-exec-37] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: fbce748e-2313-4105-b418-89e887183693
+17:25:27.085 [http-nio-8080-exec-37] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: fbce748e-2313-4105-b418-89e887183693
+17:25:29.195 [http-nio-8080-exec-9] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: fbce748e-2313-4105-b418-89e887183693
+17:25:30.841 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[测试用户][Success][注册成功]
+17:25:32.223 [http-nio-8080-exec-51] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 96d9760e-3781-65be-abf7-d729af2e60a7
+17:25:32.226 [http-nio-8080-exec-51] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 96d9760e-3781-65be-abf7-d729af2e60a7
+17:25:45.492 [http-nio-8080-exec-57] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 5b55f65e-18d6-2b62-8e9a-c94c6e4c9bc0
+17:25:45.493 [http-nio-8080-exec-57] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 5b55f65e-18d6-2b62-8e9a-c94c6e4c9bc0
+17:26:05.740 [http-nio-8080-exec-54] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 5b55f65e-18d6-2b62-8e9a-c94c6e4c9bc0
+17:26:07.251 [http-nio-8080-exec-47] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 96d9760e-3781-65be-abf7-d729af2e60a7
+17:26:43.712 [http-nio-8080-exec-45] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: d7d4555b-9d44-7b7a-4e21-09e46a33b54c
+17:26:43.718 [http-nio-8080-exec-45] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: d7d4555b-9d44-7b7a-4e21-09e46a33b54c
+17:26:47.930 [http-nio-8080-exec-44] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: d7d4555b-9d44-7b7a-4e21-09e46a33b54c
+17:26:48.412 [http-nio-8080-exec-59] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: b769f4b8-6c33-42c6-2f08-816c61f3cd33
+17:26:48.415 [http-nio-8080-exec-59] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: b769f4b8-6c33-42c6-2f08-816c61f3cd33
+17:26:50.961 [http-nio-8080-exec-76] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 7a2f417a-9d03-56bd-9a13-4ad76dcb627a
+17:26:50.962 [http-nio-8080-exec-76] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 7a2f417a-9d03-56bd-9a13-4ad76dcb627a
+17:27:49.844 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 7a2f417a-9d03-56bd-9a13-4ad76dcb627a
+17:27:53.723 [http-nio-8080-exec-99] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 674d7056-9d1d-36bd-31a5-7c70885b4f61
+17:27:53.724 [http-nio-8080-exec-99] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 674d7056-9d1d-36bd-31a5-7c70885b4f61
+17:28:19.964 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: b769f4b8-6c33-42c6-2f08-816c61f3cd33
+17:28:23.714 [http-nio-8080-exec-95] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: c0a3298a-5468-f896-24ce-19cd51eaf1d5
+17:28:23.715 [http-nio-8080-exec-95] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: c0a3298a-5468-f896-24ce-19cd51eaf1d5
+17:28:30.007 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 674d7056-9d1d-36bd-31a5-7c70885b4f61
+17:28:33.721 [http-nio-8080-exec-88] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 36985876-8a8e-63f2-c2b2-c2470fc32774
+17:28:33.722 [http-nio-8080-exec-88] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 36985876-8a8e-63f2-c2b2-c2470fc32774
+17:29:00.116 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,86] - 客服下线: c0a3298a-5468-f896-24ce-19cd51eaf1d5
+17:29:03.769 [http-nio-8080-exec-93] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: a0b5c758-86b6-9d0b-5213-4a40f6efa253
+17:29:03.770 [http-nio-8080-exec-93] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: a0b5c758-86b6-9d0b-5213-4a40f6efa253
+17:29:10.148 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,86] - 客服下线: 36985876-8a8e-63f2-c2b2-c2470fc32774
+17:29:13.721 [http-nio-8080-exec-83] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: e712aa6d-f88f-1cee-240e-9566a9d46a1a
+17:29:13.722 [http-nio-8080-exec-83] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: e712aa6d-f88f-1cee-240e-9566a9d46a1a
+17:29:36.976 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+17:29:37.984 [SpringApplicationShutdownHook] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: a0b5c758-86b6-9d0b-5213-4a40f6efa253
+17:29:37.984 [SpringApplicationShutdownHook] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: e712aa6d-f88f-1cee-240e-9566a9d46a1a
+17:29:38.007 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+17:29:38.008 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+17:29:38.008 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+17:29:38.008 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+17:29:38.013 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2204] - {dataSource-1} closing ...
+17:29:38.017 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2277] - {dataSource-1} closed
+17:29:40.537 [background-preinit] INFO  o.h.v.i.util.Version - [<clinit>,21] - HV000001: Hibernate Validator 6.2.5.Final
+17:29:40.707 [main] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 21.0.2 on CrueldeMacBook-Pro.local with PID 40053 (/Users/cruelsummer/Projects/tourism/RuoYi-Vue/ruoyi-admin/target/classes started by cruelsummer in /Users/cruelsummer/Projects/tourism/RuoYi-Vue)
+17:29:40.708 [main] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+17:29:42.463 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8080"]
+17:29:42.464 [main] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+17:29:42.464 [main] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.98]
+17:29:42.517 [main] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+17:29:43.293 [main] INFO  c.a.d.p.DruidDataSource - [init,1002] - {dataSource-1} inited
+17:29:44.966 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1220] - Using default implementation for ThreadExecutor
+17:29:44.989 [main] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+17:29:44.989 [main] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.2 created.
+17:29:44.989 [main] INFO  o.q.s.RAMJobStore - [initialize,155] - RAMJobStore initialized.
+17:29:44.990 [main] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+17:29:44.990 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1374] - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+17:29:44.990 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1378] - Quartz scheduler version: 2.3.2
+17:29:44.990 [main] INFO  o.q.c.QuartzScheduler - [setJobFactory,2293] - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@264129aa
+17:29:46.099 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8080"]
+17:29:46.452 [main] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+17:29:46.459 [main] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 6.25 seconds (JVM running for 7.636)
+17:29:49.773 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+17:29:49.825 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 9aad5212-0a1b-2184-caa9-c8ece1f317ac
+17:29:49.837 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 9aad5212-0a1b-2184-caa9-c8ece1f317ac
+17:30:19.952 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 9aad5212-0a1b-2184-caa9-c8ece1f317ac
+17:31:45.522 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+17:31:46.550 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+17:31:46.551 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+17:31:46.551 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+17:31:46.551 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+17:31:46.557 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2204] - {dataSource-1} closing ...
+17:31:46.561 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2277] - {dataSource-1} closed
+17:31:48.964 [background-preinit] INFO  o.h.v.i.util.Version - [<clinit>,21] - HV000001: Hibernate Validator 6.2.5.Final
+17:31:49.130 [main] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 21.0.2 on CrueldeMacBook-Pro.local with PID 40124 (/Users/cruelsummer/Projects/tourism/RuoYi-Vue/ruoyi-admin/target/classes started by cruelsummer in /Users/cruelsummer/Projects/tourism/RuoYi-Vue)
+17:31:49.131 [main] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+17:31:50.829 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8080"]
+17:31:50.830 [main] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+17:31:50.830 [main] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.98]
+17:31:50.879 [main] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+17:31:51.640 [main] INFO  c.a.d.p.DruidDataSource - [init,1002] - {dataSource-1} inited
+17:31:53.279 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1220] - Using default implementation for ThreadExecutor
+17:31:53.301 [main] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+17:31:53.301 [main] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.2 created.
+17:31:53.301 [main] INFO  o.q.s.RAMJobStore - [initialize,155] - RAMJobStore initialized.
+17:31:53.302 [main] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+17:31:53.302 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1374] - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+17:31:53.302 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1378] - Quartz scheduler version: 2.3.2
+17:31:53.302 [main] INFO  o.q.c.QuartzScheduler - [setJobFactory,2293] - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@151daca9
+17:31:54.398 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8080"]
+17:31:54.743 [main] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+17:31:54.750 [main] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 6.131 seconds (JVM running for 7.451)
+18:05:47.582 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+18:05:48.036 [http-nio-8080-exec-17] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: acb2687f-9d1e-5690-6dc6-de45a0a67e88
+18:05:48.044 [http-nio-8080-exec-17] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: acb2687f-9d1e-5690-6dc6-de45a0a67e88
+18:06:24.549 [http-nio-8080-exec-5] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: acb2687f-9d1e-5690-6dc6-de45a0a67e88
+18:06:24.563 [http-nio-8080-exec-2] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 3768ffab-33f3-1d38-e915-e692adef519c
+18:06:24.563 [http-nio-8080-exec-2] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 3768ffab-33f3-1d38-e915-e692adef519c
+18:06:27.752 [http-nio-8080-exec-8] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 2f7df103-6433-8ad1-8196-c2d44a5d55b1
+18:06:27.753 [http-nio-8080-exec-8] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 2f7df103-6433-8ad1-8196-c2d44a5d55b1
+18:06:57.662 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 3768ffab-33f3-1d38-e915-e692adef519c
+18:07:00.759 [http-nio-8080-exec-22] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 5c6ba8cf-34c0-3bb2-21a4-ae571ee81649
+18:07:00.760 [http-nio-8080-exec-22] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 5c6ba8cf-34c0-3bb2-21a4-ae571ee81649
+18:07:07.689 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 2f7df103-6433-8ad1-8196-c2d44a5d55b1
+18:07:10.755 [http-nio-8080-exec-15] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 4d949cd1-dead-f7e6-e03f-e78a2a9ef511
+18:07:10.755 [http-nio-8080-exec-15] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 4d949cd1-dead-f7e6-e03f-e78a2a9ef511
+18:07:37.801 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 5c6ba8cf-34c0-3bb2-21a4-ae571ee81649
+18:07:41.758 [http-nio-8080-exec-46] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 33d36750-e339-d262-85ce-7ce1f858dd44
+18:07:41.758 [http-nio-8080-exec-46] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 33d36750-e339-d262-85ce-7ce1f858dd44
+18:07:47.842 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 4d949cd1-dead-f7e6-e03f-e78a2a9ef511
+18:07:51.753 [http-nio-8080-exec-3] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 0cc954b5-658e-caa9-4cbb-925114234b04
+18:07:51.754 [http-nio-8080-exec-3] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 0cc954b5-658e-caa9-4cbb-925114234b04
+18:08:17.944 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 33d36750-e339-d262-85ce-7ce1f858dd44
+18:08:21.762 [http-nio-8080-exec-48] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 03475413-b4e6-0e91-e902-b07abb002ea9
+18:08:21.763 [http-nio-8080-exec-48] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 03475413-b4e6-0e91-e902-b07abb002ea9
+18:08:27.992 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 0cc954b5-658e-caa9-4cbb-925114234b04
+18:08:31.766 [http-nio-8080-exec-38] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,32] - 用户连接: 167bf4f4-29e9-8562-cdea-5ed5d20f3f73
+18:08:31.767 [http-nio-8080-exec-38] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 167bf4f4-29e9-8562-cdea-5ed5d20f3f73
+18:08:47.786 [http-nio-8080-exec-56] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 03475413-b4e6-0e91-e902-b07abb002ea9
+18:08:47.786 [http-nio-8080-exec-33] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,84] - 客服下线: 167bf4f4-29e9-8562-cdea-5ed5d20f3f73
+18:08:50.977 [http-nio-8080-exec-35] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: f9c28bab-334a-b32d-a768-7a3d1933a7dc
+18:08:50.981 [http-nio-8080-exec-35] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: f9c28bab-334a-b32d-a768-7a3d1933a7dc
+18:10:39.466 [http-nio-8080-exec-28] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,89] - 客服下线: f9c28bab-334a-b32d-a768-7a3d1933a7dc
+18:10:41.284 [http-nio-8080-exec-41] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 394983b0-ae0c-db52-2dfe-6b01a0bc773b
+18:10:41.286 [http-nio-8080-exec-41] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: 394983b0-ae0c-db52-2dfe-6b01a0bc773b
+18:10:43.668 [http-nio-8080-exec-24] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: a4d0cb89-7bf3-a7ef-1b0d-85bb79cbde79
+18:10:43.670 [http-nio-8080-exec-24] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: a4d0cb89-7bf3-a7ef-1b0d-85bb79cbde79
+18:10:55.799 [http-nio-8080-exec-25] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,89] - 客服下线: 394983b0-ae0c-db52-2dfe-6b01a0bc773b
+18:10:57.574 [http-nio-8080-exec-42] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: e85149be-4cf8-ce2b-7ce7-ca33ae505787
+18:10:57.575 [http-nio-8080-exec-42] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: e85149be-4cf8-ce2b-7ce7-ca33ae505787
+18:10:59.418 [http-nio-8080-exec-57] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 7a4fa854-bfdb-72f1-2720-3d8075ef9ff4
+18:10:59.419 [http-nio-8080-exec-57] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: 7a4fa854-bfdb-72f1-2720-3d8075ef9ff4
+18:11:12.952 [http-nio-8080-exec-59] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,92] - 用户断开: e85149be-4cf8-ce2b-7ce7-ca33ae505787
+18:11:13.373 [http-nio-8080-exec-60] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: b903dad0-ae22-a82d-8cdf-1174a22c43a1
+18:11:13.375 [http-nio-8080-exec-60] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: b903dad0-ae22-a82d-8cdf-1174a22c43a1
+18:11:15.984 [http-nio-8080-exec-58] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 52cda2c8-c414-abaa-b040-dc135ca12edf
+18:11:15.984 [http-nio-8080-exec-58] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: 52cda2c8-c414-abaa-b040-dc135ca12edf
+18:11:33.545 [http-nio-8080-exec-79] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,92] - 用户断开: 52cda2c8-c414-abaa-b040-dc135ca12edf
+18:11:33.545 [http-nio-8080-exec-80] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,92] - 用户断开: b903dad0-ae22-a82d-8cdf-1174a22c43a1
+18:11:33.545 [http-nio-8080-exec-86] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,89] - 客服下线: 7a4fa854-bfdb-72f1-2720-3d8075ef9ff4
+18:11:33.546 [http-nio-8080-exec-50] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,89] - 客服下线: a4d0cb89-7bf3-a7ef-1b0d-85bb79cbde79
+18:11:34.099 [http-nio-8080-exec-77] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: e57d78b8-5490-5e24-75fa-4c6113257e4e
+18:11:34.100 [http-nio-8080-exec-77] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: e57d78b8-5490-5e24-75fa-4c6113257e4e
+18:11:46.458 [http-nio-8080-exec-78] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,92] - 用户断开: e57d78b8-5490-5e24-75fa-4c6113257e4e
+18:11:49.884 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[测试用户][Success][注册成功]
+18:11:51.179 [http-nio-8080-exec-61] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: e96ea465-65c7-c3a9-1fd9-7d15b1227b7c
+18:11:51.183 [http-nio-8080-exec-61] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: e96ea465-65c7-c3a9-1fd9-7d15b1227b7c
+18:12:26.291 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,92] - 用户断开: e96ea465-65c7-c3a9-1fd9-7d15b1227b7c
+18:12:29.400 [http-nio-8080-exec-98] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: cc80779b-113a-8850-13cc-bc400f8d1f04
+18:13:26.347 [http-nio-8080-exec-98] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: cc80779b-113a-8850-13cc-bc400f8d1f04
+18:14:54.485 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: cc80779b-113a-8850-13cc-bc400f8d1f04
+18:14:57.727 [http-nio-8080-exec-96] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 5d689c9d-0e82-c8e3-e08b-d3baaa266f3f
+18:14:57.730 [http-nio-8080-exec-70] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: 5d689c9d-0e82-c8e3-e08b-d3baaa266f3f
+18:15:13.652 [http-nio-8080-exec-69] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: 5d689c9d-0e82-c8e3-e08b-d3baaa266f3f
+18:15:14.783 [http-nio-8080-exec-74] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 6eee7613-8dc3-fb91-831c-15939610f12e
+18:15:14.784 [http-nio-8080-exec-74] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: 6eee7613-8dc3-fb91-831c-15939610f12e
+18:15:17.312 [http-nio-8080-exec-90] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: b405452e-42d7-e4c8-e6af-4a84b1d4bef2
+18:15:17.313 [http-nio-8080-exec-90] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: b405452e-42d7-e4c8-e6af-4a84b1d4bef2
+18:15:49.906 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: b405452e-42d7-e4c8-e6af-4a84b1d4bef2
+18:15:53.710 [http-nio-8080-exec-23] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: f2daa037-c381-a3d6-aaac-2dda1c5f3d56
+18:15:53.712 [http-nio-8080-exec-23] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: f2daa037-c381-a3d6-aaac-2dda1c5f3d56
+18:15:59.946 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: 6eee7613-8dc3-fb91-831c-15939610f12e
+18:16:03.696 [http-nio-8080-exec-76] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 564351ce-164c-d18d-25dd-b43ce79ae787
+18:16:03.697 [http-nio-8080-exec-76] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: 564351ce-164c-d18d-25dd-b43ce79ae787
+18:16:18.997 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Success][注册成功]
+18:16:21.272 [http-nio-8080-exec-85] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 232d48be-84d1-3ae5-ae0a-57c50ba6d918
+18:16:21.273 [http-nio-8080-exec-85] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: 232d48be-84d1-3ae5-ae0a-57c50ba6d918
+18:17:10.174 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,88] - 客服下线: 232d48be-84d1-3ae5-ae0a-57c50ba6d918
+18:17:10.177 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: 564351ce-164c-d18d-25dd-b43ce79ae787
+18:17:10.178 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: f2daa037-c381-a3d6-aaac-2dda1c5f3d56
+18:17:13.723 [http-nio-8080-exec-52] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: b3967f43-9cd0-46f7-f3bd-ef183edbf3e2
+18:17:13.723 [http-nio-8080-exec-10] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 8ff6845c-1789-c56b-eece-8a8a7a76c5ce
+18:17:13.726 [http-nio-8080-exec-52] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: b3967f43-9cd0-46f7-f3bd-ef183edbf3e2
+18:17:13.726 [http-nio-8080-exec-10] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: 8ff6845c-1789-c56b-eece-8a8a7a76c5ce
+18:17:13.739 [http-nio-8080-exec-43] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 0f86794d-d72c-a067-38b3-f63ad828722e
+18:17:13.739 [http-nio-8080-exec-43] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: 0f86794d-d72c-a067-38b3-f63ad828722e
+18:18:15.992 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,88] - 客服下线: 8ff6845c-1789-c56b-eece-8a8a7a76c5ce
+18:18:16.378 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: 0f86794d-d72c-a067-38b3-f63ad828722e
+18:18:21.709 [http-nio-8080-exec-14] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: e56dd92c-08f7-2288-3ed6-c37088d76fc2
+18:18:29.347 [http-nio-8080-exec-14] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: e56dd92c-08f7-2288-3ed6-c37088d76fc2
+18:19:19.923 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,88] - 客服下线: e56dd92c-08f7-2288-3ed6-c37088d76fc2
+18:19:19.927 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: b3967f43-9cd0-46f7-f3bd-ef183edbf3e2
+18:19:23.697 [http-nio-8080-exec-18] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 6932112b-5522-db91-8aa1-a66cd6f43bc5
+18:19:23.697 [http-nio-8080-exec-18] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: 6932112b-5522-db91-8aa1-a66cd6f43bc5
+18:19:23.704 [http-nio-8080-exec-12] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: bfcb8617-0d18-c05d-edba-a07d2b41ddee
+18:19:23.705 [http-nio-8080-exec-12] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: bfcb8617-0d18-c05d-edba-a07d2b41ddee
+18:19:53.801 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,88] - 客服下线: 6932112b-5522-db91-8aa1-a66cd6f43bc5
+18:19:53.802 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: bfcb8617-0d18-c05d-edba-a07d2b41ddee
+18:19:56.851 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: d59ec08a-233e-e8e1-be74-87d161465071
+18:19:56.852 [http-nio-8080-exec-20] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 97eeda96-9057-d6c2-12ad-806d83360d15
+18:19:56.855 [http-nio-8080-exec-20] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: 97eeda96-9057-d6c2-12ad-806d83360d15
+18:19:56.855 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: d59ec08a-233e-e8e1-be74-87d161465071
+18:20:57.044 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+18:20:58.053 [SpringApplicationShutdownHook] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: 97eeda96-9057-d6c2-12ad-806d83360d15
+18:20:58.054 [SpringApplicationShutdownHook] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,88] - 客服下线: d59ec08a-233e-e8e1-be74-87d161465071
+18:20:58.081 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+18:20:58.082 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+18:20:58.082 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+18:20:58.083 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+18:20:58.087 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2204] - {dataSource-1} closing ...
+18:20:58.091 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2277] - {dataSource-1} closed
+18:21:00.760 [background-preinit] INFO  o.h.v.i.util.Version - [<clinit>,21] - HV000001: Hibernate Validator 6.2.5.Final
+18:21:00.951 [main] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 21.0.2 on CrueldeMacBook-Pro.local with PID 40821 (/Users/cruelsummer/Projects/tourism/RuoYi-Vue/ruoyi-admin/target/classes started by cruelsummer in /Users/cruelsummer/Projects/tourism/RuoYi-Vue)
+18:21:00.952 [main] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+18:21:02.803 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8080"]
+18:21:02.804 [main] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+18:21:02.804 [main] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.98]
+18:21:02.864 [main] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+18:21:03.657 [main] INFO  c.a.d.p.DruidDataSource - [init,1002] - {dataSource-1} inited
+18:21:05.357 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1220] - Using default implementation for ThreadExecutor
+18:21:05.379 [main] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+18:21:05.379 [main] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.2 created.
+18:21:05.380 [main] INFO  o.q.s.RAMJobStore - [initialize,155] - RAMJobStore initialized.
+18:21:05.380 [main] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+18:21:05.380 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1374] - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+18:21:05.380 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1378] - Quartz scheduler version: 2.3.2
+18:21:05.381 [main] INFO  o.q.c.QuartzScheduler - [setJobFactory,2293] - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@5cb96c95
+18:21:06.526 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8080"]
+18:21:06.870 [main] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+18:21:06.878 [main] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 6.443 seconds (JVM running for 7.854)
+18:26:49.445 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+18:26:49.503 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 52a2d2d6-519f-a7d7-defb-afd508facc8a
+18:26:49.516 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: 52a2d2d6-519f-a7d7-defb-afd508facc8a
+18:26:55.355 [http-nio-8080-exec-25] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: fe00dd51-52fc-9c8f-7ed4-f5a2ed9957e3
+18:26:55.356 [http-nio-8080-exec-25] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: fe00dd51-52fc-9c8f-7ed4-f5a2ed9957e3
+18:27:57.533 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,88] - 客服下线: 52a2d2d6-519f-a7d7-defb-afd508facc8a
+18:27:57.534 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,91] - 用户断开: fe00dd51-52fc-9c8f-7ed4-f5a2ed9957e3
+18:28:00.821 [http-nio-8080-exec-8] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: a86d8304-33ed-1e68-7abd-bc2559a7cbdd
+18:28:00.821 [http-nio-8080-exec-13] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: cc0fa214-dc4d-768f-a562-eaaff97bc3fd
+18:28:00.824 [http-nio-8080-exec-8] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,54] - 客服上线: a86d8304-33ed-1e68-7abd-bc2559a7cbdd
+18:28:00.824 [http-nio-8080-exec-13] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,57] - 用户连接: cc0fa214-dc4d-768f-a562-eaaff97bc3fd
+18:28:25.297 [http-nio-8080-exec-16] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: a86d8304-33ed-1e68-7abd-bc2559a7cbdd
+18:28:30.928 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: cc0fa214-dc4d-768f-a562-eaaff97bc3fd
+18:28:34.049 [http-nio-8080-exec-38] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 0d2890de-b96d-7644-4b12-52420e032547
+18:28:34.050 [http-nio-8080-exec-38] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: 0d2890de-b96d-7644-4b12-52420e032547
+18:29:04.155 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: 0d2890de-b96d-7644-4b12-52420e032547
+18:29:07.166 [http-nio-8080-exec-7] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: c60d7215-913a-8f24-61b4-65254f50d642
+18:29:07.168 [http-nio-8080-exec-7] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: c60d7215-913a-8f24-61b4-65254f50d642
+18:29:37.288 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: c60d7215-913a-8f24-61b4-65254f50d642
+18:29:40.312 [http-nio-8080-exec-5] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: e69d9a50-f75a-f584-ea2b-f86809f78d47
+18:29:40.316 [http-nio-8080-exec-5] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: e69d9a50-f75a-f584-ea2b-f86809f78d47
+18:30:10.417 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: e69d9a50-f75a-f584-ea2b-f86809f78d47
+18:30:13.439 [http-nio-8080-exec-6] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: fae99e37-cc44-2655-5dc3-944bb5b47d24
+18:30:13.442 [http-nio-8080-exec-6] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: fae99e37-cc44-2655-5dc3-944bb5b47d24
+18:30:43.540 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: fae99e37-cc44-2655-5dc3-944bb5b47d24
+18:30:59.628 [http-nio-8080-exec-17] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: f0a4cc1f-29ea-ac3c-ef98-c696bb42d1fd
+18:30:59.632 [http-nio-8080-exec-17] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: f0a4cc1f-29ea-ac3c-ef98-c696bb42d1fd
+18:31:00.904 [http-nio-8080-exec-14] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: f0a4cc1f-29ea-ac3c-ef98-c696bb42d1fd
+18:31:03.927 [http-nio-8080-exec-9] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: a4d35c40-5de0-cb7f-4cd3-484a157f7e2d
+18:31:03.932 [http-nio-8080-exec-9] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: a4d35c40-5de0-cb7f-4cd3-484a157f7e2d
+18:31:06.911 [http-nio-8080-exec-40] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: a4d35c40-5de0-cb7f-4cd3-484a157f7e2d
+18:31:09.836 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Success][注册成功]
+18:31:46.666 [schedule-pool-2] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+18:31:48.812 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Success][注册成功]
+18:31:53.225 [http-nio-8080-exec-43] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: ba72c81e-3673-f4e3-83ed-b89833fb5ca8
+18:31:53.228 [http-nio-8080-exec-43] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: ba72c81e-3673-f4e3-83ed-b89833fb5ca8
+18:31:56.742 [schedule-pool-3] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+18:31:56.754 [http-nio-8080-exec-3] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: ba72c81e-3673-f4e3-83ed-b89833fb5ca8
+18:32:01.686 [schedule-pool-2] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[ry][Success][注册成功]
+18:32:06.103 [http-nio-8080-exec-79] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: ad256136-7f28-85f7-414e-8d531e15edfd
+18:32:06.104 [http-nio-8080-exec-79] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: ad256136-7f28-85f7-414e-8d531e15edfd
+18:32:07.934 [http-nio-8080-exec-62] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: ad256136-7f28-85f7-414e-8d531e15edfd
+18:32:10.950 [http-nio-8080-exec-64] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 2843dd25-ca77-ee7e-419e-81c1e0fe1445
+18:32:10.955 [http-nio-8080-exec-60] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 2843dd25-ca77-ee7e-419e-81c1e0fe1445
+18:32:44.074 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: 2843dd25-ca77-ee7e-419e-81c1e0fe1445
+18:32:47.091 [http-nio-8080-exec-99] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 94d2a7d8-6fba-0406-0292-cdd722589cbb
+18:32:47.092 [http-nio-8080-exec-99] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 94d2a7d8-6fba-0406-0292-cdd722589cbb
+18:33:17.204 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: 94d2a7d8-6fba-0406-0292-cdd722589cbb
+18:33:20.227 [http-nio-8080-exec-90] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: f24eba55-d497-320b-bb1a-92b2153e95df
+18:33:20.229 [http-nio-8080-exec-90] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: f24eba55-d497-320b-bb1a-92b2153e95df
+18:33:29.402 [http-nio-8080-exec-88] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: ea42cf53-ee71-afcb-8c32-34ef95f56bd3
+18:33:29.403 [http-nio-8080-exec-88] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: ea42cf53-ee71-afcb-8c32-34ef95f56bd3
+18:33:41.110 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+18:33:42.118 [SpringApplicationShutdownHook] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: ea42cf53-ee71-afcb-8c32-34ef95f56bd3
+18:33:42.118 [SpringApplicationShutdownHook] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: f24eba55-d497-320b-bb1a-92b2153e95df
+18:33:42.146 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+18:33:42.146 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+18:33:42.146 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+18:33:42.147 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+18:33:42.151 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2204] - {dataSource-1} closing ...
+18:33:42.156 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2277] - {dataSource-1} closed
+18:33:44.880 [background-preinit] INFO  o.h.v.i.util.Version - [<clinit>,21] - HV000001: Hibernate Validator 6.2.5.Final
+18:33:45.033 [main] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 21.0.2 on CrueldeMacBook-Pro.local with PID 41171 (/Users/cruelsummer/Projects/tourism/RuoYi-Vue/ruoyi-admin/target/classes started by cruelsummer in /Users/cruelsummer/Projects/tourism/RuoYi-Vue)
+18:33:45.034 [main] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+18:33:46.825 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8080"]
+18:33:46.826 [main] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+18:33:46.826 [main] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.98]
+18:33:46.879 [main] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+18:33:47.666 [main] INFO  c.a.d.p.DruidDataSource - [init,1002] - {dataSource-1} inited
+18:33:49.335 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1220] - Using default implementation for ThreadExecutor
+18:33:49.356 [main] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+18:33:49.356 [main] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.2 created.
+18:33:49.356 [main] INFO  o.q.s.RAMJobStore - [initialize,155] - RAMJobStore initialized.
+18:33:49.357 [main] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+18:33:49.357 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1374] - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+18:33:49.357 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1378] - Quartz scheduler version: 2.3.2
+18:33:49.357 [main] INFO  o.q.c.QuartzScheduler - [setJobFactory,2293] - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@4902882c
+18:33:50.481 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8080"]
+18:33:50.818 [main] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+18:33:50.826 [main] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 6.242 seconds (JVM running for 7.563)
+18:33:53.732 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+18:34:08.705 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionEstablished,33] - 用户连接: 8127985e-346d-39ff-04c2-0477658a531a
+18:34:08.744 [http-nio-8080-exec-1] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 8127985e-346d-39ff-04c2-0477658a531a
+18:34:48.870 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: 8127985e-346d-39ff-04c2-0477658a531a
+18:35:02.461 [http-nio-8080-exec-39] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 6ec07d80-45df-578f-e3bc-b925371188fd
+18:35:13.938 [http-nio-8080-exec-76] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: 2789664c-8233-821d-b67c-efd09fe79d05
+18:35:52.618 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: 2789664c-8233-821d-b67c-efd09fe79d05
+18:35:52.621 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: 6ec07d80-45df-578f-e3bc-b925371188fd
+18:35:55.702 [http-nio-8080-exec-100] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: e99a9dd4-109b-65d6-0c0f-7c4d311e6de3
+18:35:55.713 [http-nio-8080-exec-52] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,53] - 客服上线: 278d8ca6-da0e-f34e-367f-c7d4031ddcce
+18:36:25.828 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: e99a9dd4-109b-65d6-0c0f-7c4d311e6de3
+18:36:25.829 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,87] - 客服下线: 278d8ca6-da0e-f34e-367f-c7d4031ddcce
+18:36:28.870 [http-nio-8080-exec-98] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: da1a2b95-494e-aa71-fa27-f1e3e37f1f23
+18:36:58.978 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: da1a2b95-494e-aa71-fa27-f1e3e37f1f23
+18:37:02.013 [http-nio-8080-exec-95] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: 0da9a510-c388-5794-1789-1b9b838e7a09
+18:37:32.131 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: 0da9a510-c388-5794-1789-1b9b838e7a09
+18:37:35.724 [http-nio-8080-exec-83] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: 2f9cb545-f18a-7676-ae65-3b556ceb6441
+18:38:05.829 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: 2f9cb545-f18a-7676-ae65-3b556ceb6441
+18:38:09.873 [http-nio-8080-exec-94] INFO  c.r.f.w.ChatWebSocketHandler - [handleTextMessage,56] - 用户连接: 3d7748bd-efa0-6e42-3ad1-fc75bf5253a3
+18:38:39.970 [WebSocket background processing] INFO  c.r.f.w.ChatWebSocketHandler - [afterConnectionClosed,90] - 用户断开: 3d7748bd-efa0-6e42-3ad1-fc75bf5253a3
+18:44:46.890 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+18:44:47.940 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+18:44:47.940 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+18:44:47.940 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+18:44:47.941 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+18:44:47.948 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2204] - {dataSource-1} closing ...
+18:44:47.952 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2277] - {dataSource-1} closed
+18:44:50.385 [background-preinit] INFO  o.h.v.i.util.Version - [<clinit>,21] - HV000001: Hibernate Validator 6.2.5.Final
+18:44:50.543 [main] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 21.0.2 on CrueldeMacBook-Pro.local with PID 41688 (/Users/cruelsummer/Projects/tourism/RuoYi-Vue/ruoyi-admin/target/classes started by cruelsummer in /Users/cruelsummer/Projects/tourism/RuoYi-Vue)
+18:44:50.544 [main] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+18:44:52.216 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8080"]
+18:44:52.217 [main] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+18:44:52.217 [main] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.98]
+18:44:52.268 [main] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+18:44:53.020 [main] INFO  c.a.d.p.DruidDataSource - [init,1002] - {dataSource-1} inited
+18:44:54.641 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1220] - Using default implementation for ThreadExecutor
+18:44:54.668 [main] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+18:44:54.668 [main] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.2 created.
+18:44:54.669 [main] INFO  o.q.s.RAMJobStore - [initialize,155] - RAMJobStore initialized.
+18:44:54.669 [main] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+18:44:54.669 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1374] - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+18:44:54.669 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1378] - Quartz scheduler version: 2.3.2
+18:44:54.669 [main] INFO  o.q.c.QuartzScheduler - [setJobFactory,2293] - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@754e3050
+18:44:55.756 [main] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8080"]
+18:44:56.100 [main] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+18:44:56.110 [main] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 6.029 seconds (JVM running for 7.345)
+18:51:05.207 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+19:26:55.166 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+19:26:56.223 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+19:26:56.223 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+19:26:56.224 [SpringApplicationShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+19:26:56.224 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+19:26:56.232 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2204] - {dataSource-1} closing ...
+19:26:56.236 [SpringApplicationShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2277] - {dataSource-1} closed

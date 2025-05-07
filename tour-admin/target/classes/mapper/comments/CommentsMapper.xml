@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.comments.mapper.CommentsMapper">
+    
+    <resultMap type="Comments" id="CommentsResult">
+        <result property="commentId"    column="comment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="content"    column="content"    />
+        <result property="rating"    column="rating"    />
+        <result property="createdAt"    column="created_at"    />
+    </resultMap>
+
+    <sql id="selectCommentsVo">
+        select comment_id, user_id, project_id, content, rating, created_at from comments
+    </sql>
+
+    <select id="selectCommentsList" parameterType="Comments" resultMap="CommentsResult">
+        <include refid="selectCommentsVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="rating != null "> and rating = #{rating}</if>
+        </where>
+    </select>
+    
+    <select id="selectCommentsByCommentId" parameterType="Long" resultMap="CommentsResult">
+        <include refid="selectCommentsVo"/>
+        where comment_id = #{commentId}
+    </select>
+
+    <insert id="insertComments" parameterType="Comments" useGeneratedKeys="true" keyProperty="commentId">
+        insert into comments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            user_id,
+            <if test="projectId != null">project_id,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="rating != null">rating,</if>
+            <if test="createdAt != null">created_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{userId},
+            <if test="projectId != null">#{projectId},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="rating != null">#{rating},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateComments" parameterType="Comments">
+        update comments
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="rating != null">rating = #{rating},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+        </trim>
+        where comment_id = #{commentId}
+    </update>
+
+    <delete id="deleteCommentsByCommentId" parameterType="Long">
+        delete from comments where comment_id = #{commentId}
+    </delete>
+
+    <delete id="deleteCommentsByCommentIds" parameterType="String">
+        delete from comments where comment_id in 
+        <foreach item="commentId" collection="array" open="(" separator="," close=")">
+            #{commentId}
+        </foreach>
+    </delete>
+</mapper>
