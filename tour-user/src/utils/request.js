@@ -97,7 +97,7 @@ service.interceptors.response.use(res => {
             })
                 .then(() => {
                     isRelogin.show = false;
-                    router.push('/');
+                    router.push('/auth');
                 })
                 .catch(() => {
                     isRelogin.show = false;
