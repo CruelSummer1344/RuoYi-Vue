@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.promotions.mapper.CulturalPromotionsMapper">
+    
+    <resultMap type="CulturalPromotions" id="CulturalPromotionsResult">
+        <result property="promotionId"    column="promotion_id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="imageUrl"    column="image_url"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectCulturalPromotionsVo">
+        select promotion_id, title, content, image_url, created_at, updated_at from cultural_promotions
+    </sql>
+
+    <select id="selectCulturalPromotionsList" parameterType="CulturalPromotions" resultMap="CulturalPromotionsResult">
+        <include refid="selectCulturalPromotionsVo"/>
+        <where>  
+            <if test="promotionId != null "> and promotion_id = #{promotionId}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+        </where>
+    </select>
+    
+    <select id="selectCulturalPromotionsByPromotionId" parameterType="Long" resultMap="CulturalPromotionsResult">
+        <include refid="selectCulturalPromotionsVo"/>
+        where promotion_id = #{promotionId}
+    </select>
+
+    <insert id="insertCulturalPromotions" parameterType="CulturalPromotions" useGeneratedKeys="true" keyProperty="promotionId">
+        insert into cultural_promotions
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">title,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="imageUrl != null">image_url,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="imageUrl != null">#{imageUrl},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCulturalPromotions" parameterType="CulturalPromotions">
+        update cultural_promotions
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="imageUrl != null">image_url = #{imageUrl},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where promotion_id = #{promotionId}
+    </update>
+
+    <delete id="deleteCulturalPromotionsByPromotionId" parameterType="Long">
+        delete from cultural_promotions where promotion_id = #{promotionId}
+    </delete>
+
+    <delete id="deleteCulturalPromotionsByPromotionIds" parameterType="String">
+        delete from cultural_promotions where promotion_id in 
+        <foreach item="promotionId" collection="array" open="(" separator="," close=")">
+            #{promotionId}
+        </foreach>
+    </delete>
+</mapper>

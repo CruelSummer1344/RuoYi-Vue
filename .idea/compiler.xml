@@ -6,12 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ruoyi-common" />
-        <module name="ruoyi-framework" />
-        <module name="ruoyi-generator" />
-        <module name="ruoyi-system" />
-        <module name="ruoyi-quartz" />
-        <module name="ruoyi-admin" />
+        <module name="tour-quartz" />
+        <module name="tour-admin" />
+        <module name="tour-generator" />
+        <module name="tour-common" />
+        <module name="tour-system" />
+        <module name="tour-framework" />
       </profile>
     </annotationProcessing>
   </component>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activities.mapper.ActivitiesMapper">
+    
+    <resultMap type="Activities" id="ActivitiesResult">
+        <result property="activityId"    column="activity_id"    />
+        <result property="title"    column="title"    />
+        <result property="date"    column="date"    />
+        <result property="imageUrl"    column="image_url"    />
+        <result property="createdAt"    column="created_at"    />
+    </resultMap>
+
+    <sql id="selectActivitiesVo">
+        select activity_id, title, date, image_url, created_at from activities
+    </sql>
+
+    <select id="selectActivitiesList" parameterType="Activities" resultMap="ActivitiesResult">
+        <include refid="selectActivitiesVo"/>
+        <where>  
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="date != null "> and date = #{date}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivitiesByActivityId" parameterType="Long" resultMap="ActivitiesResult">
+        <include refid="selectActivitiesVo"/>
+        where activity_id = #{activityId}
+    </select>
+
+    <insert id="insertActivities" parameterType="Activities" useGeneratedKeys="true" keyProperty="activityId">
+        insert into activities
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">title,</if>
+            <if test="date != null">date,</if>
+            <if test="imageUrl != null">image_url,</if>
+            <if test="createdAt != null">created_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="date != null">#{date},</if>
+            <if test="imageUrl != null">#{imageUrl},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateActivities" parameterType="Activities">
+        update activities
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="date != null">date = #{date},</if>
+            <if test="imageUrl != null">image_url = #{imageUrl},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+        </trim>
+        where activity_id = #{activityId}
+    </update>
+
+    <delete id="deleteActivitiesByActivityId" parameterType="Long">
+        delete from activities where activity_id = #{activityId}
+    </delete>
+
+    <delete id="deleteActivitiesByActivityIds" parameterType="String">
+        delete from activities where activity_id in 
+        <foreach item="activityId" collection="array" open="(" separator="," close=")">
+            #{activityId}
+        </foreach>
+    </delete>
+</mapper>

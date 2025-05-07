@@ -3,6 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ruoyi.iml" filepath="$PROJECT_DIR$/ruoyi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tour-admin/tour-admin.iml" filepath="$PROJECT_DIR$/tour-admin/tour-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ruoyi-common/tour-common.iml" filepath="$PROJECT_DIR$/ruoyi-common/tour-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tour-framework/tour-framework.iml" filepath="$PROJECT_DIR$/tour-framework/tour-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ruoyi-generator/tour-generator.iml" filepath="$PROJECT_DIR$/ruoyi-generator/tour-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tour-quartz/tour-quartz.iml" filepath="$PROJECT_DIR$/tour-quartz/tour-quartz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ruoyi-system/tour-system.iml" filepath="$PROJECT_DIR$/ruoyi-system/tour-system.iml" />
     </modules>
   </component>
 </project>
