@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.activities.mapper.ActivitiesMapper">
+<mapper namespace="com.tour.activities.mapper.ActivitiesMapper">
     
     <resultMap type="Activities" id="ActivitiesResult">
         <result property="activityId"    column="activity_id"    />

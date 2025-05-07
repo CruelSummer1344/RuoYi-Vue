@@ -34,7 +34,7 @@ server:
 # 日志配置
 logging:
   level:
-    com.ruoyi: debug
+    com.tour: debug
     org.springframework: warn
 
 # 用户配置
@@ -100,12 +100,12 @@ token:
 # MyBatis配置
 mybatis:
   # 搜索指定包别名
-  typeAliasesPackage: com.ruoyi.**.domain
+  typeAliasesPackage: com.tour.**.domain
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 加载全局的配置文件
   configLocation: classpath:mybatis/mybatis-config.xml
-  type-handlers-package: com.ruoyi.hotel.handler
+  type-handlers-package: com.tour.hotel.handler
 
 # PageHelper分页插件
 pagehelper:
