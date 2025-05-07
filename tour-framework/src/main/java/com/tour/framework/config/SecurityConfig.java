@@ -113,6 +113,7 @@ public class SecurityConfig
                 requests
                         // 放行WebSocket路径（注意和前端连接URL一致）
                         .antMatchers("/websocket/**", "/websocket*").permitAll()
+                        .antMatchers("/profile/**").permitAll()
                         .antMatchers("/login", "/register", "/captchaImage").permitAll()
                         .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
                         .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
