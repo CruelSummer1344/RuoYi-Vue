@@ -500,7 +500,7 @@ export default {
   },
   created() {
     this.totalTravelItems = this.travelData.length;
-    this.getUserInfo();
+    // this.getUserInfo();
     this.getWeatherData();
   },
   methods: {

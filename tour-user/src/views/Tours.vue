@@ -155,7 +155,7 @@ export default {
             {id: 1, user: '游客', text: '景点很美，值得一游！'}
           ]
         }));
-      });
+      }).catch(err=> {});
     },
 
     handleSearch() {

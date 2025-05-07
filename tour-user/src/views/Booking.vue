@@ -784,7 +784,7 @@ export default {
             }
           ]
         }));
-      });
+      }).catch(err=> {});
     },
 
     // 搜索景点
@@ -907,7 +907,7 @@ export default {
           details: order.remarks ? JSON.parse(order.remarks) : {}
         }));
         this.filteredOrders = [...this.orders];
-      });
+      }).catch(err=> {});
     },
 
     // 搜索订单
@@ -1042,7 +1042,7 @@ export default {
             }
           ]
         }));
-      });
+      }).catch(err=> {});
     },
 
     // 搜索酒店
@@ -1185,7 +1185,7 @@ export default {
           ]
         }));
         this.filteredTourProjects = [...this.tourProjects];
-      });
+      }).catch(err=> {});
     },
 
     // 搜索旅游项目

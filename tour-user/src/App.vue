@@ -114,11 +114,6 @@ export default {
     this.name = this.$store.state.user.name || ''
   },
   methods: {
-    getUser() {
-      getUserProfile().then(response => {
-        this.user = response.data;
-      });
-    },
     // 菜单选择（添加防抖）
     handleSelect(key) {
       if (this.$route.path !== key) {
