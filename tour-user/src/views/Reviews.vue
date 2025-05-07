@@ -3,11 +3,11 @@
     <h2>用户评论</h2>
 
     <!-- 发表评论 -->
-    <el-card class="review-form-card" shadow="always">
+    <el-card class="review-form-card" shadow="never">
       <h3>发表您的评论</h3>
       <el-form :model="reviewForm" :rules="rules" ref="reviewForm" label-width="100px">
         <el-form-item label="选择项目" prop="projectId">
-          <el-select v-model="reviewForm.projectId" placeholder="请选择体验过的项目" @change="onProjectChange">
+          <el-select v-model="reviewForm.projectId" placeholder="请选择体验过的项目" @change="onProjectChange" class="form-select">
             <el-option v-for="project in projects" :key="project.id" :label="project.name" :value="project.id"></el-option>
           </el-select>
         </el-form-item>
@@ -15,7 +15,7 @@
           <el-rate v-model="reviewForm.rating" show-score text-color="#ff9900" score-template="{value} 分"></el-rate>
         </el-form-item>
         <el-form-item label="评论内容" prop="content">
-          <el-input type="textarea" v-model="reviewForm.content" placeholder="请分享您的真实体验" :rows="4"></el-input>
+          <el-input type="textarea" v-model="reviewForm.content" placeholder="请分享您的真实体验" :rows="4" class="form-textarea"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitReview('reviewForm')">提交评论</el-button>
@@ -27,24 +27,36 @@
     <!-- 评论列表 -->
     <div class="review-list">
       <h3>最新评论</h3>
-      <el-form inline class="sort-form">
-        <el-form-item label="排序">
-          <el-select v-model="sortOrder" @change="sortReviews">
-            <el-option label="最新评论" value="desc"></el-option>
-            <el-option label="最早评论" value="asc"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <el-card v-for="review in sortedReviews" :key="review.id" class="review-card" shadow="hover">
-        <div class="review-header">
-          <span class="username">{{ review.username }}</span>
-          <el-rate v-model="review.rating" disabled show-score text-color="#ff9900" score-template="{value} 分"></el-rate>
-          <span class="date">{{ review.createTime }}</span>
-        </div>
-        <p>{{ review.content }}</p>
-        <p class="project-name"><strong>项目：</strong>{{ review.projectName }}</p>
-      </el-card>
-      <el-empty v-if="sortedReviews.length === 0" description="暂无评论"></el-empty>
+      <div class="sort-container">
+        <el-form inline class="sort-form">
+          <el-form-item label="排序">
+            <el-select v-model="sortOrder" @change="sortReviews" class="sort-select">
+              <el-option label="最新评论" value="desc"></el-option>
+              <el-option label="最早评论" value="asc"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <el-row :gutter="24" v-if="sortedReviews.length > 0">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" v-for="review in sortedReviews" :key="review.id">
+          <el-card class="review-card" shadow="never">
+            <div class="review-header">
+              <span class="username">{{ review.username }}</span>
+              <span class="date">{{ review.createTime }}</span>
+            </div>
+            <div class="review-rating">
+              <el-rate v-model="review.rating" disabled show-score text-color="#ff9900" score-template="{value} 分"></el-rate>
+            </div>
+            <p class="review-content">{{ review.content }}</p>
+            <div class="review-footer">
+              <span class="project-tag">{{ review.projectName }}</span>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+
+      <el-empty v-if="sortedReviews.length === 0" description="暂无评论" :image-size="200"></el-empty>
     </div>
   </div>
 </template>
@@ -162,52 +174,202 @@ export default {
 
 <style scoped>
 .reviews {
-  padding: 20px;
-  max-width: 1200px;
+  padding: 40px 20px;
+  max-width: 1400px;
   margin: 0 auto;
+  background: #f8fafc;
 }
 
-h2, h3 {
+h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2a44;
+  margin-bottom: 30px;
   text-align: center;
-  color: #303133;
-  margin-bottom: 20px;
 }
 
+h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f2a44;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* 评论表单卡片 */
 .review-form-card {
   margin-bottom: 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+  border: none;
 }
 
+.review-form-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.review-form-card >>> .el-card__body {
+  padding: 30px;
+}
+
+.form-select, .form-textarea {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.form-select >>> .el-input__inner,
+.form-textarea >>> .el-textarea__inner {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.form-textarea >>> .el-textarea__inner {
+  padding: 12px;
+  line-height: 1.6;
+}
+
+.el-button {
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+.el-button--primary {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+/* 评论列表 */
 .review-list {
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
-.sort-form {
-  margin-bottom: 20px;
+.sort-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.sort-select {
+  width: 150px;
+  border-radius: 8px;
+}
+
+.sort-select >>> .el-input__inner {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
 }
 
 .review-card {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  height: 100%;
+}
+
+.review-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.review-card >>> .el-card__body {
+  padding: 24px;
 }
 
 .review-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .username {
-  font-weight: bold;
-  color: #409eff;
+  font-weight: 600;
+  color: #1f2a44;
+  font-size: 16px;
 }
 
 .date {
-  color: #909399;
-  font-size: 12px;
+  color: #64748b;
+  font-size: 14px;
 }
 
-.project-name {
-  color: #606266;
-  margin-top: 10px;
+.review-rating {
+  margin-bottom: 16px;
+}
+
+.review-content {
+  color: #1f2a44;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.review-footer {
+  display: flex;
+  align-items: center;
+}
+
+.project-tag {
+  font-size: 13px;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+  .reviews {
+    padding: 30px 15px;
+  }
+
+  .review-form-card >>> .el-card__body {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .sort-container {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .reviews {
+    padding: 20px 10px;
+  }
+
+  .review-form-card >>> .el-card__body {
+    padding: 20px;
+  }
+
+  .el-form-item {
+    margin-bottom: 18px;
+  }
+
+  .el-button {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 0 !important;
+  }
 }
 </style>

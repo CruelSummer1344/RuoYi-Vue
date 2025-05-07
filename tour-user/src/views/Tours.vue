@@ -4,17 +4,17 @@
     <div class="search-container">
       <el-input
           v-model="searchQuery"
+          placeholder="搜索旅游项目"
           class="search-input"
           clearable
-          placeholder="搜索旅游项目"
           @keyup.enter.native="handleSearch"
       >
-        <el-button slot="append" icon="el-icon-search" @click="handleSearch"/>
+        <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
       </el-input>
     </div>
 
     <!-- 最近活动 -->
-    <el-card class="recent-activities" shadow="hover">
+    <el-card class="recent-activities" shadow="never">
       <h3 slot="header">最近活动</h3>
       <el-carousel :interval="5000" height="280px">
         <el-carousel-item v-for="activity in recentActivities" :key="activity.id">
@@ -27,17 +27,19 @@
     </el-card>
 
     <!-- 旅游项目列表 -->
-    <el-row :gutter="20" class="tour-list">
+    <el-row :gutter="24" class="tour-list">
       <el-col v-for="tour in paginatedTours" :key="tour.id" :lg="12" :md="12" :sm="24" :xs="24">
-        <el-card class="tour-card" shadow="hover">
-          <el-row :gutter="15">
+        <el-card class="tour-card" shadow="never">
+          <el-row :gutter="20">
             <el-col :lg="8" :md="8" :sm="8" :xs="24">
-              <el-image :src="realUrl(tour)" alt="tour image" class="tour-image"/>
+              <div class="image-container">
+                <el-image :src="realUrl(tour)" alt="tour image" class="specialty-image"/>
+              </div>
             </el-col>
             <el-col :lg="16" :md="16" :sm="16" :xs="24">
-              <div class="tour-content">
+              <div class="specialty-content">
                 <h4>{{ tour.title }}</h4>
-                <p class="tour-desc">{{ tour.description }}</p>
+                <p class="specialty-desc">{{ tour.description }}</p>
                 <p class="tour-price"><strong>价格：</strong>¥{{ tour.price }}</p>
                 <el-select
                     v-model="tour.selectedPackage"
@@ -55,7 +57,7 @@
 
                 <div class="action-buttons">
                   <el-button size="small" type="primary" @click="bookTour(tour)">立即预约</el-button>
-                  <el-button plain size="small" type="success" @click="contactCustomerService">联系客服</el-button>
+                  <el-button plain size="small" @click="contactCustomerService">联系客服</el-button>
                 </div>
 
                 <el-collapse accordion class="tour-comments">
@@ -215,35 +217,65 @@ export default {
 
 <style scoped>
 .tours {
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
+  padding: 40px 20px;
+  max-width: 1400px;
   margin: 0 auto;
+  background: #f8fafc;
 }
 
 /* 搜索框 */
 .search-container {
-  text-align: center;
-  margin-bottom: 25px;
-  width: 100%;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
 }
 
 .search-input {
-  width: 60%;
-  max-width: 500px;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.search-input >>> .el-input__inner {
+  border-radius: 25px 0 0 25px;
+  border: 1px solid #e2e8f0;
+  height: 46px;
+}
+
+.search-input >>> .el-input-group__append {
+  border-radius: 0 25px 25px 0;
+  background: #2563eb;
+  border: none;
+}
+
+.search-input >>> .el-input-group__append .el-button {
+  color: white;
 }
 
 /* 最近活动 */
 .recent-activities {
-  margin-bottom: 30px;
-  border-radius: 8px;
-  width: 100%;
+  margin-bottom: 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  transition: box-shadow 0.3s ease;
+}
+
+.recent-activities:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.recent-activities >>> .el-card__header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .recent-activities h3 {
   margin: 0;
   font-size: 18px;
-  padding: 10px 0;
+  font-weight: 600;
+  color: #1f2a44;
 }
 
 .activity-item {
@@ -257,54 +289,82 @@ export default {
 
 .activity-image {
   width: 100%;
-  height: 230px; /* 增加图片高度 */
+  height: 230px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.el-carousel-item:hover .activity-image {
+  transform: scale(1.02);
 }
 
 .activity-item p {
   margin: 15px 0 0;
   font-size: 16px;
-  color: #606266;
   font-weight: 500;
+  color: #1f2a44;
 }
 
 /* 旅游项目列表 */
 .tour-list {
-  margin-bottom: 30px;
-  width: 100%;
+  margin-bottom: 40px;
 }
 
 .tour-card {
-  margin-bottom: 20px;
-  border-radius: 8px;
-  transition: all 0.3s;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  background: white;
+  border: none;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 100%;
 }
 
 .tour-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-.tour-image {
+.image-container {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-height: 160px;
+  border-radius: 8px;
+}
+
+.specialty-image {
   width: 100%;
-  height: 140px;
+  height: 100%;
+  min-height: 160px;
   object-fit: cover;
-  border-radius: 4px;
+  transition: transform 0.3s ease;
 }
 
-.tour-content {
+.tour-card:hover .specialty-image {
+  transform: scale(1.05);
+}
+
+.specialty-content {
+  padding: 16px;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
-.tour-desc {
+.specialty-content h4 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2a44;
+}
+
+.specialty-desc {
   font-size: 14px;
-  color: #606266;
-  margin: 10px 0;
-  line-height: 1.5;
+  color: #64748b;
+  margin: 0 0 16px;
+  line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -313,49 +373,100 @@ export default {
 
 .tour-price {
   font-size: 16px;
-  color: #303133;
-  margin: 10px 0;
+  color: #1f2a44;
+  margin: 0 0 16px;
 }
 
 .package-select {
   width: 100%;
-  max-width: 200px;
-  margin: 10px 0;
+  margin-bottom: 16px;
+}
+
+.package-select >>> .el-input__inner {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
 }
 
 .action-buttons {
   display: flex;
-  gap: 10px;
-  margin: 15px 0;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.action-buttons .el-button {
+  border-radius: 8px;
+}
+
+.action-buttons .el-button--primary {
+  background: #2563eb;
+  border-color: #2563eb;
 }
 
 .tour-comments {
-  margin-top: 10px;
+  margin-top: auto;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tour-comments >>> .el-collapse-item__header {
+  font-size: 14px;
+  color: #2563eb;
+  border-bottom: none;
+  padding: 8px 0;
+}
+
+.tour-comments >>> .el-collapse-item__content {
+  padding: 10px 0;
 }
 
 .comment {
   font-size: 13px;
-  color: #909399;
+  color: #64748b;
   margin: 5px 0;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 8px;
 }
 
 .comment span {
-  font-weight: bold;
-  color: #606266;
+  font-weight: 600;
+  color: #1f2a44;
+  margin-right: 4px;
 }
 
 /* 分页 */
 .pagination-container {
   text-align: center;
-  padding: 20px 0;
-  width: 100%;
+  padding: 30px 0;
+}
+
+.pagination-container >>> .el-pagination {
+  padding: 0;
+}
+
+.pagination-container >>> .el-pager li {
+  font-size: 14px;
+  margin: 0 4px;
+  border-radius: 8px;
+}
+
+.pagination-container >>> .el-pagination button {
+  border-radius: 8px;
 }
 
 /* 响应式调整 */
 @media (max-width: 992px) {
+  .tours {
+    padding: 30px 15px;
+  }
+
+  .specialty-image {
+    height: 180px;
+  }
+
   .action-buttons {
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
   }
 
   .action-buttons .el-button {
@@ -365,31 +476,45 @@ export default {
 
 @media (max-width: 768px) {
   .search-input {
-    width: 90%;
+    max-width: 90%;
   }
 
   .activity-image {
     height: 200px;
   }
 
-  .tour-image {
-    height: 180px;
-    margin-bottom: 10px;
+  .specialty-image {
+    height: 160px;
+  }
+
+  .specialty-content {
+    padding: 16px;
+  }
+
+  .specialty-content h4 {
+    font-size: 16px;
   }
 }
 
 @media (max-width: 576px) {
   .tours {
-    padding: 10px;
+    padding: 20px 10px;
+  }
+
+  .search-container {
+    margin-bottom: 24px;
   }
 
   .activity-image {
     height: 180px;
   }
 
+  .specialty-desc {
+    font-size: 13px;
+  }
+
   .el-button {
     width: 100%;
-    margin-bottom: 10px;
   }
 }
 </style>

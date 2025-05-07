@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="service-container">
     <div class="chat-container">
       <div class="chat-header">
         <h3>在线客服</h3>
@@ -20,6 +20,7 @@
             type="textarea"
             :rows="3"
             placeholder="请输入消息"
+            class="message-textarea"
             @keyup.enter.native="sendMessage"
         />
         <el-button type="primary" @click="sendMessage">发送</el-button>
@@ -116,9 +117,13 @@ export default {
 </script>
 
 <style scoped>
-.app-container {
+.service-container {
   height: calc(100vh - 84px);
-  padding: 20px;
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #f8fafc;
+  box-sizing: border-box;
 }
 
 .chat-container {
@@ -126,25 +131,35 @@ export default {
   display: flex;
   flex-direction: column;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.chat-container:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .chat-header {
   padding: 20px;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fff;
 }
 
 .chat-header h3 {
   margin: 0;
-  color: #303133;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2a44;
+  text-align: center;
 }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
   padding: 20px;
-  background: #f5f5f5;
+  background: #f8fafc;
 }
 
 .message {
@@ -162,41 +177,117 @@ export default {
 
 .message-content {
   max-width: 70%;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 16px;
+  border-radius: 12px;
   background: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.message-content:hover {
+  transform: translateY(-3px);
 }
 
 .message-right .message-content {
-  background: #e3f2fd;
+  background: #eff6ff;
+  border-bottom-right-radius: 4px;
+}
+
+.message-left .message-content {
+  background: #ffffff;
+  border-bottom-left-radius: 4px;
 }
 
 .message-sender {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #666;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1f2a44;
+  font-size: 14px;
 }
 
 .message-text {
   word-break: break-word;
+  color: #1f2a44;
+  line-height: 1.6;
+  font-size: 14px;
 }
 
 .message-time {
   font-size: 12px;
-  color: #999;
-  margin-top: 5px;
+  color: #64748b;
+  margin-top: 8px;
   text-align: right;
 }
 
 .chat-input {
   padding: 20px;
   display: flex;
-  gap: 10px;
-  border-top: 1px solid #e6e6e6;
+  gap: 16px;
+  border-top: 1px solid #f0f0f0;
+  background: #fff;
+}
+
+.message-textarea {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.message-textarea >>> .el-textarea__inner {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  line-height: 1.6;
+  resize: none;
 }
 
 .chat-input .el-button {
   align-self: flex-end;
+  border-radius: 8px;
+  height: 46px;
+  padding: 0 20px;
+  background: #2563eb;
+  border-color: #2563eb;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.chat-input .el-button:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+  .service-container {
+    padding: 30px 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .message-content {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 576px) {
+  .service-container {
+    padding: 20px 10px;
+    height: calc(100vh - 60px);
+  }
+
+  .chat-input {
+    padding: 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .chat-input .el-button {
+    width: 100%;
+    align-self: center;
+  }
+
+  .message-content {
+    max-width: 90%;
+  }
 }
 </style>
