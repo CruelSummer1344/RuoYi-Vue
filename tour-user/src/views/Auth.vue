@@ -233,14 +233,14 @@ export default {
         phonenumber: this.form.phone,
         password: this.form.password
       }).then(response => {
-        if (response.data.code === 200) {
+        if (response.code === 200) {
           this.$message.success('注册成功，请登录');
           this.isLogin = true;
           this.$refs['authForm'].resetFields();
         } else {
           this.$message.error('注册失败：' + response.data.msg);
         }
-      }).catch(() => {
+      }).catch((err) => {
         this.$message.error('注册请求失败');
       });
     },
