@@ -107,6 +107,11 @@ public class AttendanceRecordsServiceImpl implements IAttendanceRecordsService {
         attendanceRecords.setUserId(SecurityUtils.getUserId());
         List<AttendanceRecords> list = attendanceRecordsMapper.selectAttendanceRecordsList(attendanceRecords);
 
+        if (list.isEmpty()) {
+            attendanceRecords.setClockInTime(new Date());
+            return attendanceRecordsMapper.insertAttendanceRecords(attendanceRecords);
+        }
+
         attendanceRecords = list.get(0);
         boolean isToday = isToday(attendanceRecords.getCreatedAt());
 
