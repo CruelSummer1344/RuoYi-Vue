@@ -260,7 +260,8 @@ export default {
     },
     clickSubmit() {
       clickSubmit().then(response => {
-        console.log(response)
+        this.$message.success('打卡成功')
+        this.getList()
       })
     },
     // 多选框选中数据
