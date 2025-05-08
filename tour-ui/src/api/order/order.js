@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function listOrderData() {
+  return request({
+    url: '/order/order/listData',
+    method: 'get'
+  })
+}
+
+
 // 查询订单列表
 export function listOrder(query) {
   return request({

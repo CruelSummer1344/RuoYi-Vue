@@ -1,12 +1,25 @@
 import axios from 'axios';
 import {Notification, MessageBox, Message} from 'element-ui';
-import store from '@/store';
 import {getToken} from '@/utils/auth';
 import errorCode from '@/utils/errorCode';
 import {tansParams} from '@/utils/ruoyi';
 import cache from '@/plugins/cache';
 import md5 from 'md5';
 import router from '@/router';
+
+const errorCodeMap = {
+    // 通用错误
+    'common.operation.success': '操作成功',
+    'common.operation.fail': '操作失败',
+    // 用户相关
+    'user.register.success': '注册成功！',
+    'user.login.success': '登录成功',
+    'user.login.fail': '登录失败',
+    'user.not.login': '未登录或登录超时',
+    // 权限相关
+    'permission.denied': '权限不足',
+    // 其他 key 按需补充...
+};
 
 export let isRelogin = {show: false};
 
@@ -83,7 +96,12 @@ service.interceptors.response.use(res => {
     }
 
     const code = res.data.code || 200;
-    const msg = errorCode[code] || res.data.msg || errorCode['default'];
+    let msg = errorCode[code] || res.data.msg || errorCode['default'];
+
+    // 关键修改：如果 msg 是国际化 key，则替换为中文
+    if (errorCodeMap[msg]) {
+        msg = errorCodeMap[msg];
+    }
 
     if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
         return res.data;

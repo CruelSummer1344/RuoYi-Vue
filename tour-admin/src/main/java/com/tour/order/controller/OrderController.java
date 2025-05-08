@@ -1,6 +1,10 @@
 package com.tour.order.controller;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,5 +104,25 @@ public class OrderController extends BaseController
     public AjaxResult remove(@PathVariable Long[] orderIds)
     {
         return toAjax(orderService.deleteOrderByOrderIds(orderIds));
+    }
+
+    @GetMapping("/listData")
+    public AjaxResult listData(Order order)
+    {
+        List<Order> list = orderService.selectOrderList(order);
+// 获取当前时间和三个月前的时间戳
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime threeMonthsAgo = now.minusMonths(3);
+
+        // 将 LocalDateTime 转换为时间戳（毫秒）
+        Date threeMonthsAgoDate = Date.from(threeMonthsAgo.atZone(ZoneId.systemDefault()).toInstant());
+        // 获取当前时间戳
+        // 过滤近三个月的数据并按 createdAt 排序
+        List<Order> collect = list.stream()
+                .filter(order1 -> !order1.getCreatedAt().before(threeMonthsAgoDate))
+                .sorted(Comparator.comparing(Order::getCreatedAt))
+                .collect(Collectors.toList());
+
+        return AjaxResult.success(collect);
     }
 }

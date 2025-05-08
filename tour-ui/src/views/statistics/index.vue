@@ -27,7 +27,7 @@
 
 <script>
 import * as echarts from 'echarts'
-import { listOrder } from "@/api/order/order";
+import {listOrderData} from "@/api/order/order";
 
 export default {
   name: "Statistics",
@@ -52,8 +52,8 @@ export default {
     /** 查询订单列表 */
     getList() {
       this.loading = true;
-      listOrder().then(response => {
-        this.orderList = response.rows;
+      listOrderData().then(response => {
+        this.orderList = response.data;
         this.loading = false;
         this.updateCharts();
       });
@@ -166,4 +166,4 @@ export default {
   padding: 16px 16px;
   margin-bottom: 32px;
 }
-</style> 
+</style>
