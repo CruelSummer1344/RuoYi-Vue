@@ -1,7 +1,7 @@
 # Project exclude paths
-/ruoyi-admin/target/
-/ruoyi-common/target/
-/ruoyi-framework/target/
-/ruoyi-generator/target/
-/ruoyi-quartz/target/
-/ruoyi-system/target/
+/tour-admin/target/
+/tour-common/target/
+/tour-framework/target/
+/tour-generator/target/
+/tour-quartz/target/
+/tour-system/target/
