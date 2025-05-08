@@ -7,7 +7,7 @@
       <h3>发表您的评论</h3>
       <el-form :model="reviewForm" :rules="rules" ref="reviewForm" label-width="100px">
         <el-form-item label="选择项目" prop="projectId">
-          <el-select v-model="reviewForm.projectId" placeholder="请选择体验过的项目" @change="onProjectChange" class="form-select">
+          <el-select v-model="reviewForm.projectId" placeholder="请选择体验过的项目" @change="onProjectChange" class="form-select" filterable>
             <el-option v-for="project in projects" :key="project.id" :label="project.name" :value="project.id"></el-option>
           </el-select>
         </el-form-item>
@@ -27,19 +27,8 @@
     <!-- 评论列表 -->
     <div class="review-list">
       <h3>最新评论</h3>
-      <div class="sort-container">
-        <el-form inline class="sort-form">
-          <el-form-item label="排序">
-            <el-select v-model="sortOrder" @change="sortReviews" class="sort-select">
-              <el-option label="最新评论" value="desc"></el-option>
-              <el-option label="最早评论" value="asc"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-      </div>
-
       <el-row :gutter="24" v-if="sortedReviews.length > 0">
-        <el-col :xs="24" :sm="24" :md="12" :lg="12" v-for="review in sortedReviews" :key="review.id">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" v-for="review in sortedReviews" :key="review.id">
           <el-card class="review-card" shadow="never">
             <div class="review-header">
               <span class="username">{{ review.username }}</span>
@@ -65,6 +54,7 @@
 import {addComments, listComments} from "@/api/comments/comments";
 import {listSpot} from "@/api/spot/spot";
 import {listHotel} from "@/api/hotel/hotel";
+import {listProject} from "@/api/projects/projects";
 
 export default {
   name: 'Reviews',
@@ -116,7 +106,15 @@ export default {
         if (resp.code === 200) {
           this.projects = this.projects.concat(resp.rows.map(hotel => ({
             id: hotel.hotelId,
-            name: hotel.name
+            name: hotel.name,
+          })))
+        }
+      });
+      listProject().then(response => {
+        if (response.code === 200) {
+          this.projects = this.projects.concat(response.rows.map(project => ({
+            id: project.projectId,
+            name: project.name,
           })))
         }
       });
@@ -154,7 +152,7 @@ export default {
           
           addComments(commentData).then(response => {
             if (response.code === 200) {
-              this.$message.success('评论提交成功，待审核');
+              this.$message.success('评论提交成功');
               this.loadReviews();
               this.resetForm(formName);
             }

@@ -290,7 +290,200 @@
       </el-card>
     </div>
 
-    <!-- 各种对话框 (保持原代码不变) -->
+    <!-- 预订对话框 -->
+    <el-dialog :visible.sync="dialogVisible" title="预订详情" width="40%">
+      <el-form ref="bookingForm" :model="bookingForm" :rules="rules" label-width="100px">
+        <el-form-item label="景点名称" prop="projectName">
+          <el-input v-model="bookingForm.projectName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="套餐" prop="packageName">
+          <el-input v-model="bookingForm.packageName" disabled></el-input>
+        </el-form-item>
+        <el-form-item v-if="bookingForm.hotel" label="酒店">
+          <el-input v-model="bookingForm.hotel" disabled></el-input>
+        </el-form-item>
+        <el-form-item v-if="bookingForm.restaurant" label="餐饮">
+          <el-input v-model="bookingForm.restaurant" disabled></el-input>
+        </el-form-item>
+        <el-form-item v-if="bookingForm.activity" label="活动">
+          <el-input v-model="bookingForm.activity" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="预订日期" prop="date">
+          <el-date-picker v-model="bookingForm.date" placeholder="选择日期" type="date"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="人数" prop="peopleCount">
+          <el-input-number v-model="bookingForm.peopleCount" :max="10" :min="1"></el-input-number>
+        </el-form-item>
+        <el-form-item label="总价">
+          <span class="total-price">￥{{ bookingForm.totalPrice }}</span>
+        </el-form-item>
+        <el-form-item label="支付方式" prop="paymentMethod">
+          <el-radio-group v-model="bookingForm.paymentMethod">
+            <el-radio label="wechat">微信支付</el-radio>
+            <el-radio label="alipay">支付宝</el-radio>
+            <el-radio label="bank">银行卡</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmBooking('bookingForm')">确认支付</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 酒店预订对话框 -->
+    <el-dialog :visible.sync="hotelDialogVisible" title="酒店预订" width="40%">
+      <el-form ref="hotelBookingForm" :model="hotelBookingForm" :rules="hotelRules" label-width="100px">
+        <el-form-item label="酒店名称" prop="hotelName">
+          <el-input v-model="hotelBookingForm.hotelName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="房型" prop="roomType">
+          <el-input v-model="hotelBookingForm.roomType" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="入住日期" prop="checkInDate">
+          <el-date-picker
+              v-model="hotelBookingForm.checkInDate"
+              :picker-options="{
+                            disabledDate(time) {
+                                return time.getTime() < Date.now() - 8.64e7;
+                            }
+                        }"
+              placeholder="选择入住日期"
+              type="date"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="离店日期" prop="checkOutDate">
+          <el-date-picker
+              v-model="hotelBookingForm.checkOutDate"
+              :picker-options="{
+                            disabledDate(time) {
+                                return time.getTime() <= hotelBookingForm.checkInDate;
+                            }
+                        }"
+              placeholder="选择离店日期"
+              type="date"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="房间数量" prop="roomCount">
+          <el-input-number v-model="hotelBookingForm.roomCount" :max="5" :min="1"></el-input-number>
+        </el-form-item>
+        <el-form-item label="入住时间">
+          <el-time-picker
+              v-model="hotelBookingForm.checkInTime"
+              :picker-options="{
+                            selectableRange: '14:00:00 - 23:59:59'
+                        }"
+              placeholder="选择入住时间"
+          ></el-time-picker>
+        </el-form-item>
+        <el-form-item label="离店时间">
+          <el-time-picker
+              v-model="hotelBookingForm.checkOutTime"
+              :picker-options="{
+                            selectableRange: '00:00:00 - 12:00:00'
+                        }"
+              placeholder="选择离店时间"
+          ></el-time-picker>
+        </el-form-item>
+        <el-form-item label="总价">
+          <span class="total-price">￥{{ hotelTotalPrice }}</span>
+        </el-form-item>
+        <el-form-item label="支付方式" prop="paymentMethod">
+          <el-radio-group v-model="hotelBookingForm.paymentMethod">
+            <el-radio label="wechat">微信支付</el-radio>
+            <el-radio label="alipay">支付宝</el-radio>
+            <el-radio label="bank">银行卡</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button @click="hotelDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmHotelBooking('hotelBookingForm')">确认支付</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 订单详情对话框 -->
+    <el-dialog :visible.sync="orderDetailVisible" title="订单详情" width="40%">
+      <div v-if="selectedOrder">
+        <el-descriptions :column="1" border>
+          <el-descriptions-item label="订单号">{{ selectedOrder.orderId }}</el-descriptions-item>
+          <el-descriptions-item label="项目名称">{{ selectedOrder.projectName }}</el-descriptions-item>
+          <el-descriptions-item label="订单类型">
+            <span v-if="selectedOrder.spotId">景点</span>
+            <span v-else-if="selectedOrder.hotelId">酒店</span>
+            <span v-else>旅游项目</span>
+          </el-descriptions-item>
+          <el-descriptions-item label="创建日期">{{ selectedOrder.createTime }}</el-descriptions-item>
+          <el-descriptions-item label="人数">{{ selectedOrder.peopleCount }}</el-descriptions-item>
+          <el-descriptions-item label="总价">¥{{ selectedOrder.totalPrice }}</el-descriptions-item>
+          <el-descriptions-item label="状态">
+            <el-tag :type="getStatusType(selectedOrder.status)">{{ selectedOrder.status }}</el-tag>
+          </el-descriptions-item>
+
+          <!-- 景点订单详情 -->
+          <template v-if="selectedOrder.spotId">
+            <el-descriptions-item label="套餐">{{ selectedOrder.details.packageName }}</el-descriptions-item>
+            <el-descriptions-item v-if="selectedOrder.details.hotel" label="酒店">{{ selectedOrder.details.hotel }}</el-descriptions-item>
+            <el-descriptions-item v-if="selectedOrder.details.restaurant" label="餐饮">{{ selectedOrder.details.restaurant }}</el-descriptions-item>
+            <el-descriptions-item v-if="selectedOrder.details.activity" label="活动">{{ selectedOrder.details.activity }}</el-descriptions-item>
+          </template>
+
+          <!-- 酒店订单详情 -->
+          <template v-if="selectedOrder.hotelId">
+            <el-descriptions-item label="房型">{{ selectedOrder.details.packageName }}</el-descriptions-item>
+            <el-descriptions-item label="入住日期">{{ formatDateTime(selectedOrder.details.checkInDate, selectedOrder.details.checkInTime) }}</el-descriptions-item>
+            <el-descriptions-item label="离店日期">{{ formatDateTime(selectedOrder.details.checkOutDate, selectedOrder.details.checkOutTime) }}</el-descriptions-item>
+          </template>
+
+          <!-- 旅游项目订单详情 -->
+          <template v-if="selectedOrder.productId">
+            <el-descriptions-item label="套餐">{{ selectedOrder.details.packageName }}</el-descriptions-item>
+          </template>
+        </el-descriptions>
+      </div>
+      <div slot="footer">
+        <el-button @click="orderDetailVisible = false">关闭</el-button>
+        <el-button
+            v-if="selectedOrder && (selectedOrder.status === '已支付' || selectedOrder.status === '已完成')"
+            type="primary"
+            @click="goToReview(selectedOrder)"
+        >
+          去评价
+        </el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 旅游项目预订对话框 -->
+    <el-dialog :visible.sync="tourProjectDialogVisible" title="旅游项目预订" width="40%">
+      <el-form ref="tourProjectBookingForm" :model="tourProjectBookingForm" :rules="rules" label-width="100px">
+        <el-form-item label="项目名称" prop="projectName">
+          <el-input v-model="tourProjectBookingForm.projectName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="套餐" prop="packageName">
+          <el-input v-model="tourProjectBookingForm.packageName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="预订日期" prop="date">
+          <el-date-picker v-model="tourProjectBookingForm.date" placeholder="选择日期" type="date"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="人数" prop="peopleCount">
+          <el-input-number v-model="tourProjectBookingForm.peopleCount" :max="10" :min="1"></el-input-number>
+        </el-form-item>
+        <el-form-item label="总价">
+          <span class="total-price">￥{{ tourProjectBookingForm.totalPrice }}</span>
+        </el-form-item>
+        <el-form-item label="支付方式" prop="paymentMethod">
+          <el-radio-group v-model="tourProjectBookingForm.paymentMethod">
+            <el-radio label="wechat">微信支付</el-radio>
+            <el-radio label="alipay">支付宝</el-radio>
+            <el-radio label="bank">银行卡</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button @click="tourProjectDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="confirmTourProjectBooking('tourProjectBookingForm')">确认支付</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -827,6 +1020,7 @@ export default {
 
     // 打开预订对话框
     openBookingDialog(project, pkg) {
+      console.log('sdsd')
       getSpot(project.id).then(response => {
         const spotData = response.data;
         this.bookingForm = {
@@ -881,7 +1075,8 @@ export default {
               }).then(() => {
                 this.goToReview({
                   orderId: response.data.orderId,
-                  spotId: this.bookingForm.projectId
+                  spotId: this.bookingForm.projectId,
+                  type: 'spot'
                 });
               }).catch(() => {});
             }
@@ -974,12 +1169,18 @@ export default {
 
     // 前往评价页面
     goToReview(order) {
+      if (!order.type) {
+        if (order.spotId) order.type = 'spot'
+        else if (order.hotelId) order.type = 'hotel'
+        else order.type = 'project'
+      }
       let projectId = order.spotId || order.hotelId || order.projectId;
       this.$router.push({
         path: '/reviews',
         query: {
           projectId: projectId,
-          orderId: order.orderId
+          orderId: order.orderId,
+          type: order.type
         }
       });
     },
@@ -1143,7 +1344,8 @@ export default {
               }).then(() => {
                 this.goToReview({
                   orderId: response.data.orderId,
-                  hotelId: this.hotelBookingForm.hotelId
+                  hotelId: this.hotelBookingForm.hotelId,
+                  type: 'hotel'
                 });
               }).catch(() => {});
             }
@@ -1273,7 +1475,8 @@ export default {
               }).then(() => {
                 this.goToReview({
                   orderId: response.data.orderId,
-                  projectId: this.tourProjectBookingForm.projectId
+                  projectId: this.tourProjectBookingForm.projectId,
+                  type: 'project'
                 });
               }).catch(() => {});
             }

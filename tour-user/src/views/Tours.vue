@@ -18,7 +18,7 @@
       <h3 slot="header">最近活动</h3>
       <el-carousel :interval="5000" height="280px">
         <el-carousel-item v-for="activity in recentActivities" :key="activity.id">
-          <div class="activity-item" @click="goToActivity(activity.id)">
+          <div class="activity-item">
             <img :src="activity.image" alt="activity image" class="activity-image"/>
             <p>{{ activity.title }} - {{ activity.date }}</p>
           </div>
@@ -59,14 +59,6 @@
                   <el-button size="small" type="primary" @click="bookTour(tour)">立即预约</el-button>
                   <el-button plain size="small" @click="contactCustomerService">联系客服</el-button>
                 </div>
-
-                <el-collapse accordion class="tour-comments">
-                  <el-collapse-item name="comments" title="查看评论">
-                    <div v-for="comment in tour.comments" :key="comment.id" class="comment">
-                      <span>{{ comment.user }}:</span> {{ comment.text }}
-                    </div>
-                  </el-collapse-item>
-                </el-collapse>
               </div>
             </el-col>
           </el-row>
@@ -90,6 +82,7 @@
 
 <script>
 import {listSpot, getSpot} from "@/api/spot/spot";
+import {listComments} from "@/api/comments/comments";
 
 export default {
   name: 'Tours',
@@ -146,14 +139,14 @@ export default {
           price: spot.price,
           image: spot.imageUrl || '/assets/default-spot.jpg',
           packages: [
-            {id: 1, name: '标准门票'},
-            {id: 2, name: '含讲解套餐 (+120元)'},
-            {id: 3, name: '含餐饮套餐 (+300元)'}
+            {
+              id: spot.spotId * 100 + 1,
+              name: '标准门票',
+              price: spot.price,
+              description: spot.description
+            }
           ],
           selectedPackage: null,
-          comments: [
-            {id: 1, user: '游客', text: '景点很美，值得一游！'}
-          ]
         }));
       }).catch(err=> {});
     },
@@ -189,6 +182,10 @@ export default {
     },
 
     bookTour(tour) {
+      if (!tour.selectedPackage) {
+        this.$message.warning('请选择一个套餐');
+        return;
+      }
       getSpot(tour.id).then(response => {
         const spotData = response.data;
         const pkg = tour.packages.find(p => p.id === tour.selectedPackage) || tour.packages[0];

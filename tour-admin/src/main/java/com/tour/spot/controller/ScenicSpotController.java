@@ -1,8 +1,13 @@
 package com.tour.spot.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tour.comments.domain.Comments;
+import com.tour.comments.service.ICommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +38,8 @@ public class ScenicSpotController extends BaseController
 {
     @Autowired
     private IScenicSpotService scenicSpotService;
+    @Resource
+    private ICommentsService commentsService;
 
     /**
      * 查询景点列表
